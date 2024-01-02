@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 import { useState } from "react";
 import LayoutComponent from "./Layout/LayoutComponent";
 import Router from "./routes/Router";
