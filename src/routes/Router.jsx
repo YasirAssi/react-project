@@ -8,6 +8,7 @@ import ErrorPage from "../Pages/ErrorPage";
 // import CardsExample from "../sandbox/Pages/CardsExample";
 // import EditCardPage from "../Pages/EditCardPage";
 // import SandboxPage from "../sandbox/Pages/SandboxPage";
+import ContextPage from "../sandbox/Pages/ContextPage";
 
 const Router = () => {
   //http://localhost:3000/
@@ -22,7 +23,7 @@ const Router = () => {
       {/* <Route path="/edit/:id" element={<EditCardPage />} /> */}
       {/* <Route path="/cards-example" element={<CardsExample />} />
       <Route path="/sandbox" element={<SandboxPage />}></Route> */}
-
+      <Route path="/context" element={<ContextPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
