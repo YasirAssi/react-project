@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext } from "react";
 import CounterSettingContext from "../store/counterContext";
 import Typography from "@mui/material/Typography";
 
