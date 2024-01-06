@@ -2,17 +2,16 @@ import "./App.css";
 import { useState } from "react";
 import LayoutComponent from "./Layout/LayoutComponent";
 import Router from "./routes/Router";
-import CounterSettingContext from "./store/counterContext";
+import LogInContext from "./store/loginContext";
 
 function App() {
-  const [counter, setCounter] = useState(0);
-
+  const [logIn, setLogIn] = useState(null);
   return (
-    <CounterSettingContext.Provider value={{ counter, setCounter }}>
+    <LogInContext.Provider value={{ logIn, setLogIn }}>
       <LayoutComponent>
         <Router />
       </LayoutComponent>
-    </CounterSettingContext.Provider>
+    </LogInContext.Provider>
   );
 }
 
