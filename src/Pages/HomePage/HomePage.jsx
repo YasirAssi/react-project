@@ -21,7 +21,6 @@ const HomePage = () => {
     axios
       .get("/cards")
       .then(({ data }) => {
-        console.log(data);
         setDataFromServer(data);
       })
       .catch((err) => {
@@ -33,9 +32,10 @@ const HomePage = () => {
   }
   const handleDeleteCard = (id) => {
     console.log("father: card to delete", id);
-    console.log({ dataFromServer });
+    setDataFromServer((currentDataFromServer) =>
+      currentDataFromServer.filter((card) => card._id !== id)
+    );
   };
-
   return (
     <Grid container spacing={2} mt={7}>
       {dataFromServer.map((item, index) => (
