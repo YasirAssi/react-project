@@ -14,17 +14,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-// import car1 from "../assets/imgs/car 1.jpg";
 import PropTypes from "prop-types";
 import { SignalCellular1Bar } from "@mui/icons-material";
 
 import ROUTES from "../routes/ROUTES";
-// import EditCardPage from "../Pages/EditCardPage";
-
-/**
- * title -> title
- * subtitle -> subheader
- */
 
 const CardComponent = ({
   title,
@@ -40,9 +33,6 @@ const CardComponent = ({
   onFav,
 }) => {
   const navigate = useNavigate();
-
-  // let { title, subtitle, img, body } = props;
-  // console.log(props);
 
   const handleDeleteClick = () => {
     console.log("child clicked on delete", id);
@@ -100,11 +90,9 @@ const CardComponent = ({
             <IconButton onClick={handleDeleteClick}>
               <DeleteIcon />
             </IconButton>
-            {/* <Link to={`${ROUTES.EDITCARD}/${id}`}> */}
             <IconButton onClick={handleEditClick}>
               <ModeIcon />
             </IconButton>
-            {/* </Link> */}
           </Box>
           <Box>
             <IconButton onClick={handlePhoneClick}>
