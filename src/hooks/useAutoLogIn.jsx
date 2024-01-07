@@ -28,7 +28,7 @@ const useAutoLogin = () => {
       .catch((err) => {
         setFinishAutoLogin(true);
       });
-  }, []);
+  }, [setLogIn]);
 
   return finishAutoLogin;
 };

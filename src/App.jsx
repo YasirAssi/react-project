@@ -1,26 +1,20 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 import LayoutComponent from "./Layout/LayoutComponent";
 import Router from "./routes/Router";
-import CounterSettingContext from "./store/counterContext";
 import LoginContext from "./store/loginContext";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const [counter, setCounter] = useState(0);
-  // const [logIn, setLogIn] = useState(false);
   const [logIn, setLogIn] = useState(null);
 
   return (
-    <CounterSettingContext.Provider value={{ counter, setCounter }}>
-      <LoginContext.Provider value={{ logIn, setLogIn }}>
-        <ToastContainer />
-        <LayoutComponent>
-          <Router />
-        </LayoutComponent>
-      </LoginContext.Provider>
-    </CounterSettingContext.Provider>
+    <LoginContext.Provider value={{ logIn, setLogIn }}>
+      <ToastContainer />
+      <LayoutComponent>
+        <Router />
+      </LayoutComponent>
+    </LoginContext.Provider>
   );
 }
 

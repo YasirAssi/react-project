@@ -1,6 +1,4 @@
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import Paper from "@mui/material/Paper";
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import DiamondIcon from "@mui/icons-material/Diamond";

@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import FooterComponent from "./footer/FooterComponent";
 import HeaderComponent from "./header/HeaderComponent";
 import MainComponent from "./main/MainComponent";
@@ -23,10 +23,6 @@ const LayoutComponent = ({ children }) => {
   const handleThemeChange = (ClientChecked) => {
     SetDarkTheme(ClientChecked);
   };
-
-  // if (!finishAutoLogin) {
-  //   return <Typography>Loading...</Typography>;
-  // }
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkMode : lightMode}>

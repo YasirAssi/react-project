@@ -5,13 +5,11 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
-  Button,
   Drawer,
   ListItemIcon,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { useState, Fragment } from "react";
 
 const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const list = () => (

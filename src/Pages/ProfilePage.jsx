@@ -2,10 +2,7 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 
 const ProfilePage = () => {
-  useEffect(() => {
-    //axios call to get user data
-    //useContext get user id
-  }, []);
+  useEffect(() => {}, []);
   return (
     <Typography variant="h1" color="initial">
       Profile Page

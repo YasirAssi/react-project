@@ -1,35 +1,21 @@
 import { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Alert from "@mui/material/Alert";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import ROUTES from "../../routes/ROUTES";
-import { useNavigate } from "react-router-dom";
-import normalizeRegister from "./normalizeRe";
 import {
-  validateEmailLogin,
-  validatePasswordLogin,
-  validateFirstSchema,
-  validateMiddleSchema,
-  validateLastSchema,
-  validatePhoneSchema,
-  validateUrlSchema,
-  validateStateSchema,
-  validateCountrySchema,
-  validateCitySchema,
-  validateStreetSchema,
-  validateHouseNumberSchema,
-  validateZipSchema,
-  validateSchema,
-} from "../../validation/registerationValidation";
+  Avatar,
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Box,
+  Typography,
+  Alert,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import ROUTES from "../../routes/ROUTES";
+import normalizeRegister from "./normalizeRe";
+import { validateSchema } from "../../validation/registerationValidation";
 
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -63,48 +49,15 @@ const RegisterPage = () => {
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   const handleInputsChange = (e) => {
-    /**
-     * e.target.id -> name of property to update
-     * e.target.value -> the value
-     */
-
-    // step 1
-    // setInputsValue((CopyOfCurrentValue) => {
-    // CopyOfCurrentValue.first = e.target.value;
-    // return CopyOfCurrentValue; //x
-    // return { ...CopyOfCurrentValue }; //v
-    // });
-
-    // step 2
-    // setInputsValue((CopyOfCurrentValue) => {
-    //   CopyOfCurrentValue[e.target.id] = e.target.value;
-    //   return { ...CopyOfCurrentValue };
-    // });
-
-    // step 3
-    // setInputsValue((CopyOfCurrentValue) => ({
-    //   ...CopyOfCurrentValue,
-    //   first: e.target.value,
-    // }));
-
-    // final boss
     setInputsValue((CopyOfCurrentValue) => ({
       ...CopyOfCurrentValue,
       [e.target.id]: e.target.value,
     }));
   };
   const handleInputsBlur = (e) => {
-    /**
-     * validateSchema[e.target.id] -> function to validate the current input
-     * inputsValue[e.target.id] -> the value inside the input
-     */
     let dataFromJoi = validateSchema[e.target.id]({
       [e.target.id]: inputsValue[e.target.id],
     });
-    /*
-      {email:emailValue}
-    */
-    console.log("dataFromJoi", dataFromJoi);
     if (dataFromJoi.error) {
       setErrors((copyOfErrors) => ({
         ...copyOfErrors,
@@ -116,11 +69,6 @@ const RegisterPage = () => {
         return { ...copyOfErrors };
       });
     }
-    // if (dataFromJoi.error) {
-    //   setPasswordError(dataFromJoi.error.details[0].message);
-    // } else {
-    //   setPasswordError("");
-    // }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -382,5 +330,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
-// the disabled is always disabled while i request to be disable if the ay least on of the fields of the errors are empty
