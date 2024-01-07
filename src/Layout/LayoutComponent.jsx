@@ -4,9 +4,11 @@ import HeaderComponent from "./header/HeaderComponent";
 import MainComponent from "./main/MainComponent";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import tmc from "twin-moon-color";
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline, Typography } from "@mui/material";
+import useAutoLogin from "../hooks/useAutoLogIn";
 
 const LayoutComponent = ({ children }) => {
+  const finishAutoLogin = useAutoLogin();
   const [isDarkTheme, SetDarkTheme] = useState(false);
 
   const themes = tmc({
@@ -22,6 +24,10 @@ const LayoutComponent = ({ children }) => {
     SetDarkTheme(ClientChecked);
   };
 
+  // if (!finishAutoLogin) {
+  //   return <Typography>Loading...</Typography>;
+  // }
+
   return (
     <ThemeProvider theme={isDarkTheme ? darkMode : lightMode}>
       <CssBaseline />
@@ -29,7 +35,13 @@ const LayoutComponent = ({ children }) => {
         isDarkTheme={isDarkTheme}
         onThemeChange={handleThemeChange}
       />
-      <MainComponent>{children}</MainComponent>
+      <MainComponent>
+        {finishAutoLogin ? (
+          children
+        ) : (
+          <Typography variant="h1">Loading...</Typography>
+        )}
+      </MainComponent>
       <FooterComponent />
     </ThemeProvider>
   );
