@@ -10,10 +10,10 @@ const passwordLoginSchema = Joi.object({
   password: Joi.string()
     .pattern(
       new RegExp(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*-])[A-Za-z\d!@#$%^&*-]{6,}$/
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*-])[A-Za-z\d!@#$%^&*-]{7,}$/
       )
     )
-    .min(7)
+    .min(8)
     .max(20)
     .required()
     .messages({
