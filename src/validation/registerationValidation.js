@@ -39,50 +39,50 @@ const zipSchema = Joi.object({
   zip: Joi.string().min(2).max(256).required(),
 });
 
-const validateFirstSchema = (first) => firstSchema.validate(first);
-const validateMiddleSchema = (middle) => middleSchema.validate(middle);
-const validateLastSchema = (last) => lastSchema.validate(last);
-const validatePhoneSchema = (phone) => phoneSchema.validate(phone);
-const validateUrlSchema = (url) => urlSchema.validate(url);
-const validateAltSchema = (alt) => altSchema.validate(alt);
-const validateStateSchema = (state) => stateSchema.validate(state);
-const validateCountrySchema = (country) => countrySchema.validate(country);
-const validateCitySchema = (city) => citySchema.validate(city);
-const validateStreetSchema = (street) => streetSchema.validate(street);
-const validateHouseNumberSchema = (houseNumber) =>
+const validateFirst = (first) => firstSchema.validate(first);
+const validateMiddle = (middle) => middleSchema.validate(middle);
+const validateLast = (last) => lastSchema.validate(last);
+const validatePhone = (phone) => phoneSchema.validate(phone);
+const validateUrl = (url) => urlSchema.validate(url);
+const validateAlt = (alt) => altSchema.validate(alt);
+const validateState = (state) => stateSchema.validate(state);
+const validateCountry = (country) => countrySchema.validate(country);
+const validateCity = (city) => citySchema.validate(city);
+const validateStreet = (street) => streetSchema.validate(street);
+const validateHouseNumber = (houseNumber) =>
   houseNumberSchema.validate(houseNumber);
-const validateZipSchema = (zip) => zipSchema.validate(zip);
+const validateZip = (zip) => zipSchema.validate(zip);
 
 const validateSchema = {
-  first: validateFirstSchema,
-  middle: validateMiddleSchema,
-  last: validateLastSchema,
+  first: validateFirst,
+  middle: validateMiddle,
+  last: validateLast,
   email: validateEmailLogin,
   password: validatePasswordLogin,
-  phone: validatePhoneSchema,
-  url: validateUrlSchema,
-  alt: validateAltSchema,
-  state: validateStateSchema,
-  country: validateCountrySchema,
-  city: validateCitySchema,
-  street: validateStreetSchema,
-  houseNumber: validateHouseNumberSchema,
-  zip: validateZipSchema,
+  phone: validatePhone,
+  url: validateUrl,
+  alt: validateAlt,
+  state: validateState,
+  country: validateCountry,
+  city: validateCity,
+  street: validateStreet,
+  houseNumber: validateHouseNumber,
+  zip: validateZip,
 };
 
 export {
   validateEmailLogin,
   validatePasswordLogin,
-  validateFirstSchema,
-  validateMiddleSchema,
-  validateLastSchema,
-  validatePhoneSchema,
-  validateUrlSchema,
-  validateStateSchema,
-  validateCountrySchema,
-  validateCitySchema,
-  validateStreetSchema,
-  validateHouseNumberSchema,
-  validateZipSchema,
+  validateFirst,
+  validateMiddle,
+  validateLast,
+  validatePhone,
+  validateUrl,
+  validateState,
+  validateCountry,
+  validateCity,
+  validateStreet,
+  validateHouseNumber,
+  validateZip,
   validateSchema,
 };
