@@ -16,7 +16,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ROUTES from "../../routes/ROUTES";
 import normalizeRegister from "./normalizeRe";
 import { validateSchema } from "../../validation/registerationValidation";
-
+import { toast } from "react-toastify";
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
     first: "",
@@ -74,6 +74,16 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       await axios.post("/users", normalizeRegister(inputsValue));
+      toast.success("🦄 LoggedIn Successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       navigate(ROUTES.LOGIN);
     } catch (err) {
       console.log("error from axios", err);
