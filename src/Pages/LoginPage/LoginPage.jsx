@@ -52,7 +52,6 @@ const LoginPage = () => {
 
       localStorage.setItem("token", data);
       const decoded = jwtDecode(data);
-      console.log("decoded", decoded);
       setLogIn(decoded);
       toast.success("🦄 LoggedIn Successfully", {
         position: "top-right",
@@ -73,7 +72,6 @@ const LoginPage = () => {
   };
   const handleEmailBlur = () => {
     let dataFromJoi = validateEmailLogin({ email: emailValue });
-    console.log("dataFromJoi", dataFromJoi);
     if (dataFromJoi.error) {
       setEmailError(dataFromJoi.error.details[0].message);
     } else {
@@ -82,7 +80,6 @@ const LoginPage = () => {
   };
   const handlePasswordBlur = () => {
     let dataFromJoi = validatePasswordLogin({ password: passwordValue });
-    console.log("dataFromJoi", dataFromJoi);
     if (dataFromJoi.error) {
       setPasswordError(dataFromJoi.error.details[0].message);
     } else {

@@ -5,7 +5,7 @@ const alwaysLinks = [
   { to: ROUTES.ABOUT, children: "About Us" },
 ];
 
-const loggedInLinks = [{ to: "/profile", children: "Profile page" }];
+const loggedInLinks = [{ to: ROUTES.PROFILE, children: "Profile page" }];
 
 const bizLinks = [{ to: ROUTES.CREATECARD, children: "Create Page" }];
 
