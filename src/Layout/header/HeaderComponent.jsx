@@ -16,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
@@ -24,9 +25,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import tmc from "twin-moon-color";
-import { loggedInLinks } from "../myLinks";
+// import { loggedInLinks } from "../myLinks";
 import { toast } from "react-toastify";
-import ROUTES from "../../routes/ROUTES";
 import LogInContext from "../../store/loginContext";
 
 const themes = tmc({
@@ -96,27 +96,39 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         <Link to={ROUTES.PROFILE}>Profile</Link>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      {/* <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem> */}
     </Menu>
   );
 
   const handleLogOut = async () => {
     let token = localStorage.getItem("token");
-    if (token) localStorage.removeItem("token");
-    const decoded = jwtDecode(token); //convert token to object
-    console.log("decoded", decoded);
-    setLogIn(false);
-    toast("🦄 You'e Logged Out", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-    navigate(ROUTES.HOME);
+    if (token) {
+      localStorage.removeItem("token");
+      setLogIn(false);
+      toast("🦄 You're Logged Out", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.HOME);
+    } else {
+      setLogIn(false);
+      toast("🦄 Connect Now", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.LOGIN);
+    }
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";

@@ -2,6 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import CardComponent from "../../Component/CardComponent";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -35,6 +36,16 @@ const HomePage = () => {
     setDataFromServer((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );
+    toast("🦄 Card Is Deleted", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
   return (
     <Grid container spacing={2} mt={7}>
