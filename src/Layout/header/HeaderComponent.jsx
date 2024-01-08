@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   AppBar,
   Box,
@@ -20,11 +20,29 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import FilterComponent from "./ui/FilterComponent";
+import { Link, useNavigate } from "react-router-dom";
+import ROUTES from "../../routes/ROUTES";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import tmc from "twin-moon-color";
+import { loggedInLinks } from "../myLinks";
+import { toast } from "react-toastify";
+import ROUTES from "../../routes/ROUTES";
+import LogInContext from "../../store/loginContext";
+
+const themes = tmc({
+  "text.headerColor": "!gray",
+  "text.headerActive": "*white",
+  favActive: "*FB0000",
+});
+
+const darkMode = createTheme(themes.dark);
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { setLogIn } = useContext(LogInContext);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -74,10 +92,32 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to={ROUTES.PROFILE}>Profile</Link>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem> */}
     </Menu>
   );
+
+  const handleLogOut = async () => {
+    let token = localStorage.getItem("token");
+    if (token) localStorage.removeItem("token");
+    const decoded = jwtDecode(token); //convert token to object
+    console.log("decoded", decoded);
+    setLogIn(false);
+    toast("🦄 You'e Logged Out", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    navigate(ROUTES.HOME);
+  };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -210,6 +250,11 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
               <MoreIcon />
             </IconButton>
           </Box>
+          <ThemeProvider theme={darkMode}>
+            <IconButton size="large" color="" onClick={handleLogOut}>
+              <ExitToAppIcon />
+            </IconButton>
+          </ThemeProvider>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
