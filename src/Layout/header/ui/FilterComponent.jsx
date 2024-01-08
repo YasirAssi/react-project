@@ -2,13 +2,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import GetCardsContext from "../../../store/getCardsContext";
 
 const FilterComponent = () => {
   const [txt, setTxt] = useState("");
+  const { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
 
   const handleInputChange = (e) => {
-    setTxt(e.target.value);
+    const inputValue = e.target.value;
+    setTxt(inputValue);
+    const cardsSearch = cardsFromServer.filter((card) => {
+      return card.title.includes(inputValue);
+    });
+
+    setCardsFromServer(cardsSearch);
   };
 
   return (

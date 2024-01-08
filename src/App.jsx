@@ -4,17 +4,20 @@ import LayoutComponent from "./Layout/LayoutComponent";
 import Router from "./routes/Router";
 import LogInContext from "./store/loginContext";
 import { ToastContainer } from "react-toastify";
+import GetCardsContext from "./store/getCardsContext";
 
 function App() {
   const [logIn, setLogIn] = useState(null);
-
+  const [cardsFromServer, setCardsFromServer] = useState([]);
   return (
-    <LogInContext.Provider value={{ logIn, setLogIn }}>
-      <ToastContainer />
-      <LayoutComponent>
-        <Router />
-      </LayoutComponent>
-    </LogInContext.Provider>
+    <GetCardsContext.Provider value={{ cardsFromServer, setCardsFromServer }}>
+      <LogInContext.Provider value={{ logIn, setLogIn }}>
+        <ToastContainer />
+        <LayoutComponent>
+          <Router />
+        </LayoutComponent>
+      </LogInContext.Provider>
+    </GetCardsContext.Provider>
   );
 }
 

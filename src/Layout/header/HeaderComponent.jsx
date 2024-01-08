@@ -106,7 +106,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       setLogIn(false);
       toast("🦄 You're Logged Out", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -119,7 +119,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       setLogIn(false);
       toast("🦄 Connect Now", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

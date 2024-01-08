@@ -1,8 +1,10 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
-import { useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import GetCardsContext from "../../store/getCardsContext";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -17,23 +19,29 @@ const handleEditCard = (id) => {
 };
 
 const HomePage = () => {
-  const [dataFromServer, setDataFromServer] = useState([]);
+  let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
+  const [visibleItems, setVisibleItems] = useState(4);
   useEffect(() => {
     axios
       .get("/cards")
       .then(({ data }) => {
-        setDataFromServer(data);
+        setCardsFromServer(data);
       })
       .catch((err) => {
         console.log("error from axios", err);
       });
   }, []);
-  if (!dataFromServer || !dataFromServer.length) {
+  if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any items</Typography>;
   }
+
+  const handleShowMore = () => {
+    setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
+  };
+
   const handleDeleteCard = (id) => {
     console.log("father: card to delete", id);
-    setDataFromServer((currentDataFromServer) =>
+    setCardsFromServer((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );
     toast("🦄 Card Is Deleted", {
@@ -49,7 +57,7 @@ const HomePage = () => {
   };
   return (
     <Grid container spacing={2} mt={7}>
-      {dataFromServer.map((item, index) => (
+      {cardsFromServer.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}
@@ -66,6 +74,24 @@ const HomePage = () => {
           />
         </Grid>
       ))}
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        m={3}
+      >
+        {visibleItems < cardsFromServer.length && (
+          <Button
+            variant="contained"
+            endIcon={<ExpandMoreIcon />}
+            onClick={handleShowMore}
+            color="secondary"
+          >
+            Show More Cards
+          </Button>
+        )}
+      </Grid>
     </Grid>
   );
 };
