@@ -6,9 +6,10 @@ import axios from "axios";
 import TextContent from "../../Component/TextContent";
 import validateSchema from "../../validation/cardValidation";
 import LoginContext from "../../store/loginContext";
-import { fromServer } from "./normalizeEdit";
+import { fromServer } from "./normalizeRequest";
 import ROUTES from "../../routes/ROUTES";
 import { toast } from "react-toastify";
+import { toServer } from "../../services/normalizeResponse";
 
 const EditCardPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -37,6 +38,7 @@ const EditCardPage = () => {
     city: "",
     street: "",
     houseNumber: "",
+    zip: "",
   });
   let { id } = useParams();
   const { login } = useContext(LoginContext);
@@ -95,18 +97,41 @@ const EditCardPage = () => {
     }
   };
 
-  const isFieldRequired = (fieldName) => {
-    return errors[fieldName] !== undefined;
+  const isFieldRequired = (keyName) => {
+    return errors[keyName] !== undefined;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/cards", fromServer(inputsValue));
-      navigate(ROUTES.LOGIN);
+      await axios.put("/cards/" + id, toServer(inputsValue));
+      toast(
+        "Your card has been successfully edited. Check out your updated information!",
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+      navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("error from axios", err);
+      console.log("error from axios", err.response ? err.response : err);
     }
+  };
+
+  const handleDiscard = () => {
+    setInputsValue((cInputsValue) => {
+      const clearedInputs = Object.keys(cInputsValue).reduce((acc, key) => {
+        acc[key] = "";
+        return acc;
+      }, {});
+      return clearedInputs;
+    });
   };
 
   return (
@@ -135,22 +160,40 @@ const EditCardPage = () => {
               onChange={handleInputsChange}
               onBlur={handleInputsBlur}
               errors={errors[keyName]}
-              type={keyName === "password" ? "password" : undefined}
               autoFocus={keyName === "title"}
               required={isFieldRequired(keyName)}
             />
           ))}
         </Grid>
       </Box>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        disabled={Object.keys(errors).length > 0}
-      >
-        Submit
-      </Button>
+      <Grid container spacing={2}>
+        <Grid item lg={8} md={8} sm={8} xs>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 2, mb: 2 }}
+            disabled={Object.keys(errors).length > 0}
+          >
+            Submit
+          </Button>
+        </Grid>
+        <Grid item xs>
+          <Button
+            variant="contained"
+            onClick={handleDiscard}
+            color="secondary"
+            sx={{
+              mb: 2,
+              mt: 2,
+              width: "100%",
+              ml: "0%",
+            }}
+          >
+            Discard Changes
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

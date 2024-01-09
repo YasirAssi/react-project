@@ -1,5 +1,5 @@
 import { Grid, TextField, Alert } from "@mui/material";
-
+import PropTypes from "prop-types";
 const TextContent = ({
   xs,
   id,
@@ -29,6 +29,19 @@ const TextContent = ({
       {errors && <Alert severity="error">{errors}</Alert>}
     </Grid>
   );
+};
+
+TextContent.propTypes = {
+  xs: PropTypes.number,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  autoFocus: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  errors: PropTypes.string,
+  type: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 TextContent.defaultProps = {

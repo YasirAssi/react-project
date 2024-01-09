@@ -7,7 +7,7 @@ const alwaysLinks = [
 
 const loggedInLinks = [{ to: ROUTES.PROFILE, children: "Profile page" }];
 
-const bizLinks = [{ to: ROUTES.CREATECARD, children: "Create Page" }];
+const bizLinks = [{ to: ROUTES.CREATECARD, children: "Create Your Card" }];
 
 const loggedOutLinks = [
   { to: ROUTES.REGISTER, children: "Register page" },

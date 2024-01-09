@@ -9,6 +9,7 @@ import BizGuard from "../guard/BizGuard";
 import ErrorPage from "../Pages/ErrorPage";
 import AboutUsPage from "./../Pages/AboutUsPage";
 import EditCardPage from "../Pages/EditCardPage/EditCardPage";
+import CreateCardPage from "../Pages/CreateCardPage";
 import SandboxPage from "../sandbox/Pages/SandboxPage";
 
 const Router = () => {
@@ -23,6 +24,14 @@ const Router = () => {
         element={
           <BizGuard>
             <EditCardPage />
+          </BizGuard>
+        }
+      />
+      <Route
+        path={ROUTES.CREATECARD}
+        element={
+          <BizGuard>
+            <CreateCardPage />
           </BizGuard>
         }
       />
