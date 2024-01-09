@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
-import TextContent from "../../components/TextContent";
+import TextContent from "../../Component/TextContent";
 import validateSchema from "../../validation/cardValidation";
 import LoginContext from "../../store/loginContext";
 import { fromServer } from "./normalizeEdit";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 const EditCardPage = () => {
   const [inputsValue, setInputsValue] = useState({
     title: "",
-    subTitle: "",
+    subtitle: "",
     description: "",
     phone: "",
     email: "",
@@ -29,7 +29,7 @@ const EditCardPage = () => {
   });
   const [errors, setErrors] = useState({
     title: "",
-    subTitle: "",
+    subtitle: "",
     description: "",
     phone: "",
     email: "",
@@ -95,7 +95,19 @@ const EditCardPage = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const isFieldRequired = (fieldName) => {
+    return errors[fieldName] !== undefined;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/cards", fromServer(inputsValue));
+      navigate(ROUTES.LOGIN);
+    } catch (err) {
+      console.log("error from axios", err);
+    }
+  };
 
   return (
     <Box
@@ -123,6 +135,9 @@ const EditCardPage = () => {
               onChange={handleInputsChange}
               onBlur={handleInputsBlur}
               errors={errors[keyName]}
+              type={keyName === "password" ? "password" : undefined}
+              autoFocus={keyName === "title"}
+              required={isFieldRequired(keyName)}
             />
           ))}
         </Grid>

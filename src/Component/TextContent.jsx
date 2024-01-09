@@ -10,12 +10,13 @@ const TextContent = ({
   onBlur,
   errors,
   type,
+  required,
 }) => {
   return (
     <Grid item xs={xs}>
       <TextField
         name={id}
-        required
+        required={required}
         fullWidth
         id={id}
         label={label}

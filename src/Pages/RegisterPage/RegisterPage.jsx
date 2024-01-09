@@ -47,6 +47,9 @@ const RegisterPage = () => {
   });
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
+
+  let keysArray = Object.keys(inputsValue);
+
   const handleInputsChange = (e) => {
     setInputsValue((CopyOfCurrentValue) => ({
       ...CopyOfCurrentValue,
@@ -93,6 +96,10 @@ const RegisterPage = () => {
     setChecked(e.target.checked);
   };
 
+  const isFieldRequired = (fieldName) => {
+    return errors[fieldName] !== undefined;
+  };
+
   return (
     <Box
       sx={{
@@ -121,6 +128,7 @@ const RegisterPage = () => {
               errors={errors[keyName]}
               type={keyName === "password" ? "password" : undefined}
               autoFocus={keyName === "first"}
+              required={isFieldRequired(keyName)}
             />
           ))}
 
@@ -158,3 +166,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+// how to show that the keyName required knowing the the statrs inside the errors usetate are required
