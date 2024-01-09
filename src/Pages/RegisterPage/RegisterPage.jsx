@@ -4,14 +4,13 @@ import axios from "axios";
 import {
   Avatar,
   Button,
-  TextField,
   FormControlLabel,
   Checkbox,
   Grid,
   Box,
   Typography,
-  Alert,
 } from "@mui/material";
+import TextContent from "../../Component/TextContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ROUTES from "../../routes/ROUTES";
 import normalizeRegister from "./normalizeRe";
@@ -111,201 +110,20 @@ const RegisterPage = () => {
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              autoComplete="given-name"
-              name="first"
-              required
-              fullWidth
-              id="first"
-              label="First Name"
-              autoFocus
-              value={inputsValue.first}
+          {keysArray.map((keyName) => (
+            <TextContent
+              key={"inputs" + keyName}
+              id={keyName}
+              label={keyName}
+              value={inputsValue[keyName]}
               onChange={handleInputsChange}
               onBlur={handleInputsBlur}
+              errors={errors[keyName]}
+              type={keyName === "password" ? "password" : undefined}
+              autoFocus={keyName === "first"}
             />
-            {errors.first && <Alert severity="error">{errors.first}</Alert>}
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              autoComplete="given-name"
-              name="middle"
-              fullWidth
-              id="middle"
-              label="Middle Name"
-              autoFocus
-              value={inputsValue.middle}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              fullWidth
-              id="last"
-              label="Last Name"
-              name="last"
-              autoComplete="family-name"
-              value={inputsValue.last}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.last && <Alert severity="error">{errors.last}</Alert>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={inputsValue.email}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.email && <Alert severity="error">{errors.email}</Alert>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              value={inputsValue.password}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.password && (
-              <Alert severity="error">{errors.password}</Alert>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="phone"
-              label="Phone"
-              id="phone"
-              autoComplete="new-phone"
-              value={inputsValue.phone}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.phone && <Alert severity="error">{errors.phone}</Alert>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              name="url"
-              label="Url"
-              id="url"
-              autoComplete="new-url"
-              value={inputsValue.url}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              name="alt"
-              label="Alt"
-              id="alt"
-              autoComplete="new-alt"
-              value={inputsValue.alt}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              name="state"
-              label="State"
-              id="state"
-              autoComplete="new-state"
-              value={inputsValue.state}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="country"
-              label="Country"
-              id="country"
-              autoComplete="new-country"
-              value={inputsValue.country}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.country && <Alert severity="error">{errors.country}</Alert>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="city"
-              label="City"
-              id="city"
-              autoComplete="new-city"
-              value={inputsValue.city}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.city && <Alert severity="error">{errors.city}</Alert>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="street"
-              label="Street"
-              id="street"
-              autoComplete="new-street"
-              value={inputsValue.street}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.street && <Alert severity="error">{errors.street}</Alert>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="houseNumber"
-              label="House Number"
-              id="houseNumber"
-              autoComplete="new-houseNumber"
-              value={inputsValue.houseNumber}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.houseNumber && (
-              <Alert severity="error">{errors.houseNumber}</Alert>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              required
-              name="zip"
-              label="Zip"
-              id="zip"
-              autoComplete="new-zip"
-              value={inputsValue.zip}
-              onChange={handleInputsChange}
-              onBlur={handleInputsBlur}
-            />
-            {errors.zip && <Alert severity="error">{errors.zip}</Alert>}
-          </Grid>
+          ))}
+
           <Grid item xs={12}>
             <FormControlLabel
               control={
