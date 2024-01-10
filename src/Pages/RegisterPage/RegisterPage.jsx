@@ -16,6 +16,7 @@ import ROUTES from "../../routes/ROUTES";
 import normalizeRegister from "./normalizeRe";
 import { validateSchema } from "../../validation/registerationValidation";
 import { toast } from "react-toastify";
+
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
     first: "",

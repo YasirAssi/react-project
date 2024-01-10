@@ -23,6 +23,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import tmc from "twin-moon-color";
 import { toast } from "react-toastify";
 import LogInContext from "../../store/loginContext";
+import PropTypes from "prop-types";
 
 const themes = tmc({
   "text.headerColor": "!gray",
@@ -143,5 +144,10 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       />
     </Box>
   );
+};
+
+HeaderComponent.propTypes = {
+  isDarkTheme: PropTypes.bool.isRequired,
+  onThemeChange: PropTypes.func.isRequired,
 };
 export default HeaderComponent;

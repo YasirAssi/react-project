@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const NavLinkComponent = ({ to, children }) => {
   return (
@@ -15,6 +16,11 @@ const NavLinkComponent = ({ to, children }) => {
       )}
     </NavLink>
   );
+};
+
+NavLinkComponent.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default NavLinkComponent;

@@ -40,41 +40,30 @@ const EditCardPage = () => {
     houseNumber: "",
     zip: "",
   });
-  let { id } = useParams();
+  let { id: _id } = useParams();
   const { login } = useContext(LoginContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!id || !login) {
+    if (!_id || !login) {
       return;
     }
     axios
-      .get("/cards/" + id)
+      .get("/cards/" + _id)
       .then(({ data }) => {
         if (data.user_id === login._id) {
           setInputsValue(fromServer(data));
-        } else {
-          toast("You need to SignIn", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          navigate(ROUTES.LOGIN);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [id, login, navigate]);
+  }, [_id, login]);
 
   let keysArray = Object.keys(inputsValue);
+
   const handleInputsChange = (e) => {
-    setInputsValue((cInputsValue) => ({
-      ...cInputsValue,
+    setInputsValue((currentInputsValue) => ({
+      ...currentInputsValue,
       [e.target.id]: e.target.value,
     }));
   };
@@ -83,16 +72,15 @@ const EditCardPage = () => {
     const { error } = validateSchema[e.target.id]({
       [e.target.id]: inputsValue[e.target.id],
     });
-    console.log({ error });
     if (error) {
-      setErrors((cErrors) => ({
-        ...cErrors,
+      setErrors((currentErrors) => ({
+        ...currentErrors,
         [e.target.id]: error.details[0].message,
       }));
     } else {
-      setErrors((cErrors) => {
-        delete cErrors[e.target.id];
-        return { ...cErrors };
+      setErrors((currentErrors) => {
+        delete currentErrors[e.target.id];
+        return { ...currentErrors };
       });
     }
   };
@@ -104,7 +92,7 @@ const EditCardPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("/cards/" + id, toServer(inputsValue));
+      await axios.put("/cards/" + _id, toServer(inputsValue));
       toast(
         "Your card has been successfully edited. Check out your updated information!",
         {
@@ -173,7 +161,7 @@ const EditCardPage = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 2, mb: 2 }}
-            disabled={Object.keys(errors).length > 0}
+            disabled={Boolean(Object.keys(errors).length > 0)}
           >
             Submit
           </Button>

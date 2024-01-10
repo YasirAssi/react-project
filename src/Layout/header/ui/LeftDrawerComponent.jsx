@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import MailIcon from "@mui/icons-material/Mail";
+import PropTypes from "prop-types";
 
 const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const list = () => (
@@ -53,4 +54,8 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   );
 };
 
+LeftDrawerComponent.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onCloseDrawer: PropTypes.func.isRequired,
+};
 export default LeftDrawerComponent;

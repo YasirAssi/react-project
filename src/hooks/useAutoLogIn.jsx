@@ -9,13 +9,11 @@ const useAutoLogin = () => {
   useEffect(() => {
     let token = localStorage.getItem("token");
     if (!token) {
-      console.log("no token");
       setFinishAutoLogin(true);
       return;
     }
     let userData = jwtDecode(token);
     if (!userData || !userData._id) {
-      console.log("no user data");
       setFinishAutoLogin(true);
       return;
     }

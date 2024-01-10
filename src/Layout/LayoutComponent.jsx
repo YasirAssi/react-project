@@ -6,6 +6,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import tmc from "twin-moon-color";
 import { CssBaseline, Typography } from "@mui/material";
 import useAutoLogin from "../hooks/useAutoLogIn";
+import PropTypes from "prop-types";
 
 const LayoutComponent = ({ children }) => {
   const finishAutoLogin = useAutoLogin();
@@ -42,4 +43,9 @@ const LayoutComponent = ({ children }) => {
     </ThemeProvider>
   );
 };
+
+LayoutComponent.prototype = {
+  children: PropTypes.node.isRequired,
+};
+
 export default LayoutComponent;

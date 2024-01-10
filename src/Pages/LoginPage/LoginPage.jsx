@@ -32,10 +32,10 @@ const LoginPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const navigate = useNavigate();
-  const { setLogIn } = useContext(LoginContext);
   const [checked, setChecked] = useState(false);
+  const navigate = useNavigate();
 
+  const { setLogIn } = useContext(LoginContext);
   const handleEmailChange = (e) => {
     setEmailValue(e.target.value);
   };
@@ -51,8 +51,8 @@ const LoginPage = () => {
       });
 
       localStorage.setItem("token", data);
-      const decoded = jwtDecode(data);
-      setLogIn(decoded);
+      const userInfo = jwtDecode(data);
+      setLogIn(userInfo);
       toast.success("LoggedIn Successfully!", {
         position: "top-right",
         autoClose: 3000,
@@ -171,7 +171,7 @@ const LoginPage = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={emailError || passwordError}
+              disabled={Boolean(emailError || passwordError)}
             >
               Sign In
             </Button>

@@ -30,7 +30,7 @@ const HomePage = () => {
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, []);
+  }, [setCardsFromServer]);
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any items</Typography>;
   }
@@ -40,7 +40,6 @@ const HomePage = () => {
   };
 
   const handleDeleteCard = (id) => {
-    console.log("father: card to delete", id);
     setCardsFromServer((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );

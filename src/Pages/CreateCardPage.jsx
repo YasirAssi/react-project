@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import axios from "axios";
 import TextContent from "../Component/TextContent";
 import validateSchema from "../validation/cardValidation";
@@ -39,11 +39,11 @@ const CreateCardPage = () => {
     houseNumber: "",
     zip: "",
   });
-
+  let { id: _id } = useParams();
   const { login } = useContext(LoginContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!login) {
+    if (_id || !login) {
       return;
     }
     axios
@@ -68,7 +68,7 @@ const CreateCardPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [login, navigate]);
+  }, [_id, login, navigate]);
 
   let keysArray = Object.keys(inputsValue);
   const handleInputsChange = (e) => {
@@ -103,7 +103,7 @@ const CreateCardPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/cards", fromServer(inputsValue));
+      await axios.post("/cards/", fromServer(inputsValue));
       navigate(ROUTES.CREATECARD);
     } catch (err) {
       console.log("error from axios", err);
@@ -120,10 +120,10 @@ const CreateCardPage = () => {
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <EditIcon />
+        <AutoAwesomeIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Edit your card
+        Creat Your Card
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
         <Grid container spacing={2}>
