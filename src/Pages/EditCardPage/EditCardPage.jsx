@@ -72,6 +72,7 @@ const EditCardPage = () => {
     const { error } = validateSchema[e.target.id]({
       [e.target.id]: inputsValue[e.target.id],
     });
+    console.log({ error });
     if (error) {
       setErrors((currentErrors) => ({
         ...currentErrors,
