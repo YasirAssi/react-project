@@ -72,7 +72,6 @@ const EditCardPage = () => {
     const { error } = validateSchema[e.target.id]({
       [e.target.id]: inputsValue[e.target.id],
     });
-    console.log({ error });
     if (error) {
       setErrors((currentErrors) => ({
         ...currentErrors,
@@ -113,7 +112,6 @@ const EditCardPage = () => {
       console.log("error from axios", err.response ? err.response : err);
     }
   };
-  // how to check if the axio is working
 
   const handleDiscard = () => {
     setInputsValue((cInputsValue) => {

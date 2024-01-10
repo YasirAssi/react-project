@@ -76,10 +76,10 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/users", normalizeRegister(inputsValue));
-      toast.success("🦄 LoggedIn Successfully", {
+      await axios.post("/users/", normalizeRegister(inputsValue));
+      toast.success("LoggedIn Successfully", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -167,5 +167,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
-// how to show that the keyName required knowing the the statrs inside the errors usetate are required

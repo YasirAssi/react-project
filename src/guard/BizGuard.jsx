@@ -12,7 +12,7 @@ const BizGuard = ({ children }) => {
   } else {
     toast("You need to SignIn", {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

@@ -12,7 +12,6 @@ import {
   Switch,
 } from "@mui/material";
 
-import MenuIcon from "@mui/icons-material/Menu";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
@@ -42,9 +41,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     onThemeChange(event.target.checked);
   };
 
-  const handleOpenDrawerClick = () => {
-    setIsOpen(true);
-  };
   const handleCloseDrawerClick = () => {
     setIsOpen(false);
   };
@@ -54,9 +50,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     if (token) {
       localStorage.removeItem("token");
       setLogIn(false);
-      toast("🦄 You're Logged Out", {
+      toast(" You're Logged Out", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -67,9 +63,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       navigate(ROUTES.HOME);
     } else {
       setLogIn(false);
-      toast("🦄 Connect Now", {
+      toast("Connect Now", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -85,23 +81,13 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     <Box sx={{ flexGrow: 1, mb: 2 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={handleOpenDrawerClick}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            LOGO
+            CardifyHub
           </Typography>
           <Links />
           <FilterComponent />
