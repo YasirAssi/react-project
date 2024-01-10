@@ -86,14 +86,15 @@ const EditCardPage = () => {
     }
   };
 
-  const isFieldRequired = (keyName) => {
+  const isRequiredField = (keyName) => {
     return errors[keyName] !== undefined;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("/cards/" + _id, toServer(inputsValue));
+      const response = await axios.put("/cards/" + _id, toServer(inputsValue));
+      console.log("Axios response:", response.data);
       toast(
         "Your card has been successfully edited. Check out your updated information!",
         {
@@ -112,6 +113,7 @@ const EditCardPage = () => {
       console.log("error from axios", err.response ? err.response : err);
     }
   };
+  // how to check if the axio is working
 
   const handleDiscard = () => {
     setInputsValue((cInputsValue) => {
@@ -150,7 +152,7 @@ const EditCardPage = () => {
               onBlur={handleInputsBlur}
               errors={errors[keyName]}
               autoFocus={keyName === "title"}
-              required={isFieldRequired(keyName)}
+              required={isRequiredField(keyName)}
             />
           ))}
         </Grid>

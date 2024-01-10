@@ -8,7 +8,7 @@ const NavLinkComponent = ({ to, children }) => {
       {({ isActive }) => (
         <Typography
           color={isActive ? "text.headerActive" : "text.headerColor"}
-          sx={{ p: 2, textDecorationLine: "none" }}
+          sx={{ p: 2 }}
           variant="h7"
         >
           {children}
@@ -24,3 +24,5 @@ NavLinkComponent.propTypes = {
 };
 
 export default NavLinkComponent;
+
+//how to remove the underline from link
