@@ -9,7 +9,6 @@ import useCardsInputs from "../hooks/useCardsInputs";
 
 const CreateCardPage = () => {
   const {
-    id,
     inputsValue,
     errors,
     navigate,

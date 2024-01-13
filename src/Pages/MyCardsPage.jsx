@@ -22,10 +22,6 @@ const MyCardsPage = () => {
   let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   useEffect(() => {
-    let token = localStorage.getItem("token");
-    if (!token) {
-      return;
-    }
     axios
       .get("/cards/my-cards")
       .then(({ data }) => {
@@ -58,6 +54,8 @@ const MyCardsPage = () => {
       theme: "dark",
     });
   };
+
+  const handleFavCard = () => {};
   return (
     <Grid container spacing={2} mt={7}>
       {cardsFromServer.slice(0, visibleItems).map((item, index) => (

@@ -14,6 +14,7 @@ import {
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
+import HomeIcon from "@mui/icons-material/Home";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import FilterComponent from "./ui/FilterComponent";
@@ -91,6 +92,13 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             CardifyHub
           </Typography>
           <Links />
+          <Tooltip title="HomePage">
+            <Link to={ROUTES.HOME}>
+              <IconButton>
+                <HomeIcon />
+              </IconButton>
+            </Link>
+          </Tooltip>
           <FilterComponent />
           <Box
             sx={{

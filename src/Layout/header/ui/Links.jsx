@@ -28,13 +28,13 @@ const Links = () => {
       {loggedIn &&
         loggedIn.isBusiness &&
         bizLinks.map((myItem, index) => (
-          <NavLinkComponent to={myItem.to} key={"linksnav2" + index}>
+          <NavLinkComponent to={myItem.to} key={"linksnav3" + index}>
             {myItem.children}
           </NavLinkComponent>
         ))}
       {!loggedIn &&
         loggedOutLinks.map((myItem, index) => (
-          <NavLinkComponent to={myItem.to} key={"linksnav3" + index}>
+          <NavLinkComponent to={myItem.to} key={"linksnav4" + index}>
             {myItem.children}
           </NavLinkComponent>
         ))}
