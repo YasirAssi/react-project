@@ -12,7 +12,8 @@ import {
   Switch,
 } from "@mui/material";
 
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import FilterComponent from "./ui/FilterComponent";
@@ -34,7 +35,7 @@ const darkMode = createTheme(themes.dark);
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { setLogIn } = useContext(LogInContext);
+  const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
 
   const handleThemeChange = (event) => {
@@ -119,7 +120,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           </Box>
           <ThemeProvider theme={darkMode}>
             <IconButton size="large" color="" onClick={handleLogOut}>
-              <ExitToAppIcon />
+              {logIn ? <LogoutIcon /> : <LoginIcon />}
             </IconButton>
           </ThemeProvider>
         </Toolbar>

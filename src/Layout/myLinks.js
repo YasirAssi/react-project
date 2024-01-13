@@ -1,9 +1,6 @@
 import ROUTES from "../routes/ROUTES";
 
-const alwaysLinks = [
-  { to: ROUTES.HOME, children: "Home page" },
-  { to: ROUTES.ABOUT, children: "About Us" },
-];
+const alwaysLinks = [{ to: ROUTES.ABOUT, children: "About Us" }];
 
 const loggedInLinks = [{ to: ROUTES.FAV, children: "LikedCards" }];
 
