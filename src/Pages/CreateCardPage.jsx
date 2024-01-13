@@ -47,7 +47,7 @@ const CreateCardPage = () => {
       return;
     }
     axios
-      .get("/cards/")
+      .get("/cards")
       .then(({ data }) => {
         if (data.user_id === login._id) {
           setInputsValue(fromServer(data));
@@ -142,16 +142,16 @@ const CreateCardPage = () => {
             />
           ))}
         </Grid>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          disabled={Object.keys(errors).length > 0}
+        >
+          Submit
+        </Button>
       </Box>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        disabled={Object.keys(errors).length > 0}
-      >
-        Submit
-      </Button>
     </Box>
   );
 };

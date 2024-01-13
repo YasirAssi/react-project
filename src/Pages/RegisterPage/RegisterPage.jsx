@@ -9,6 +9,7 @@ import {
   Grid,
   Box,
   Typography,
+  Alert,
 } from "@mui/material";
 import TextContent from "../../Component/TextContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -46,6 +47,7 @@ const RegisterPage = () => {
     houseNumber: "",
     zip: "",
   });
+  const [showAlert, setAlertShown] = useState(false);
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -76,7 +78,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/users/", normalizeRegister(inputsValue));
+      await axios.post("/users", normalizeRegister(inputsValue));
       toast.success("LoggedIn Successfully", {
         position: "top-right",
         autoClose: 1000,
@@ -89,7 +91,7 @@ const RegisterPage = () => {
       });
       navigate(ROUTES.LOGIN);
     } catch (err) {
-      console.log("error from axios", err);
+      setAlertShown(true);
     }
   };
 
@@ -152,10 +154,11 @@ const RegisterPage = () => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          disabled={Object.keys(errors).length > 0}
+          disabled={Boolean(Object.keys(errors).length > 0)}
         >
           Sign Up
         </Button>
+        {showAlert && <Alert severity="error">Failed To Register!</Alert>}{" "}
         <Grid container justifyContent="flex-end">
           <Grid item>
             <Link to={ROUTES.LOGIN}>Already have an account? Sign in</Link>

@@ -9,7 +9,6 @@ import LoginContext from "../../store/loginContext";
 import { fromServer } from "./normalizeRequest";
 import ROUTES from "../../routes/ROUTES";
 import { toast } from "react-toastify";
-import { toServer } from "../../services/normalizeResponse";
 
 const EditCardPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -40,24 +39,28 @@ const EditCardPage = () => {
     houseNumber: "",
     zip: "",
   });
-  let { id: _id } = useParams();
+  let { id } = useParams();
   const { login } = useContext(LoginContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!_id || !login) {
-      return;
-    }
-    axios
-      .get("/cards/" + _id)
-      .then(({ data }) => {
+    const fetchData = async () => {
+      if (!id || !login) {
+        return;
+      }
+
+      try {
+        const { data } = await axios.get("/cards/" + id);
         if (data.user_id === login._id) {
           setInputsValue(fromServer(data));
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [_id, login]);
+      } catch (err) {
+        alert("failed");
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [id, login]);
 
   let keysArray = Object.keys(inputsValue);
 
@@ -92,7 +95,9 @@ const EditCardPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put("/cards/" + _id, toServer(inputsValue));
+      const requestData = fromServer(inputsValue);
+      console.log("Request Payload:", requestData);
+      const response = await axios.put("/cards/" + id, fromServer(inputsValue));
       console.log("Axios response:", response.data);
       toast(
         "Your card has been successfully edited. Check out your updated information!",
@@ -154,35 +159,36 @@ const EditCardPage = () => {
             />
           ))}
         </Grid>
+
+        <Grid container spacing={2}>
+          <Grid item lg={8} md={8} sm={8} xs>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 2, mb: 2 }}
+              disabled={Boolean(Object.keys(errors).length > 0)}
+            >
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <Button
+              variant="contained"
+              onClick={handleDiscard}
+              color="secondary"
+              sx={{
+                mb: 2,
+                mt: 2,
+                width: "100%",
+                ml: "0%",
+              }}
+            >
+              Discard Changes
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
-      <Grid container spacing={2}>
-        <Grid item lg={8} md={8} sm={8} xs>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 2, mb: 2 }}
-            disabled={Boolean(Object.keys(errors).length > 0)}
-          >
-            Submit
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            variant="contained"
-            onClick={handleDiscard}
-            color="secondary"
-            sx={{
-              mb: 2,
-              mt: 2,
-              width: "100%",
-              ml: "0%",
-            }}
-          >
-            Discard Changes
-          </Button>
-        </Grid>
-      </Grid>
     </Box>
   );
 };

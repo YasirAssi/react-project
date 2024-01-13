@@ -4,7 +4,7 @@ import CoffeeIcon from "@mui/icons-material/Coffee";
 import DiamondIcon from "@mui/icons-material/Diamond";
 const FooterComponent = () => {
   return (
-    <Paper elevation={4} sx={{ position: "sticky", mt: 2 }}>
+    <Paper elevation={4} sx={{ position: "sticky", mt: 2, mb: 0 }}>
       <BottomNavigation showLabels>
         <BottomNavigationAction label="Icebook" icon={<AcUnitIcon />} />
         <BottomNavigationAction label="Cofegram" icon={<CoffeeIcon />} />

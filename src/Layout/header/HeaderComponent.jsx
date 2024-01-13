@@ -103,8 +103,8 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             <Switch checked={isDarkTheme} onChange={handleThemeChange} />
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
-            <Tooltip title="Profile">
-              <Link to={ROUTES.PROFILE}>
+            <Tooltip title="Account">
+              <Link to={ROUTES.MYCARDS}>
                 <IconButton sx={{ p: 0 }}>
                   <Avatar>
                     <img

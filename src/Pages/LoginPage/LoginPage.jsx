@@ -49,7 +49,6 @@ const LoginPage = () => {
         email: emailValue,
         password: passwordValue,
       });
-
       localStorage.setItem("token", data);
       const userInfo = jwtDecode(data);
       setLogIn(userInfo);

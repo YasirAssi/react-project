@@ -3,7 +3,6 @@ import ROUTES from "./ROUTES";
 import HomePage from "../Pages/HomePage/HomePage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
-import ProfilePage from "../Pages/ProfilePage";
 import AuthGuard from "../guard/AuthGuard";
 import BizGuard from "../guard/BizGuard";
 import ErrorPage from "../Pages/ErrorPage";
@@ -11,6 +10,8 @@ import AboutUsPage from "./../Pages/AboutUsPage";
 import EditCardPage from "../Pages/EditCardPage/EditCardPage";
 import CreateCardPage from "../Pages/CreateCardPage";
 import SandboxPage from "../sandbox/Pages/SandboxPage";
+import MyCardsPage from "../Pages/MyCardsPage";
+import FavPage from "../Pages/FavPage";
 
 const Router = () => {
   return (
@@ -36,11 +37,19 @@ const Router = () => {
         }
       />
       <Route
-        path={ROUTES.PROFILE}
+        path={ROUTES.FAV}
         element={
           <AuthGuard>
-            <ProfilePage />
+            <FavPage />
           </AuthGuard>
+        }
+      />
+      <Route
+        path={ROUTES.MYCARDS}
+        element={
+          <BizGuard>
+            <MyCardsPage />
+          </BizGuard>
         }
       />
       <Route path={ROUTES.SANDBOX} element={<SandboxPage />}></Route>
