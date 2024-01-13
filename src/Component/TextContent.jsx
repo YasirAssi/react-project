@@ -26,6 +26,7 @@ const TextContent = ({
         onChange={onChange}
         onBlur={onBlur}
         type={type}
+        error={Boolean(errors)}
       />
       {errors && <Alert severity="error">{errors}</Alert>}
     </Grid>

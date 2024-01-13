@@ -22,6 +22,10 @@ const MyCardsPage = () => {
   let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
     axios
       .get("/cards/my-cards")
       .then(({ data }) => {

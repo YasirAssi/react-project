@@ -47,7 +47,7 @@ const RegisterPage = () => {
     houseNumber: "",
     zip: "",
   });
-  const [showAlert, setAlertShown] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -79,7 +79,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       await axios.post("/users", normalizeRegister(inputsValue));
-      toast.success("LoggedIn Successfully", {
+      toast.success("Registered Successfully", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -91,7 +91,7 @@ const RegisterPage = () => {
       });
       navigate(ROUTES.LOGIN);
     } catch (err) {
-      setAlertShown(true);
+      setShowRegister(true);
     }
   };
 
@@ -158,7 +158,7 @@ const RegisterPage = () => {
         >
           Sign Up
         </Button>
-        {showAlert && <Alert severity="error">Failed To Register!</Alert>}{" "}
+        {showRegister && <Alert severity="error">Failed To Register!</Alert>}{" "}
         <Grid container justifyContent="flex-end">
           <Grid item>
             <Link to={ROUTES.LOGIN}>Already have an account? Sign in</Link>

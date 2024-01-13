@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import validateSchema from "../validation/cardValidation";
 import LoginContext from "../store/loginContext";
-import { fromServer } from "../Pages/EditCardPage/normalizeRequest";
+import { fromServer } from "../services/normalizeRequest";
 import axios from "axios";
 
 const useCardsInputs = () => {

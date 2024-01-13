@@ -2,7 +2,7 @@ import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import axios from "axios";
 import TextContent from "../Component/TextContent";
-import { fromServer } from "./EditCardPage/normalizeRequest";
+import { toServer } from "../services/normalizeRespons";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import useCardsInputs from "../hooks/useCardsInputs";
@@ -22,10 +22,31 @@ const CreateCardPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/cards/", fromServer(inputsValue));
-      navigate(ROUTES.CREATECARD);
+      await axios.post("/cards/", toServer(inputsValue));
+      toast.success("Check Your Card", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log("error from axios", err);
+      toast.success("Somthing went wrong, please try again!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.MYCARDS);
     }
   };
 

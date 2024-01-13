@@ -1,11 +1,11 @@
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
-import TextContent from "../../Component/TextContent";
-import { fromServer } from "./normalizeRequest";
-import ROUTES from "../../routes/ROUTES";
+import TextContent from "../Component/TextContent";
+import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
-import useCardsInputs from "../../hooks/useCardsInputs";
+import useCardsInputs from "../hooks/useCardsInputs";
+import { toServer } from "../services/normalizeRespons";
 
 const EditCardPage = () => {
   const {
@@ -23,10 +23,8 @@ const EditCardPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const requestData = fromServer(inputsValue);
-      console.log("Request Payload:", requestData);
-      const response = await axios.put("/cards/" + id, fromServer(inputsValue));
-      console.log("Axios response:", response.data);
+      const { data } = await axios.put(`cards/${id}`, toServer(inputsValue));
+      console.log("Axios response:", data);
       toast(
         "Your card has been successfully edited. Check out your updated information!",
         {
@@ -40,9 +38,19 @@ const EditCardPage = () => {
           theme: "dark",
         }
       );
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.MYCARDS);
     } catch (err) {
-      console.log("error from axios", err.response ? err.response : err);
+      toast("Only the user or admin can Edit!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.HOME);
     }
   };
 
