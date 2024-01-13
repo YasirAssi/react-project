@@ -1,104 +1,23 @@
-import { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import axios from "axios";
 import TextContent from "../Component/TextContent";
-import validateSchema from "../validation/cardValidation";
-import LoginContext from "../store/loginContext";
 import { fromServer } from "./EditCardPage/normalizeRequest";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
+import useCardsInputs from "../hooks/useCardsInputs";
 
 const CreateCardPage = () => {
-  const [inputsValue, setInputsValue] = useState({
-    title: "",
-    subtitle: "",
-    description: "",
-    phone: "",
-    email: "",
-    web: "",
-    url: "",
-    alt: "",
-    state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zip: "",
-  });
-  const [errors, setErrors] = useState({
-    title: "",
-    subtitle: "",
-    description: "",
-    phone: "",
-    email: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zip: "",
-  });
-  let { id } = useParams();
-  const { login } = useContext(LoginContext);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!id || !login) {
-      return;
-    }
-    axios
-      .get("/cards")
-      .then(({ data }) => {
-        if (data.user_id === login._id) {
-          setInputsValue(fromServer(data));
-        } else {
-          toast("You need to SignIn", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          navigate(ROUTES.LOGIN);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id, login, navigate]);
-
-  let keysArray = Object.keys(inputsValue);
-  const handleInputsChange = (e) => {
-    setInputsValue((cInputsValue) => ({
-      ...cInputsValue,
-      [e.target.id]: e.target.value,
-    }));
-  };
-
-  const handleInputsBlur = (e) => {
-    const { error } = validateSchema[e.target.id]({
-      [e.target.id]: inputsValue[e.target.id],
-    });
-    console.log({ error });
-    if (error) {
-      setErrors((cErrors) => ({
-        ...cErrors,
-        [e.target.id]: error.details[0].message,
-      }));
-    } else {
-      setErrors((cErrors) => {
-        delete cErrors[e.target.id];
-        return { ...cErrors };
-      });
-    }
-  };
-
-  const isFieldRequired = (inputName) => {
-    return errors[inputName] !== undefined;
-  };
+  const {
+    id,
+    inputsValue,
+    errors,
+    navigate,
+    keysArray,
+    handleInputsChange,
+    handleInputsBlur,
+    isRequiredField,
+  } = useCardsInputs();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,7 +57,7 @@ const CreateCardPage = () => {
               errors={errors[keyName]}
               type={keyName === "password" ? "password" : undefined}
               autoFocus={keyName === "title"}
-              required={isFieldRequired(keyName)}
+              required={isRequiredField(keyName)}
             />
           ))}
         </Grid>

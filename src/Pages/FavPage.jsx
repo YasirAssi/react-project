@@ -99,5 +99,3 @@ const FavPage = () => {
 };
 
 export default FavPage;
-
-// could you help me add to the patch request the id token of the card
