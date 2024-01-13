@@ -43,21 +43,19 @@ const EditCardPage = () => {
   const { login } = useContext(LoginContext);
   const navigate = useNavigate();
   useEffect(() => {
-    const fetchData = async () => {
-      if (!id || !login) {
-        return;
-      }
+    if (!id || !login) {
+      return;
+    }
 
-      try {
-        const { data } = await axios.get("/cards/" + id);
-        if (data.user_id === login._id) {
-          setInputsValue(fromServer(data));
-        }
-      } catch (err) {
-        alert("failed");
-        console.error(err);
+    try {
+      const { data } = axios.get("/cards/" + id);
+      if (data.user_id === login._id) {
+        setInputsValue(fromServer(data));
       }
-    };
+    } catch (err) {
+      alert("failed");
+      console.error(err);
+    }
 
     fetchData();
   }, [id, login]);

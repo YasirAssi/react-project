@@ -39,11 +39,11 @@ const CreateCardPage = () => {
     houseNumber: "",
     zip: "",
   });
-  let { id: _id } = useParams();
+  let { id } = useParams();
   const { login } = useContext(LoginContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (_id || !login) {
+    if (!id || !login) {
       return;
     }
     axios
@@ -68,7 +68,7 @@ const CreateCardPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [_id, login, navigate]);
+  }, [id, login, navigate]);
 
   let keysArray = Object.keys(inputsValue);
   const handleInputsChange = (e) => {
