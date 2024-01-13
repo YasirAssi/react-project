@@ -10,10 +10,6 @@ const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
-const handleFavCard = (id) => {
-  console.log("parent: card to like", id);
-};
-
 const handleEditCard = (id) => {
   console.log("parent: card to edit", id);
 };

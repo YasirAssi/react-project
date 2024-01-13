@@ -2,9 +2,11 @@ import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../../store/getCardsContext";
+import ROUTES from "../../routes/ROUTES";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -14,13 +16,11 @@ const handleFavCard = (id) => {
   console.log("parent: card to like", id);
 };
 
-const handleEditCard = (id) => {
-  console.log("parent: card to edit", id);
-};
-
 const HomePage = () => {
   let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
+  const navigte = useNavigate();
+
   useEffect(() => {
     axios
       .get("/cards")
@@ -37,6 +37,21 @@ const HomePage = () => {
 
   const handleShowMore = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
+  };
+
+  const handleEditCard = (id) => {
+    console.log("parent: card to edit", id);
+    toast.warn("Only Aadmin can Edit!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    navigte(ROUTES.HOME);
   };
 
   const handleDeleteCard = (id) => {

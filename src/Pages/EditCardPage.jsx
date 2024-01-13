@@ -25,7 +25,7 @@ const EditCardPage = () => {
     try {
       const { data } = await axios.put(`cards/${id}`, toServer(inputsValue));
       console.log("Axios response:", data);
-      toast(
+      toast.success(
         "Your card has been successfully edited. Check out your updated information!",
         {
           position: "top-right",
@@ -39,19 +39,7 @@ const EditCardPage = () => {
         }
       );
       navigate(ROUTES.MYCARDS);
-    } catch (err) {
-      toast("Only the user or admin can Edit!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      navigate(ROUTES.HOME);
-    }
+    } catch (err) {}
   };
 
   const handleDiscard = () => {
