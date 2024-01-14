@@ -19,7 +19,7 @@ const HomePage = () => {
   let { cardsFromServer, setCardsFromServer, setCardsCopy } =
     useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
-  const [userData, setUserData] = useState(); // or an initial value based on your use case
+  const [userData, setUserData] = useState(null);
 
   const navigate = useNavigate();
 
@@ -51,9 +51,9 @@ const HomePage = () => {
   const handleEditCard = (id) => {
     const card = cardsFromServer.find((item) => item._id === id);
     console.log("Card owner:", card.user_id);
-    console.log("Logged-in user:", userData.userId);
+    console.log("Logged-in user:", userData._id);
     if (
-      (logIn && logIn.isBusiness && card.user_id === userData?.userId) ||
+      (logIn && logIn.isBusiness && card.user_id === userData._id) ||
       (logIn && logIn.isAdmin)
     ) {
       navigate(`${ROUTES.EDITCARD}/${id}`);
@@ -74,10 +74,10 @@ const HomePage = () => {
   const handleDeleteCard = (id) => {
     const card = cardsFromServer.find((item) => item._id === id);
     console.log("Card owner:", card.user_id);
-    console.log("Logged-in user:", userData.userId);
+    console.log("Logged-in user:", userData._id);
     if (
       logIn &&
-      (logIn.isAdmin || (logIn.isBusiness && card.user_id === userData?.userId))
+      (logIn.isAdmin || (logIn.isBusiness && card.user_id === userData._id))
     ) {
       setCardsFromServer((currentDataFromServer) =>
         currentDataFromServer.filter((card) => card._id !== id)
