@@ -37,7 +37,7 @@ const HomePage = () => {
     if (token) {
       const decodedData = jwtDecode(token);
       console.log("Decoded user data:", decodedData);
-      setUserData(decodedData); // Assuming you have a state for userData
+      setUserData(decodedData);
     }
   }, [setCardsFromServer, setCardsCopy]);
   if (!cardsFromServer || !cardsFromServer.length) {
