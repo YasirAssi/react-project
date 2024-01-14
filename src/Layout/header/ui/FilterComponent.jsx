@@ -7,6 +7,7 @@ import GetCardsContext from "../../../store/getCardsContext";
 
 const FilterComponent = () => {
   const { setCardsFromServer, cardsCopy } = useContext(GetCardsContext);
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     if (!inputValue || inputValue.length < 1) {

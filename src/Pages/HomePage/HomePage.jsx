@@ -103,6 +103,7 @@ const HomePage = () => {
   };
 
   const handleFavCard = () => {};
+
   return (
     <Grid container spacing={2} mt={7}>
       {cardsFromServer.slice(0, visibleItems).map((item, index) => (
