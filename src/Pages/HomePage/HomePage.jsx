@@ -36,7 +36,6 @@ const HomePage = () => {
     let token = localStorage.getItem("token");
     if (token) {
       const decodedData = jwtDecode(token);
-      console.log("Decoded user data:", decodedData);
       setUserData(decodedData);
     }
   }, [setCardsFromServer, setCardsCopy]);
@@ -50,8 +49,6 @@ const HomePage = () => {
 
   const handleEditCard = (id) => {
     const card = cardsFromServer.find((item) => item._id === id);
-    console.log("Card owner:", card.user_id);
-    console.log("Logged-in user:", userData._id);
     if (
       (logIn && logIn.isBusiness && card.user_id === userData._id) ||
       (logIn && logIn.isAdmin)
@@ -73,8 +70,6 @@ const HomePage = () => {
 
   const handleDeleteCard = (id) => {
     const card = cardsFromServer.find((item) => item._id === id);
-    console.log("Card owner:", card.user_id);
-    console.log("Logged-in user:", userData._id);
     if (
       logIn &&
       (logIn.isAdmin || (logIn.isBusiness && card.user_id === userData._id))
@@ -150,5 +145,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-// still userData undefined
