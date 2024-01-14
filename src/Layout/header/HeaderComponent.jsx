@@ -91,7 +91,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           >
             CardifyHub
           </Typography>
-          <Links />
           <Tooltip title="HomePage">
             <Link to={ROUTES.HOME}>
               <IconButton>
@@ -99,6 +98,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
               </IconButton>
             </Link>
           </Tooltip>
+          <Links />
           <FilterComponent />
           <Box
             sx={{

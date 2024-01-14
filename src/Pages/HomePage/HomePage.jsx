@@ -17,7 +17,8 @@ const handleFavCard = (id) => {
 };
 
 const HomePage = () => {
-  let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
+  let { cardsFromServer, setCardsFromServer, setCardsCopy } =
+    useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   const navigte = useNavigate();
 
@@ -25,6 +26,7 @@ const HomePage = () => {
     axios
       .get("/cards")
       .then(({ data }) => {
+        setCardsCopy(data);
         setCardsFromServer(data);
       })
       .catch((err) => {

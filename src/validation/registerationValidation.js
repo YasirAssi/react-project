@@ -38,6 +38,9 @@ const houseNumberSchema = Joi.object({
 const zipSchema = Joi.object({
   zip: Joi.string().min(2).max(256).required(),
 });
+const isBusinessSchema = Joi.object({
+  isBusiness: Joi.boolean().required(),
+});
 
 const validateFirst = (first) => firstSchema.validate(first);
 const validateMiddle = (middle) => middleSchema.validate(middle);
@@ -52,6 +55,8 @@ const validateStreet = (street) => streetSchema.validate(street);
 const validateHouseNumber = (houseNumber) =>
   houseNumberSchema.validate(houseNumber);
 const validateZip = (zip) => zipSchema.validate(zip);
+const validateIsBusiness = (isBusiness) =>
+  isBusinessSchema.validate({ isBusiness });
 
 const validateSchema = {
   first: validateFirst,
@@ -68,6 +73,7 @@ const validateSchema = {
   street: validateStreet,
   houseNumber: validateHouseNumber,
   zip: validateZip,
+  isBusiness: validateIsBusiness,
 };
 
 export { validateSchema };

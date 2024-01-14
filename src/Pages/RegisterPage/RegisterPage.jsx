@@ -14,7 +14,7 @@ import {
 import TextContent from "../../Component/TextContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ROUTES from "../../routes/ROUTES";
-import normalizeRegister from "./normalizeRe";
+import normalizeRegister from "./normalizeRegister";
 import { validateSchema } from "../../validation/registerationValidation";
 import { toast } from "react-toastify";
 
@@ -75,10 +75,16 @@ const RegisterPage = () => {
       });
     }
   };
+
+  const handleCheck = (e) => {
+    setChecked(e.target.checked);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Checked:", checked);
     try {
-      await axios.post("/users", normalizeRegister(inputsValue));
+      await axios.post("/users", normalizeRegister(inputsValue, checked));
       toast.success("Registered Successfully", {
         position: "top-right",
         autoClose: 1000,
@@ -91,12 +97,9 @@ const RegisterPage = () => {
       });
       navigate(ROUTES.LOGIN);
     } catch (err) {
+      console.error("Registration failed:", err);
       setShowRegister(true);
     }
-  };
-
-  const handleCheck = (e) => {
-    setChecked(e.target.checked);
   };
 
   const isFieldRequired = (fieldName) => {

@@ -2,17 +2,18 @@ import SearchIcon from "@mui/icons-material/Search";
 import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import GetCardsContext from "../../../store/getCardsContext";
 
 const FilterComponent = () => {
-  const [txt, setTxt] = useState("");
-  const { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
-
+  const { setCardsFromServer, cardsCopy } = useContext(GetCardsContext);
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    setTxt(inputValue);
-    const cardsSearch = cardsFromServer.filter((card) => {
+    if (!inputValue || inputValue.length < 1) {
+      setCardsFromServer(cardsCopy);
+      return;
+    }
+    const cardsSearch = cardsCopy.filter((card) => {
       return card.title.includes(inputValue);
     });
 
@@ -27,7 +28,6 @@ const FilterComponent = () => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
-        value={txt}
         onChange={handleInputChange}
       />
     </Search>

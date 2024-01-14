@@ -9,8 +9,12 @@ import GetCardsContext from "./store/getCardsContext";
 function App() {
   const [logIn, setLogIn] = useState(null);
   const [cardsFromServer, setCardsFromServer] = useState([]);
+  const [cardsCopy, setCardsCopy] = useState([]);
+
   return (
-    <GetCardsContext.Provider value={{ cardsFromServer, setCardsFromServer }}>
+    <GetCardsContext.Provider
+      value={{ cardsFromServer, setCardsFromServer, setCardsCopy, cardsCopy }}
+    >
       <LogInContext.Provider value={{ logIn, setLogIn }}>
         <ToastContainer />
         <LayoutComponent>
