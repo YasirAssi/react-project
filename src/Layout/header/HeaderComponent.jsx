@@ -87,7 +87,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" }, flexGrow: 1 }}
           >
             CardifyHub
           </Typography>

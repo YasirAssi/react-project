@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -17,8 +16,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
 import { SignalCellular1Bar } from "@mui/icons-material";
 
-import ROUTES from "../routes/ROUTES";
-
 const CardComponent = ({
   title,
   subtitle,
@@ -32,25 +29,19 @@ const CardComponent = ({
   onEdit,
   onFav,
 }) => {
-  const navigate = useNavigate();
-
   const handleDeleteClick = () => {
-    console.log("child clicked on delete", id);
     onDelete(id);
   };
 
   const handlePhoneClick = () => {
-    console.log("child clicked on Phone", phone);
     onCall(phone);
   };
 
   const handleFavClick = () => {
-    console.log("child clicked on Fav", id);
     onFav(id);
   };
 
   const handleEditClick = () => {
-    navigate(`${ROUTES.EDITCARD}/${id}`);
     onEdit(id);
   };
 

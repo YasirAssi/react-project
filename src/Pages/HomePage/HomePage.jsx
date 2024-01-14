@@ -7,20 +7,21 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../../store/getCardsContext";
 import ROUTES from "../../routes/ROUTES";
+import LogInContext from "../../store/loginContext";
+import { jwtDecode } from "jwt-decode";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
-const handleFavCard = (id) => {
-  console.log("parent: card to like", id);
-};
-
 const HomePage = () => {
+  let { logIn } = useContext(LogInContext);
   let { cardsFromServer, setCardsFromServer, setCardsCopy } =
     useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
-  const navigte = useNavigate();
+  const [userData, setUserData] = useState(); // or an initial value based on your use case
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -32,7 +33,13 @@ const HomePage = () => {
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, [setCardsFromServer]);
+    let token = localStorage.getItem("token");
+    if (token) {
+      const decodedData = jwtDecode(token);
+      console.log("Decoded user data:", decodedData);
+      setUserData(decodedData); // Assuming you have a state for userData
+    }
+  }, [setCardsFromServer, setCardsCopy]);
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any items</Typography>;
   }
@@ -42,35 +49,65 @@ const HomePage = () => {
   };
 
   const handleEditCard = (id) => {
-    console.log("parent: card to edit", id);
-    toast.warn("Only Aadmin can Edit!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-    navigte(ROUTES.HOME);
+    const card = cardsFromServer.find((item) => item._id === id);
+    console.log("Card owner:", card.user_id);
+    console.log("Logged-in user:", userData.userId);
+    if (
+      (logIn && logIn.isBusiness && card.user_id === userData?.userId) ||
+      (logIn && logIn.isAdmin)
+    ) {
+      navigate(`${ROUTES.EDITCARD}/${id}`);
+    } else {
+      toast.warn("Only Aadmin or Card Owner can Edit!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   const handleDeleteCard = (id) => {
-    setCardsFromServer((currentDataFromServer) =>
-      currentDataFromServer.filter((card) => card._id !== id)
-    );
-    toast("🦄 Card Is Deleted", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    const card = cardsFromServer.find((item) => item._id === id);
+    console.log("Card owner:", card.user_id);
+    console.log("Logged-in user:", userData.userId);
+    if (
+      logIn &&
+      (logIn.isAdmin || (logIn.isBusiness && card.user_id === userData?.userId))
+    ) {
+      setCardsFromServer((currentDataFromServer) =>
+        currentDataFromServer.filter((card) => card._id !== id)
+      );
+      toast("🦄 Card Is Deleted", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.warn("Only Aadmin or Card Owner can Delete!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.HOME);
+    }
   };
+
+  const handleFavCard = () => {};
   return (
     <Grid container spacing={2} mt={7}>
       {cardsFromServer.slice(0, visibleItems).map((item, index) => (
@@ -113,3 +150,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+// still userData undefined

@@ -50,8 +50,8 @@ const LoginPage = () => {
         password: passwordValue,
       });
       localStorage.setItem("token", data);
-      const userInfo = jwtDecode(data);
-      setLogIn(userInfo);
+      const userData = jwtDecode(data);
+      setLogIn(userData);
       toast.success("LoggedIn Successfully!", {
         position: "top-right",
         autoClose: 1000,

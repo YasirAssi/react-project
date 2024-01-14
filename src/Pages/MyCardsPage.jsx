@@ -1,22 +1,23 @@
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../Component/CardComponent";
-import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../store/getCardsContext";
+import LogInContext from "../store/loginContext";
+import ROUTES from "../routes/ROUTES";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
-const handleEditCard = (id) => {
-  console.log("parent: card to edit", id);
-};
-
 const MyCardsPage = () => {
   let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
+  const { logIn } = useContext(LogInContext);
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("/cards/my-cards")
@@ -35,20 +36,38 @@ const MyCardsPage = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
   };
 
+  const handleEditCard = (id) => {
+    navigate(`${ROUTES.EDITCARD}/${id}`);
+  };
+
   const handleDeleteCard = (id) => {
-    setCardsFromServer((currentDataFromServer) =>
-      currentDataFromServer.filter((card) => card._id !== id)
-    );
-    toast("🦄 Card Is Deleted", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    if (cardsFromServer || logIn.isAdmin) {
+      setCardsFromServer((currentDataFromServer) =>
+        currentDataFromServer.filter((card) => card._id !== id)
+      );
+      toast("🦄 Card Is Deleted", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.warn("Only Aadmin or Card Owner can Edit!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.HOME);
+    }
   };
 
   const handleFavCard = () => {};

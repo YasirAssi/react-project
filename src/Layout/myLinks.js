@@ -6,7 +6,7 @@ const loggedInLinks = [{ to: ROUTES.FAV, children: "LikedCards" }];
 
 const bizLinks = [
   { to: ROUTES.MYCARDS, children: "MYCARDS" },
-  { to: ROUTES.CREATECARD, children: "Create Your Card" },
+  { to: ROUTES.CREATECARD, children: "CreateCard" },
 ];
 
 const loggedOutLinks = [
