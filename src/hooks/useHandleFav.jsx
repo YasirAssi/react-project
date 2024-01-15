@@ -1,17 +1,37 @@
 import axios from "axios";
 import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import GetCardsContext from "../store/getCardsContext";
 import { toast } from "react-toastify";
+import LogInContext from "../store/loginContext";
+import ROUTES from "../routes/ROUTES";
 
 const useHandleFavClick = () => {
   let { favCards, setFavCards, setCardsFromServer, cardsFromServer } =
     useContext(GetCardsContext);
+  let { logIn } = useContext(LogInContext);
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   // Add any additional logic you want to run on mount or when favCards/cardsFromServer change
   // }, [favCards, cardsFromServer]);
 
   const handleFavClick = (id) => {
+    if (!logIn) {
+      toast("Please logIn to add this card to your favorites", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(ROUTES.LOGIN);
+      return;
+    }
+
     const isCardLiked = favCards.some((card) => card._id === id);
     console.log(`Handling favorite click for card with ID: ${id}`);
 

@@ -20,7 +20,7 @@ const HomePage = () => {
   let { logIn } = useContext(LogInContext);
   let { cardsFromServer, setCardsFromServer, setCardsCopy, favCards } =
     useContext(GetCardsContext);
-  const [visibleItems, setVisibleItems] = useState(4);
+  const [visibleItems, setVisibleItems] = useState(8);
   const [userData, setUserData] = useState(null);
   const { handleFavClick } = useHandleFavClick();
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const HomePage = () => {
   }
 
   const handleShowMore = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
+    setVisibleItems((prevVisibleItems) => prevVisibleItems + 8);
   };
 
   const handleEditCard = (id) => {
@@ -73,7 +73,7 @@ const HomePage = () => {
         theme: "dark",
       });
     } else {
-      toast.warn("Only Aadmin or Card Owner can Delete!", {
+      toast.warn("Only Aadmin or LoggedIn Owner can Delete!", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -83,7 +83,7 @@ const HomePage = () => {
         progress: undefined,
         theme: "dark",
       });
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.LOGIN);
     }
   };
 
