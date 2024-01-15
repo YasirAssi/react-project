@@ -35,22 +35,22 @@ const useCardsInputs = () => {
     zip: "",
   });
   let { id } = useParams();
-  const { login } = useContext(LogInContext);
+  const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!id || !login) {
+    if (!id || !logIn) {
       return;
     }
 
     try {
       const { data } = axios.get("/cards/" + id);
-      if (data.user_id === login._id) {
+      if (data.user_id === logIn._id) {
         setInputsValue(fromServer(data));
       }
     } catch (err) {
       alert("failed");
     }
-  }, [id, login]);
+  }, [id, logIn]);
 
   let keysArray = Object.keys(inputsValue);
 

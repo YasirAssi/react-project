@@ -12,7 +12,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import StarIcon from "@mui/icons-material/Star";
 import PropTypes from "prop-types";
 import { SignalCellular1Bar } from "@mui/icons-material";
 
@@ -91,7 +91,7 @@ const CardComponent = ({
               <LocalPhoneIcon />
             </IconButton>
             <IconButton onClick={handleFavClick}>
-              <FavoriteIcon color={isLiked ? "error" : "inherit"} />
+              <StarIcon color={isLiked ? "warning" : "inherit"} />
             </IconButton>
           </Box>
         </Box>
@@ -123,5 +123,3 @@ CardComponent.defaultProps = {
 };
 
 export default CardComponent;
-
-// could you help me making the FavoriteIcon red when user cicks on it

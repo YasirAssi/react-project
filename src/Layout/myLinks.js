@@ -2,7 +2,7 @@ import ROUTES from "../routes/ROUTES";
 
 const alwaysLinks = [{ to: ROUTES.ABOUT, children: "About Us" }];
 
-const loggedInLinks = [{ to: ROUTES.FAV, children: "LikedCards" }];
+const loggedInLinks = [{ to: ROUTES.FAV, children: "FavCards 🌟" }];
 
 const bizLinks = [
   { to: ROUTES.MYCARDS, children: "MYCARDS" },

@@ -13,11 +13,14 @@ const useHandleFavClick = () => {
 
   const handleFavClick = (id) => {
     const isCardLiked = favCards.some((card) => card._id === id);
+    console.log(`Handling favorite click for card with ID: ${id}`);
 
     if (isCardLiked) {
       axios
         .patch(`/cards/${id}`)
         .then(() => {
+          console.log(`Card with ID ${id} unliked successfully`);
+
           setFavCards((prevFavCards) =>
             prevFavCards.filter((card) => card._id !== id)
           );
@@ -39,6 +42,8 @@ const useHandleFavClick = () => {
       axios
         .patch(`/cards/${id}`)
         .then(() => {
+          console.log(`Card with ID ${id} liked successfully`);
+
           setFavCards((prevFavCards) => [
             ...prevFavCards,
             ...cardsFromServer.filter((card) => card._id === id),
@@ -73,3 +78,5 @@ const useHandleFavClick = () => {
 };
 
 export default useHandleFavClick;
+
+// could you implement the console in this code
