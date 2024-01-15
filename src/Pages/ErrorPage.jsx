@@ -11,7 +11,7 @@ const ErrorPage = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
           <Typography variant="h5" color="initial">
-            Ooops... The Request URL wan not found on this server
+            Ooops... The Request URL was not found on this server
           </Typography>
           <Link to={ROUTES.HOME}>
             <Button variant="text" color="primary">

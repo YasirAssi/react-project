@@ -24,5 +24,3 @@ NavLinkComponent.propTypes = {
 };
 
 export default NavLinkComponent;
-
-//how to remove the underline from link

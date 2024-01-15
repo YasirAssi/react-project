@@ -2,10 +2,12 @@ import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../store/getCardsContext";
 import { jwtDecode } from "jwt-decode";
+import LogInContext from "../store/loginContext";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -20,22 +22,42 @@ const handleEditCard = (id) => {
 };
 
 const FavPage = () => {
-  let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
+  let { favCards, setFavCards } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   let token = localStorage.getItem("token");
   let userData = jwtDecode(token);
+  let { id } = useParams();
+  const { login } = useContext(LogInContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!id || !login) {
+      return;
+    }
+
+    try {
+      const { data } = axios.get(`/cards/user/${id}`);
+      if (data.user_id === login._id) {
+        setFavCards(data);
+      }
+    } catch (err) {
+      alert("failed");
+      console.error(err);
+    }
+  }, [id, login]);
+
   useEffect(() => {
     axios
-      .patch("/cards/" + userData._id)
+      .get(`/cards/${userData._id}`) // Adjust the endpoint based on your API
       .then(({ data }) => {
-        setCardsFromServer(data);
+        setFavCards(data);
       })
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, [setCardsFromServer]);
-  if (!cardsFromServer || !cardsFromServer.length) {
-    return <Typography>Could not find any items</Typography>;
+  }, [setFavCards, userData._id]);
+
+  if (!favCards || favCards.length === 0) {
+    return <Typography>Could Not Find Items</Typography>;
   }
 
   const handleShowMore = () => {
@@ -43,7 +65,7 @@ const FavPage = () => {
   };
 
   const handleDeleteCard = (id) => {
-    setCardsFromServer((currentDataFromServer) =>
+    setFavCards((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );
     toast("🦄 Card Is Deleted", {
@@ -59,7 +81,7 @@ const FavPage = () => {
   };
   return (
     <Grid container spacing={2} mt={7}>
-      {cardsFromServer.slice(0, visibleItems).map((item, index) => (
+      {favCards.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}
@@ -83,7 +105,7 @@ const FavPage = () => {
         alignItems="center"
         m={3}
       >
-        {visibleItems < cardsFromServer.length && (
+        {visibleItems < favCards.length && (
           <Button
             variant="contained"
             endIcon={<ExpandMoreIcon />}
@@ -99,3 +121,5 @@ const FavPage = () => {
 };
 
 export default FavPage;
+
+// tha params is not working

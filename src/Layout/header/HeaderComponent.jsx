@@ -16,7 +16,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/Home";
 import Links from "./ui/Links";
-import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import FilterComponent from "./ui/FilterComponent";
 
 import ROUTES from "../../routes/ROUTES";
@@ -133,10 +132,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           </ThemeProvider>
         </Toolbar>
       </AppBar>
-      <LeftDrawerComponent
-        isOpen={isOpen}
-        onCloseDrawer={handleCloseDrawerClick}
-      />
     </Box>
   );
 };

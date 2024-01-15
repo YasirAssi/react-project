@@ -37,7 +37,7 @@ const Router = () => {
         }
       />
       <Route
-        path={ROUTES.FAV}
+        path={`${ROUTES.FAV}/:id`}
         element={
           <AuthGuard>
             <FavPage />

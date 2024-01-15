@@ -16,8 +16,13 @@ const handlePhoneCard = (phone) => {
 
 const HomePage = () => {
   let { logIn } = useContext(LogInContext);
-  let { cardsFromServer, setCardsFromServer, setCardsCopy } =
-    useContext(GetCardsContext);
+  let {
+    cardsFromServer,
+    setCardsFromServer,
+    setCardsCopy,
+    favCards,
+    setFavCards,
+  } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   const [userData, setUserData] = useState(null);
 

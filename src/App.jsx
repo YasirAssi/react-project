@@ -10,10 +10,18 @@ function App() {
   const [logIn, setLogIn] = useState(null);
   const [cardsFromServer, setCardsFromServer] = useState([]);
   const [cardsCopy, setCardsCopy] = useState([]);
+  const [favCards, setFavCards] = useState([]);
 
   return (
     <GetCardsContext.Provider
-      value={{ cardsFromServer, setCardsFromServer, setCardsCopy, cardsCopy }}
+      value={{
+        cardsFromServer,
+        setCardsFromServer,
+        setCardsCopy,
+        cardsCopy,
+        setFavCards,
+        favCards,
+      }}
     >
       <LogInContext.Provider value={{ logIn, setLogIn }}>
         <ToastContainer />

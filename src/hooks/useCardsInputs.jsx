@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import validateSchema from "../validation/cardValidation";
-import LoginContext from "../store/loginContext";
+import LogInContext from "../store/loginContext";
 import { fromServer } from "../services/normalizeRequest";
 import axios from "axios";
 
@@ -35,7 +35,7 @@ const useCardsInputs = () => {
     zip: "",
   });
   let { id } = useParams();
-  const { login } = useContext(LoginContext);
+  const { login } = useContext(LogInContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (!id || !login) {
@@ -49,7 +49,6 @@ const useCardsInputs = () => {
       }
     } catch (err) {
       alert("failed");
-      console.error(err);
     }
   }, [id, login]);
 

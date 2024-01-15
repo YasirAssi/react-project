@@ -14,7 +14,8 @@ const handlePhoneCard = (phone) => {
 };
 
 const MyCardsPage = () => {
-  let { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
+  let { cardsFromServer, setCardsFromServer, favCards, setFavCards } =
+    useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
@@ -70,7 +71,40 @@ const MyCardsPage = () => {
     }
   };
 
-  const handleFavCard = () => {};
+  const handleFavCard = (id) => {
+    const isCardLiked = favCards.some((card) => card._id === id);
+
+    // Toggle the like status
+    if (isCardLiked) {
+      // If liked, send a PATCH request to unlike the card
+      axios
+        .patch(`/cards/${id}/unlike`)
+        .then(() => {
+          // Remove the card from favCards if the PATCH request is successful
+          setFavCards((prevFavCards) =>
+            prevFavCards.filter((card) => card._id !== id)
+          );
+        })
+        .catch((error) => {
+          console.error("Error unliking the card:", error);
+        });
+    } else {
+      // If not liked, send a PATCH request to like the card
+      axios
+        .patch(`/cards/${id}/like`)
+        .then(() => {
+          // Add the card to favCards if the PATCH request is successful
+          setFavCards((prevFavCards) => [
+            ...prevFavCards,
+            ...cardsFromServer.filter((card) => card._id === id),
+          ]);
+        })
+        .catch((error) => {
+          console.error("Error liking the card:", error);
+        });
+    }
+  };
+
   return (
     <Grid container spacing={2} mt={7}>
       {cardsFromServer.slice(0, visibleItems).map((item, index) => (
@@ -113,3 +147,5 @@ const MyCardsPage = () => {
 };
 
 export default MyCardsPage;
+
+// in this code i want to handel the handleFavCard, by clicking on the icon of the handleFav, turning it to red as a symbol of like using the the favCards and setFavCards state.
