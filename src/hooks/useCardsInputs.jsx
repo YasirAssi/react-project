@@ -4,6 +4,7 @@ import validateSchema from "../validation/cardValidation";
 import LogInContext from "../store/loginContext";
 import { fromServer } from "../services/normalizeRequest";
 import axios from "axios";
+import ROUTES from "../routes/ROUTES";
 
 const useCardsInputs = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -38,19 +39,26 @@ const useCardsInputs = () => {
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!id || !logIn) {
-      return;
-    }
-
-    try {
-      const { data } = axios.get("/cards/" + id);
-      if (data.user_id === logIn._id) {
-        setInputsValue(fromServer(data));
+    const fetchData = async () => {
+      if (!id || !logIn) {
+        return;
       }
-    } catch (err) {
-      alert("failed");
-    }
-  }, [id, logIn]);
+
+      try {
+        const { data } = await axios.get("/cards/" + id);
+        if (data.user_id === logIn._id) {
+          setInputsValue(fromServer(data));
+        } else {
+          alert("Unauthorized access");
+          navigate(ROUTES.HOME);
+        }
+      } catch (err) {
+        alert("Failed to fetch card data");
+      }
+    };
+
+    fetchData();
+  }, [id, logIn, navigate]);
 
   let keysArray = Object.keys(inputsValue);
 
@@ -96,3 +104,5 @@ const useCardsInputs = () => {
 };
 
 export default useCardsInputs;
+
+// i have an issue here, after the changes that have been mafe in useHandleFavClick, the alert in the catch is activated but still i get to the editcardpage

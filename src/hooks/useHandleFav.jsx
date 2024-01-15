@@ -21,8 +21,8 @@ const useHandleFavClick = () => {
         .then(() => {
           console.log(`Card with ID ${id} unliked successfully`);
 
-          setFavCards((prevFavCards) =>
-            prevFavCards.filter((card) => card._id !== id)
+          setFavCards((currentFavCards) =>
+            currentFavCards.filter((card) => card._id !== id)
           );
           toast.error(" Card has been removed from your favorites", {
             position: "top-right",
@@ -44,8 +44,8 @@ const useHandleFavClick = () => {
         .then(() => {
           console.log(`Card with ID ${id} liked successfully`);
 
-          setFavCards((prevFavCards) => [
-            ...prevFavCards,
+          setFavCards((currentFavCards) => [
+            ...currentFavCards,
             ...cardsFromServer.filter((card) => card._id === id),
           ]);
           toast.success(
@@ -78,5 +78,3 @@ const useHandleFavClick = () => {
 };
 
 export default useHandleFavClick;
-
-// could you implement the console in this code

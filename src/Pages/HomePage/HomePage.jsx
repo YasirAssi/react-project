@@ -38,8 +38,8 @@ const HomePage = () => {
       });
     let token = localStorage.getItem("token");
     if (token) {
-      const decodedData = jwtDecode(token);
-      setUserData(decodedData);
+      const userData = jwtDecode(token);
+      setUserData(userData);
     }
   }, [setCardsFromServer, setCardsCopy]);
   if (!cardsFromServer || !cardsFromServer.length) {

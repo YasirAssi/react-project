@@ -13,10 +13,24 @@ const useHandleEditCard = () => {
   const navigate = useNavigate();
 
   const handleEditClick = (id) => {
+    if (!logIn) {
+      toast.warn("Only Admin or Card Owner can Edit!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     let token = localStorage.getItem("token");
     let userData = jwtDecode(token);
 
-    if (!id || !logIn || !cardsFromServer) {
+    if (!id || !cardsFromServer || !logIn) {
       return;
     }
 
