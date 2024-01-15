@@ -16,7 +16,7 @@ const handlePhoneCard = (phone) => {
 };
 
 const FavPage = () => {
-  let { favCards, setFavCards, cardsFromServer } = useContext(GetCardsContext);
+  let { favCards, setFavCards } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   let token = localStorage.getItem("token");
   let userData = jwtDecode(token);
@@ -37,7 +37,7 @@ const FavPage = () => {
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, [setFavCards, userData, logIn]);
+  }, [setFavCards, userData, logIn, id]);
 
   if (!favCards || favCards.length === 0) {
     return <Typography>Could Not Find Items</Typography>;
