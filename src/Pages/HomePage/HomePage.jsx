@@ -1,4 +1,4 @@
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
@@ -9,6 +9,8 @@ import GetCardsContext from "../../store/getCardsContext";
 import ROUTES from "../../routes/ROUTES";
 import LogInContext from "../../store/loginContext";
 import { jwtDecode } from "jwt-decode";
+import useHandleFavClick from "../../hooks/useHandleFav";
+import useHandleEditCard from "../../hooks/useHandleEdit";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -16,17 +18,13 @@ const handlePhoneCard = (phone) => {
 
 const HomePage = () => {
   let { logIn } = useContext(LogInContext);
-  let {
-    cardsFromServer,
-    setCardsFromServer,
-    setCardsCopy,
-    favCards,
-    setFavCards,
-  } = useContext(GetCardsContext);
+  let { cardsFromServer, setCardsFromServer, setCardsCopy, favCards } =
+    useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   const [userData, setUserData] = useState(null);
-
+  const { handleFavClick } = useHandleFavClick();
   const navigate = useNavigate();
+  const { handleEditClick } = useHandleEditCard();
 
   useEffect(() => {
     axios
@@ -45,7 +43,6 @@ const HomePage = () => {
     }
   }, [setCardsFromServer, setCardsCopy]);
   if (!cardsFromServer || !cardsFromServer.length) {
-    return <Typography>Could not find any items</Typography>;
   }
 
   const handleShowMore = () => {
@@ -53,24 +50,7 @@ const HomePage = () => {
   };
 
   const handleEditCard = (id) => {
-    const card = cardsFromServer.find((item) => item._id === id);
-    if (
-      (logIn && logIn.isBusiness && card.user_id === userData._id) ||
-      (logIn && logIn.isAdmin)
-    ) {
-      navigate(`${ROUTES.EDITCARD}/${id}`);
-    } else {
-      toast.warn("Only Aadmin or Card Owner can Edit!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
+    handleEditClick(id);
   };
 
   const handleDeleteCard = (id) => {
@@ -107,7 +87,9 @@ const HomePage = () => {
     }
   };
 
-  const handleFavCard = () => {};
+  const handleFavCard = (id) => {
+    handleFavClick(id);
+  };
 
   return (
     <Grid container spacing={2} mt={7}>
@@ -125,6 +107,7 @@ const HomePage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
+            isLiked={favCards.some((card) => card._id === item._id)}
           />
         </Grid>
       ))}

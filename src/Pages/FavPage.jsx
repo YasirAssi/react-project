@@ -2,59 +2,42 @@ import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../store/getCardsContext";
 import { jwtDecode } from "jwt-decode";
 import LogInContext from "../store/loginContext";
+import useHandleFavClick from "../hooks/useHandleFav";
+import useHandleEditCard from "../hooks/useHandleEdit";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
-const handleFavCard = (id) => {
-  console.log("parent: card to like", id);
-};
-
-const handleEditCard = (id) => {
-  console.log("parent: card to edit", id);
-};
-
 const FavPage = () => {
-  let { favCards, setFavCards } = useContext(GetCardsContext);
+  let { favCards, setFavCards, cardsFromServer } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   let token = localStorage.getItem("token");
   let userData = jwtDecode(token);
   let { id } = useParams();
-  const { login } = useContext(LogInContext);
-  const navigate = useNavigate();
+  const { logIn } = useContext(LogInContext);
+  const { handleFavClick } = useHandleFavClick();
+  const { handleEditClick } = useHandleEditCard();
+
   useEffect(() => {
-    if (!id || !login) {
+    if (!id || !logIn) {
       return;
     }
-
-    try {
-      const { data } = axios.get(`/cards/user/${id}`);
-      if (data.user_id === login._id) {
-        setFavCards(data);
-      }
-    } catch (err) {
-      alert("failed");
-      console.error(err);
-    }
-  }, [id, login]);
-
-  useEffect(() => {
     axios
-      .get(`/cards/${userData._id}`) // Adjust the endpoint based on your API
+      .get(`/cards/${userData._id}`)
       .then(({ data }) => {
         setFavCards(data);
       })
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, [setFavCards, userData._id]);
+  }, [setFavCards, userData, logIn]);
 
   if (!favCards || favCards.length === 0) {
     return <Typography>Could Not Find Items</Typography>;
@@ -79,6 +62,15 @@ const FavPage = () => {
       theme: "dark",
     });
   };
+
+  const handleEditCard = (id) => {
+    handleEditClick(id);
+  };
+
+  const handleFavCard = (id) => {
+    handleFavClick(id);
+  };
+
   return (
     <Grid container spacing={2} mt={7}>
       {favCards.slice(0, visibleItems).map((item, index) => (
@@ -95,6 +87,7 @@ const FavPage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
+            isLiked={favCards.some((card) => card._id === item._id)}
           />
         </Grid>
       ))}
@@ -121,5 +114,3 @@ const FavPage = () => {
 };
 
 export default FavPage;
-
-// tha params is not working

@@ -28,6 +28,7 @@ const CardComponent = ({
   onCall,
   onEdit,
   onFav,
+  isLiked,
 }) => {
   const handleDeleteClick = () => {
     onDelete(id);
@@ -90,7 +91,7 @@ const CardComponent = ({
               <LocalPhoneIcon />
             </IconButton>
             <IconButton onClick={handleFavClick}>
-              <FavoriteIcon />
+              <FavoriteIcon color={isLiked ? "error" : "inherit"} />
             </IconButton>
           </Box>
         </Box>
@@ -122,3 +123,5 @@ CardComponent.defaultProps = {
 };
 
 export default CardComponent;
+
+// could you help me making the FavoriteIcon red when user cicks on it

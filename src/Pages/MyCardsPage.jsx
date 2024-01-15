@@ -8,17 +8,19 @@ import { toast } from "react-toastify";
 import GetCardsContext from "../store/getCardsContext";
 import LogInContext from "../store/loginContext";
 import ROUTES from "../routes/ROUTES";
+import useHandleFavClick from "../hooks/useHandleFav";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
 const MyCardsPage = () => {
-  let { cardsFromServer, setCardsFromServer, favCards, setFavCards } =
+  let { cardsFromServer, setCardsFromServer, favCards } =
     useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
+  const { handleFavClick } = useHandleFavClick();
   useEffect(() => {
     axios
       .get("/cards/my-cards")
@@ -72,37 +74,7 @@ const MyCardsPage = () => {
   };
 
   const handleFavCard = (id) => {
-    const isCardLiked = favCards.some((card) => card._id === id);
-
-    // Toggle the like status
-    if (isCardLiked) {
-      // If liked, send a PATCH request to unlike the card
-      axios
-        .patch(`/cards/${id}/unlike`)
-        .then(() => {
-          // Remove the card from favCards if the PATCH request is successful
-          setFavCards((prevFavCards) =>
-            prevFavCards.filter((card) => card._id !== id)
-          );
-        })
-        .catch((error) => {
-          console.error("Error unliking the card:", error);
-        });
-    } else {
-      // If not liked, send a PATCH request to like the card
-      axios
-        .patch(`/cards/${id}/like`)
-        .then(() => {
-          // Add the card to favCards if the PATCH request is successful
-          setFavCards((prevFavCards) => [
-            ...prevFavCards,
-            ...cardsFromServer.filter((card) => card._id === id),
-          ]);
-        })
-        .catch((error) => {
-          console.error("Error liking the card:", error);
-        });
-    }
+    handleFavClick(id);
   };
 
   return (
@@ -121,6 +93,7 @@ const MyCardsPage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
+            isLiked={favCards.some((card) => card._id === item._id)}
           />
         </Grid>
       ))}
@@ -147,5 +120,3 @@ const MyCardsPage = () => {
 };
 
 export default MyCardsPage;
-
-// in this code i want to handel the handleFavCard, by clicking on the icon of the handleFav, turning it to red as a symbol of like using the the favCards and setFavCards state.
