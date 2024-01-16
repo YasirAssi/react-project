@@ -31,12 +31,8 @@ const useHandleFavClick = () => {
       navigate(ROUTES.LOGIN);
       return;
     }
-
     const isCardLiked = favCards.some((card) => card._id === id);
-    console.log(`Handling favorite click for card with ID: ${id}`);
-
     try {
-      // Optimistic update
       setFavCards((currentFavCards) => {
         if (isCardLiked) {
           return currentFavCards.filter((card) => card._id !== id);
@@ -47,10 +43,7 @@ const useHandleFavClick = () => {
           ];
         }
       });
-
-      // Make the API call
       await axios.patch(`/cards/${id}`);
-
       toast(
         `Card has been ${
           isCardLiked ? "removed from" : "added to"
@@ -66,16 +59,11 @@ const useHandleFavClick = () => {
           theme: "dark",
         }
       );
-
-      // Update the local state with the updated data
       const updatedCards = cardsFromServer.map((card) =>
         card._id === id ? { ...card, isLiked: !isCardLiked } : card
       );
       setCardsFromServer(updatedCards);
     } catch (error) {
-      console.error(`Error ${isCardLiked ? "un" : ""}liking the card:`, error);
-
-      // Revert the local state if there's an error
       setFavCards((currentFavCards) => {
         if (isCardLiked) {
           return [
@@ -86,7 +74,6 @@ const useHandleFavClick = () => {
           return currentFavCards.filter((card) => card._id !== id);
         }
       });
-
       toast.error(
         `Error ${isCardLiked ? "un" : ""}liking the card. Please try again.`,
         {
