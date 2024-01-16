@@ -16,9 +16,9 @@ const useHandleFavClick = () => {
   //   // Add any additional logic you want to run on mount or when favCards/cardsFromServer change
   // }, [favCards, cardsFromServer]);
 
-  const handleFavClick = (id) => {
+  const handleFavClick = async (id) => {
     if (!logIn) {
-      toast("Please logIn to add this card to your favorites", {
+      toast("Please log in to add this card to your favorites", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -35,63 +35,72 @@ const useHandleFavClick = () => {
     const isCardLiked = favCards.some((card) => card._id === id);
     console.log(`Handling favorite click for card with ID: ${id}`);
 
-    if (isCardLiked) {
-      axios
-        .patch(`/cards/${id}`)
-        .then(() => {
-          console.log(`Card with ID ${id} unliked successfully`);
-
-          setFavCards((currentFavCards) =>
-            currentFavCards.filter((card) => card._id !== id)
-          );
-          toast.error(" Card has been removed from your favorites", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        })
-        .catch((error) => {
-          console.error("Error unliking the card:", error);
-        });
-    } else {
-      axios
-        .patch(`/cards/${id}`)
-        .then(() => {
-          console.log(`Card with ID ${id} liked successfully`);
-
-          setFavCards((currentFavCards) => [
+    try {
+      // Optimistic update
+      setFavCards((currentFavCards) => {
+        if (isCardLiked) {
+          return currentFavCards.filter((card) => card._id !== id);
+        } else {
+          return [
             ...currentFavCards,
             ...cardsFromServer.filter((card) => card._id === id),
-          ]);
-          toast.success(
-            "Great choice! This card has been added to your favorites. 🌟",
-            {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            }
-          );
-        })
-        .catch((error) => {
-          console.error("Error liking the card:", error);
-        });
+          ];
+        }
+      });
+
+      // Make the API call
+      await axios.patch(`/cards/${id}`);
+
+      toast(
+        `Card has been ${
+          isCardLiked ? "removed from" : "added to"
+        } your favorites. ${isCardLiked ? "😢" : "🌟"}`,
+        {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+
+      // Update the local state with the updated data
+      const updatedCards = cardsFromServer.map((card) =>
+        card._id === id ? { ...card, isLiked: !isCardLiked } : card
+      );
+      setCardsFromServer(updatedCards);
+    } catch (error) {
+      console.error(`Error ${isCardLiked ? "un" : ""}liking the card:`, error);
+
+      // Revert the local state if there's an error
+      setFavCards((currentFavCards) => {
+        if (isCardLiked) {
+          return [
+            ...currentFavCards,
+            ...cardsFromServer.filter((card) => card._id === id),
+          ];
+        } else {
+          return currentFavCards.filter((card) => card._id !== id);
+        }
+      });
+
+      toast.error(
+        `Error ${isCardLiked ? "un" : ""}liking the card. Please try again.`,
+        {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
     }
-
-    const updatedCards = cardsFromServer.map((card) =>
-      card._id === id ? { ...card, isLiked: !isCardLiked } : card
-    );
-
-    setCardsFromServer(updatedCards);
   };
 
   return { favCards, cardsFromServer, handleFavClick };
