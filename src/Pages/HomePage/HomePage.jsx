@@ -83,7 +83,7 @@ const HomePage = () => {
         progress: undefined,
         theme: "dark",
       });
-      navigate(ROUTES.LOGIN);
+      if (!logIn) navigate(ROUTES.LOGIN);
     }
   };
 
@@ -107,7 +107,7 @@ const HomePage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
-            isLiked={favCards.some((card) => card._id === item._id)}
+            isFav={favCards.some((card) => card._id === item._id)}
           />
         </Grid>
       ))}

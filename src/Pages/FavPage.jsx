@@ -18,30 +18,13 @@ const handlePhoneCard = (phone) => {
 const FavPage = () => {
   let { favCards, setFavCards } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
-  let token = localStorage.getItem("token");
-  let userData = jwtDecode(token);
+
+  const userData = jwtDecode(localStorage.getItem("token"));
+
   let { id } = useParams();
   const { logIn } = useContext(LogInContext);
   const { handleFavClick } = useHandleFavClick();
   const { handleEditClick } = useHandleEditCard();
-
-  useEffect(() => {
-    if (!id || !logIn) {
-      return;
-    }
-    axios
-      .get(`/cards/${userData._id}`)
-      .then(({ data }) => {
-        setFavCards(data);
-      })
-      .catch((err) => {
-        console.log("error from axios", err);
-      });
-  }, [setFavCards, userData, logIn, id]);
-
-  if (!favCards || favCards.length === 0) {
-    return <Typography>Could Not Find Items</Typography>;
-  }
 
   const handleShowMore = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
@@ -62,6 +45,35 @@ const FavPage = () => {
       theme: "dark",
     });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!id || !logIn) {
+          return;
+        }
+        const response = await axios.get(`/cards/${id}`);
+        setFavCards(response.data);
+      } catch (error) {
+        toast.error("Error fetching data", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    };
+
+    fetchData();
+  }, [setFavCards, userData, logIn, id]);
+
+  if (!favCards || favCards.length === 0) {
+    return <Typography>Could Not Find Items</Typography>;
+  }
 
   const handleEditCard = (id) => {
     handleEditClick(id);
@@ -87,7 +99,7 @@ const FavPage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
-            isLiked={favCards.some((card) => card._id === item._id)}
+            isFav={favCards.some((card) => card._id === item._id)}
           />
         </Grid>
       ))}

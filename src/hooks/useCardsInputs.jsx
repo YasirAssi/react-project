@@ -104,5 +104,3 @@ const useCardsInputs = () => {
 };
 
 export default useCardsInputs;
-
-// i have an issue here, after the changes that have been mafe in useHandleFavClick, the alert in the catch is activated but still i get to the editcardpage

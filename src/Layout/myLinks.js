@@ -4,10 +4,7 @@ const alwaysLinks = [{ to: ROUTES.ABOUT, children: "About Us" }];
 
 const loggedInLinks = [{ to: ROUTES.FAV, children: "FavCards 🌟" }];
 
-const bizLinks = [
-  { to: ROUTES.MYCARDS, children: "MYCARDS" },
-  { to: ROUTES.CREATECARD, children: "CreateCard" },
-];
+const bizLinks = [{ to: ROUTES.MYCARDS, children: "MYCARDS" }];
 
 const loggedOutLinks = [
   { to: ROUTES.REGISTER, children: "Register page" },

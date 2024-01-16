@@ -5,16 +5,15 @@ import GetCardsContext from "../store/getCardsContext";
 import { toast } from "react-toastify";
 import LogInContext from "../store/loginContext";
 import ROUTES from "../routes/ROUTES";
+// import { jwtDecode } from "jwt-decode";
 
 const useHandleFavClick = () => {
   let { favCards, setFavCards, setCardsFromServer, cardsFromServer } =
     useContext(GetCardsContext);
   let { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   // Add any additional logic you want to run on mount or when favCards/cardsFromServer change
-  // }, [favCards, cardsFromServer]);
+  let token = localStorage.getItem("token");
+  // let userData = jwtDecode(token);
 
   const handleFavClick = async (id) => {
     if (!logIn) {
@@ -31,10 +30,12 @@ const useHandleFavClick = () => {
       navigate(ROUTES.LOGIN);
       return;
     }
-    const isCardLiked = favCards.some((card) => card._id === id);
+    const isCardFav = favCards.some((card) => card._id === id);
     try {
+      console.log("Updating favorites:", id, "Is Card Favorite?", isCardFav);
+
       setFavCards((currentFavCards) => {
-        if (isCardLiked) {
+        if (isCardFav) {
           return currentFavCards.filter((card) => card._id !== id);
         } else {
           return [
@@ -43,11 +44,17 @@ const useHandleFavClick = () => {
           ];
         }
       });
+
+      console.log("Sending PATCH request to server...");
+
       await axios.patch(`/cards/${id}`);
+
+      console.log("Patch request successful!");
+
       toast(
         `Card has been ${
-          isCardLiked ? "removed from" : "added to"
-        } your favorites. ${isCardLiked ? "😢" : "🌟"}`,
+          isCardFav ? "removed from" : "added to"
+        } your favorites. ${isCardFav ? "😢" : "🌟"}`,
         {
           position: "top-right",
           autoClose: 2000,
@@ -60,12 +67,16 @@ const useHandleFavClick = () => {
         }
       );
       const updatedCards = cardsFromServer.map((card) =>
-        card._id === id ? { ...card, isLiked: !isCardLiked } : card
+        card._id === id ? { ...card, isFav: !isCardFav } : card
       );
       setCardsFromServer(updatedCards);
+
+      console.log("State updated successfully!");
     } catch (error) {
+      console.error("Error updating favorites:", error);
+
       setFavCards((currentFavCards) => {
-        if (isCardLiked) {
+        if (isCardFav) {
           return [
             ...currentFavCards,
             ...cardsFromServer.filter((card) => card._id === id),
@@ -75,7 +86,7 @@ const useHandleFavClick = () => {
         }
       });
       toast.error(
-        `Error ${isCardLiked ? "un" : ""}liking the card. Please try again.`,
+        `Error ${isCardFav ? "un" : ""}liking the card. Please try again.`,
         {
           position: "top-right",
           autoClose: 2000,

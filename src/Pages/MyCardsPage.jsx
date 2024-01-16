@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Grid, Typography, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { Grid, Typography, Button, IconButton, Tooltip } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../Component/CardComponent";
 import axios from "axios";
@@ -9,6 +9,7 @@ import GetCardsContext from "../store/getCardsContext";
 import LogInContext from "../store/loginContext";
 import ROUTES from "../routes/ROUTES";
 import useHandleFavClick from "../hooks/useHandleFav";
+import PlusOneIcon from "@mui/icons-material/PlusOne";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -21,16 +22,20 @@ const MyCardsPage = () => {
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
   const { handleFavClick } = useHandleFavClick();
+
   useEffect(() => {
-    axios
-      .get("/cards/my-cards")
-      .then(({ data }) => {
-        setCardsFromServer(data);
-      })
-      .catch((err) => {
-        console.log("error from axios", err);
-      });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/cards/my-cards");
+        setCardsFromServer(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [setCardsFromServer]);
+
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any items</Typography>;
   }
@@ -93,10 +98,17 @@ const MyCardsPage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
-            isLiked={favCards.some((card) => card._id === item._id)}
+            isFav={favCards.some((card) => card._id === item._id)}
           />
         </Grid>
       ))}
+      <Tooltip title="Creat New Card">
+        <Link to={ROUTES.CREATECARD}>
+          <IconButton>
+            <PlusOneIcon />
+          </IconButton>
+        </Link>
+      </Tooltip>
       <Grid
         container
         direction="row"

@@ -26,13 +26,14 @@ import {
   validateEmailLogin,
   validatePasswordLogin,
 } from "../../validation/logInValidation";
+// import { storeToken } from "../../services/storageService";
 
 const LoginPage = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
   const { setLogIn } = useContext(LoginContext);
@@ -86,8 +87,8 @@ const LoginPage = () => {
     }
   };
 
-  const handleCheck = (e) => {
-    setChecked(e.target.checked);
+  const handleRememberMeCheck = (e) => {
+    setRememberMe(e.target.checked);
   };
 
   return (
@@ -162,8 +163,8 @@ const LoginPage = () => {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-              onChange={handleCheck}
-              checked={checked}
+              onChange={handleRememberMeCheck}
+              checked={rememberMe}
             />
             <Button
               type="submit"

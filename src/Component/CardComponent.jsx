@@ -28,7 +28,7 @@ const CardComponent = ({
   onCall,
   onEdit,
   onFav,
-  isLiked,
+  isFav,
 }) => {
   const handleDeleteClick = () => {
     onDelete(id);
@@ -91,7 +91,7 @@ const CardComponent = ({
               <LocalPhoneIcon />
             </IconButton>
             <IconButton onClick={handleFavClick}>
-              <StarIcon color={isLiked ? "warning" : "inherit"} />
+              <StarIcon color={isFav ? "warning" : "inherit"} />
             </IconButton>
           </Box>
         </Box>
@@ -115,6 +115,11 @@ CardComponent.propTypes = {
     zip: PropTypes.number.isRequired,
   }).isRequired,
   cardNumber: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onCall: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onFav: PropTypes.func.isRequired,
+  isFav: PropTypes.bool.isRequired,
 };
 
 CardComponent.defaultProps = {
