@@ -6,6 +6,7 @@ import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import Typography from "@mui/material/Typography";
+import { getToken } from "../services/storageService";
 
 const useHandleEditCard = () => {
   const { cardsFromServer } = useContext(GetCardsContext);
@@ -27,7 +28,7 @@ const useHandleEditCard = () => {
       return;
     }
 
-    let token = localStorage.getItem("token");
+    let token = getToken();
     let userData = jwtDecode(token);
 
     if (!id || !cardsFromServer || !logIn) {

@@ -1,19 +1,18 @@
 import axios from "axios";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import GetCardsContext from "../store/getCardsContext";
 import { toast } from "react-toastify";
 import LogInContext from "../store/loginContext";
 import ROUTES from "../routes/ROUTES";
-// import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { getToken } from "../services/storageService";
 
 const useHandleFavClick = () => {
   let { favCards, setFavCards, setCardsFromServer, cardsFromServer } =
     useContext(GetCardsContext);
   let { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
-  let token = localStorage.getItem("token");
-  // let userData = jwtDecode(token);
 
   const handleFavClick = async (id) => {
     if (!logIn) {
@@ -30,74 +29,81 @@ const useHandleFavClick = () => {
       navigate(ROUTES.LOGIN);
       return;
     }
-    const isCardFav = favCards.some((card) => card._id === id);
-    try {
-      console.log("Updating favorites:", id, "Is Card Favorite?", isCardFav);
+    let token = getToken();
+    let userData = jwtDecode(token);
 
-      setFavCards((currentFavCards) => {
-        if (isCardFav) {
-          return currentFavCards.filter((card) => card._id !== id);
-        } else {
-          return [
-            ...currentFavCards,
-            ...cardsFromServer.filter((card) => card._id === id),
-          ];
-        }
-      });
+    if (userData) {
+      const isCardFav = favCards.some((card) => card._id === id);
+      try {
+        console.log("Updating favorites:", id, "Is Card Favorite?", isCardFav);
 
-      console.log("Sending PATCH request to server...");
+        setFavCards((currentFavCards) => {
+          if (isCardFav) {
+            return currentFavCards.filter((card) => card._id !== id);
+          } else {
+            return [
+              ...currentFavCards,
+              ...cardsFromServer.filter((card) => card._id === id),
+            ];
+          }
+        });
 
-      await axios.patch(`/cards/${id}`);
+        console.log("Sending PATCH request to server...");
 
-      console.log("Patch request successful!");
+        await axios.patch(`/cards/${id}`);
 
-      toast(
-        `Card has been ${
-          isCardFav ? "removed from" : "added to"
-        } your favorites. ${isCardFav ? "😢" : "🌟"}`,
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
-      const updatedCards = cardsFromServer.map((card) =>
-        card._id === id ? { ...card, isFav: !isCardFav } : card
-      );
-      setCardsFromServer(updatedCards);
+        console.log("Patch request successful!");
 
-      console.log("State updated successfully!");
-    } catch (error) {
-      console.error("Error updating favorites:", error);
+        toast(
+          `Card has been ${
+            isCardFav ? "removed from" : "added to"
+          } your favorites. ${isCardFav ? "😢" : "🌟"}`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+        const updatedCards = cardsFromServer.map((card) =>
+          card._id === userData._id ? { ...card, isFav: !isCardFav } : card
+        );
+        setCardsFromServer(updatedCards);
 
-      setFavCards((currentFavCards) => {
-        if (isCardFav) {
-          return [
-            ...currentFavCards,
-            ...cardsFromServer.filter((card) => card._id === id),
-          ];
-        } else {
-          return currentFavCards.filter((card) => card._id !== id);
-        }
-      });
-      toast.error(
-        `Error ${isCardFav ? "un" : ""}liking the card. Please try again.`,
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
+        console.log("State updated successfully!");
+      } catch (error) {
+        console.error("Error updating favorites:", error);
+
+        setFavCards((currentFavCards) => {
+          if (isCardFav) {
+            return [
+              ...currentFavCards,
+              ...cardsFromServer.filter((card) => card._id === id),
+            ];
+          } else {
+            return currentFavCards.filter((card) => card._id !== id);
+          }
+        });
+        toast.error(
+          `Error ${
+            isCardFav ? "un" : ""
+          }liking the card. Please try again later.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+      }
     }
   };
 
@@ -105,3 +111,5 @@ const useHandleFavClick = () => {
 };
 
 export default useHandleFavClick;
+
+// i get

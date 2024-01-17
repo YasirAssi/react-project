@@ -1,7 +1,7 @@
 import { Grid, Button, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -29,22 +29,31 @@ const HomePage = () => {
   const { handleEditClick } = useHandleEditCard();
 
   useEffect(() => {
-    axios
-      .get("/cards")
-      .then(({ data }) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/cards");
+        const { data } = response;
         setCardsCopy(data);
         setCardsFromServer(data);
-      })
-      .catch((err) => {
-        console.log("error from axios", err);
-      });
-    let token = getToken();
-    if (token) {
-      const userData = jwtDecode(token);
-      setUserData(userData);
-    }
-  }, [setCardsFromServer, setCardsCopy]);
+
+        // let token = localStorage.getItem("token");
+
+        let token = getToken();
+        if (token) {
+          const userData = jwtDecode(token);
+          setUserData(userData);
+        }
+      } catch (error) {
+        console.error("Error from axios", error);
+        return <Typography>Error,Could not find any card</Typography>;
+      }
+    };
+
+    fetchData();
+  }, [setCardsFromServer, setCardsCopy, setUserData]);
+
   if (!cardsFromServer || !cardsFromServer.length) {
+    return <Typography>Could not find any card</Typography>;
   }
 
   const handleShowMore = () => {
@@ -94,17 +103,17 @@ const HomePage = () => {
   };
 
   return (
-    <Grid container spacing={2} mt={7}>
-      <Grid container>
+    <Grid container spacing={2} mt={2}>
+      <Fragment>
         <PageHeader
-          title="Cards Page"
-          subtitle="Cards, cards, cards - cards are practically everywhere. Pay attention and you’ll start noticing that most of the apps and platforms these days use UI cards in one or another way."
+          title="Card's Page"
+          subtitle="Cards, cards, cards - cards are practically everywhere. Pay attention and you will start noticing that most of the apps and platforms these days use UI cards in one or another way."
           paragraph="UI cards are great. Designers love them, developers love them, users
           love them. But is card UI design really a one-size-fits-all solution?
-          Here’s where you need to decide. With skilled designers, cards really
+          Here is where you need to decide. With skilled designers, cards really
           can make wonders for almost any web or mobile app"
         />
-      </Grid>
+      </Fragment>
       {cardsFromServer.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent

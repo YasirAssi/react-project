@@ -27,7 +27,7 @@ const FavPage = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
   };
 
-  const handleDeleteCard = (id) => {
+  const handleDeleteCard = () => {
     setFavCards((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );
