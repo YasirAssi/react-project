@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -34,16 +34,11 @@ const themes = tmc({
 const darkMode = createTheme(themes.dark);
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
 
   const handleThemeChange = (event) => {
     onThemeChange(event.target.checked);
-  };
-
-  const handleCloseDrawerClick = () => {
-    setIsOpen(false);
   };
 
   const handleLogOut = async () => {

@@ -10,6 +10,7 @@ import LogInContext from "../store/loginContext";
 import ROUTES from "../routes/ROUTES";
 import useHandleFavClick from "../hooks/useHandleFav";
 import PlusOneIcon from "@mui/icons-material/PlusOne";
+// import { jwtDecode } from "jwt-decode";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -22,6 +23,8 @@ const MyCardsPage = () => {
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
   const { handleFavClick } = useHandleFavClick();
+
+  // const userData = jwtDecode(sessionStorage.getItem("token"));
 
   useEffect(() => {
     const fetchData = async () => {

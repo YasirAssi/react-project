@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../store/getCardsContext";
-import { jwtDecode } from "jwt-decode";
 import LogInContext from "../store/loginContext";
 import useHandleFavClick from "../hooks/useHandleFav";
 import useHandleEditCard from "../hooks/useHandleEdit";
@@ -18,8 +17,6 @@ const handlePhoneCard = (phone) => {
 const FavPage = () => {
   let { favCards, setFavCards } = useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
-
-  const userData = jwtDecode(localStorage.getItem("token"));
 
   let { id } = useParams();
   const { logIn } = useContext(LogInContext);
@@ -69,7 +66,7 @@ const FavPage = () => {
     };
 
     fetchData();
-  }, [setFavCards, userData, logIn, id]);
+  }, [setFavCards, logIn, id]);
 
   if (!favCards || favCards.length === 0) {
     return <Typography>Could Not Find Items</Typography>;

@@ -2,12 +2,13 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import LogInContext from "../store/loginContext";
+import { getToken } from "../services/storageService";
 
 const useAutoLogin = () => {
   const { setLogIn } = useContext(LogInContext);
   const [finishAutoLogin, setFinishAutoLogin] = useState(false);
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       setFinishAutoLogin(true);
       return;

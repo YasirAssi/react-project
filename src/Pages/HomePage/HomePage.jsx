@@ -1,4 +1,4 @@
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
@@ -11,6 +11,8 @@ import LogInContext from "../../store/loginContext";
 import { jwtDecode } from "jwt-decode";
 import useHandleFavClick from "../../hooks/useHandleFav";
 import useHandleEditCard from "../../hooks/useHandleEdit";
+import { getToken } from "../../services/storageService";
+import PageHeader from "../../Layout/header/PageHeader";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -36,7 +38,7 @@ const HomePage = () => {
       .catch((err) => {
         console.log("error from axios", err);
       });
-    let token = localStorage.getItem("token");
+    let token = getToken();
     if (token) {
       const userData = jwtDecode(token);
       setUserData(userData);
@@ -93,6 +95,16 @@ const HomePage = () => {
 
   return (
     <Grid container spacing={2} mt={7}>
+      <Grid container>
+        <PageHeader
+          title="Cards Page"
+          subtitle="Cards, cards, cards - cards are practically everywhere. Pay attention and you’ll start noticing that most of the apps and platforms these days use UI cards in one or another way."
+          paragraph="UI cards are great. Designers love them, developers love them, users
+          love them. But is card UI design really a one-size-fits-all solution?
+          Here’s where you need to decide. With skilled designers, cards really
+          can make wonders for almost any web or mobile app"
+        />
+      </Grid>
       {cardsFromServer.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent

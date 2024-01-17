@@ -26,7 +26,7 @@ import {
   validateEmailLogin,
   validatePasswordLogin,
 } from "../../validation/logInValidation";
-// import { storeToken } from "../../services/storageService";
+import { storeToken } from "../../services/storageService";
 
 const LoginPage = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -50,7 +50,7 @@ const LoginPage = () => {
         email: emailValue,
         password: passwordValue,
       });
-      localStorage.setItem("token", data);
+      storeToken(data, rememberMe);
       const userData = jwtDecode(data);
       setLogIn(userData);
       toast.success("LoggedIn Successfully!", {
