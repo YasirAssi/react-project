@@ -2,7 +2,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardComponent from "../../Component/CardComponent";
@@ -28,19 +28,15 @@ const HomePage = () => {
   const { handleFavClick } = useHandleFavClick();
   const navigate = useNavigate();
   const { handleEditClick } = useHandleEditCard();
-  let token = getToken();
-  const userData = jwtDecode(token);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await axios.get("/cards").then(({ data }) => {
-          console.log(normalizeFav(data));
           setCardsFromServer(normalizeFav(data));
           setCardsCopy(normalizeFav(data));
         });
       } catch (error) {
-        console.error("Error from axios", error);
         return <Typography>Error,Could not find any card</Typography>;
       }
     };
@@ -48,10 +44,9 @@ const HomePage = () => {
     fetchData();
   }, [setCardsFromServer, setCardsCopy]);
 
-  let dataFromServerFiltered = normalizeFav(
-    cardsFromServer,
-    logIn ? logIn._id : undefined
-  );
+  const dataFromServerFiltered = useMemo(() => {
+    return normalizeFav(cardsFromServer, logIn ? logIn._id : undefined);
+  }, [cardsFromServer, logIn]);
 
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any card</Typography>;
@@ -67,10 +62,7 @@ const HomePage = () => {
 
   const handleDeleteCard = (id) => {
     const card = cardsFromServer.find((item) => item._id === id);
-    if (
-      logIn &&
-      (logIn.isAdmin || (logIn.isBusiness && card.user_id === userData._id))
-    ) {
+    if (logIn && (logIn.isAdmin || logIn.isBusiness)) {
       setCardsFromServer((currentDataFromServer) =>
         currentDataFromServer.filter((card) => card._id !== id)
       );
@@ -101,20 +93,6 @@ const HomePage = () => {
 
   const handleFavCard = async (id) => {
     handleFavClick(id);
-    // try {
-    //   let { data } = await axios.patch("/cards/" + id);
-    //   console.log("data from axios (patch)", data);
-    //   setCardsFromServer((cDataFromServer) => {
-    //     let cardIndex = cDataFromServer.findIndex((card) => card._id === id);
-    //     if (cardIndex >= 0) {
-    //       cDataFromServer[cardIndex] = data;
-    //     }
-    //     return [...cDataFromServer];
-    //   });
-    //   //update cards from server
-    // } catch (err) {
-    //   console.log("error from axios (like)", err);
-    // }
   };
 
   return (

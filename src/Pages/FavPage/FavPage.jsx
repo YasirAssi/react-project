@@ -2,13 +2,14 @@ import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../../store/getCardsContext";
 import LogInContext from "../../store/loginContext";
 import useHandleFavClick from "../../hooks/useHandleFav";
 import useHandleEditCard from "../../hooks/useHandleEdit";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import normalizeFav from "../../services/normalizeFavs";
 
 const handlePhoneCard = (phone) => {
@@ -23,8 +24,7 @@ const FavPage = (id) => {
   const { logIn } = useContext(LogInContext);
   const { handleFavClick } = useHandleFavClick();
   const { handleEditClick } = useHandleEditCard();
-  let token = localStorage.getItem("token");
-  let userData = jwtDecode(token);
+  const { id: _id } = useParams();
 
   const handleShowMore = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
@@ -49,18 +49,13 @@ const FavPage = (id) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Current userData id:", userData._id);
-
-        if (!userData._id || !logIn) {
-          return;
-        }
-
-        await axios.get(`/cards/${userData._id}`).then(({ data }) => {
-          const normalizedData = normalizeFav(data, liked);
-          console.log(normalizeFav(data));
-          setCardsFromServer(normalizeFav(data));
-          setCardsCopy(normalizeFav(data));
-        });
+        await axios
+          .get(`/cards/${_id}`, normalizeFav(liked))
+          .then(({ data }) => {
+            console.log(normalizeFav(data));
+            setCardsFromServer(normalizeFav(data));
+            setCardsCopy(normalizeFav(data));
+          });
       } catch (error) {
         toast.error("Error fetching data", {
           position: "top-right",
@@ -76,7 +71,7 @@ const FavPage = (id) => {
     };
 
     fetchData();
-  }, [logIn, userData._id, setCardsCopy, setCardsFromServer]);
+  }, [logIn, setCardsCopy, setCardsFromServer, _id, liked]);
 
   let dataFromServerFiltered = normalizeFav(
     cardsFromServer,

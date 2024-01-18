@@ -41,7 +41,7 @@ const MyCardsPage = () => {
     };
 
     fetchData();
-  }, [setCardsFromServer]);
+  }, [setCardsFromServer, setCardsCopy]);
 
   let dataFromServerFiltered = normalizeFav(
     cardsFromServer,
