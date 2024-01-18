@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
     <Container>
-      <PageHeader title="Error 404" subtitle="Page Not Found" />
+      <PageHeader title="Error 404" subtitle="Page Not Found" paragraph="" />
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>

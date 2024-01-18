@@ -10,7 +10,6 @@ function App() {
   const [logIn, setLogIn] = useState(null);
   const [cardsFromServer, setCardsFromServer] = useState([]);
   const [cardsCopy, setCardsCopy] = useState([]);
-  const [favCards, setFavCards] = useState([]);
 
   return (
     <GetCardsContext.Provider
@@ -19,8 +18,6 @@ function App() {
         setCardsFromServer,
         setCardsCopy,
         cardsCopy,
-        setFavCards,
-        favCards,
       }}
     >
       <LogInContext.Provider value={{ logIn, setLogIn }}>

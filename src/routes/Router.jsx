@@ -11,7 +11,7 @@ import EditCardPage from "../Pages/EditCardPage";
 import CreateCardPage from "../Pages/CreateCardPage";
 import SandboxPage from "../sandbox/Pages/SandboxPage";
 import MyCardsPage from "../Pages/MyCardsPage";
-import FavPage from "../Pages/FavPage";
+import FavPage from "../Pages/FavPage/FavPage";
 
 const Router = () => {
   return (
@@ -37,7 +37,7 @@ const Router = () => {
         }
       />
       <Route
-        path={`${ROUTES.FAV}/:id?`}
+        path={ROUTES.FAV}
         element={
           <AuthGuard>
             <FavPage />

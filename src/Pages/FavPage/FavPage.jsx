@@ -1,34 +1,37 @@
 import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CardComponent from "../Component/CardComponent";
+import CardComponent from "../../Component/CardComponent";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import GetCardsContext from "../store/getCardsContext";
-import LogInContext from "../store/loginContext";
-import useHandleFavClick from "../hooks/useHandleFav";
-import useHandleEditCard from "../hooks/useHandleEdit";
+import GetCardsContext from "../../store/getCardsContext";
+import LogInContext from "../../store/loginContext";
+import useHandleFavClick from "../../hooks/useHandleFav";
+import useHandleEditCard from "../../hooks/useHandleEdit";
+import { jwtDecode } from "jwt-decode";
+import normalizeFav from "../../services/normalizeFavs";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
-const FavPage = () => {
-  let { favCards, setFavCards } = useContext(GetCardsContext);
+const FavPage = (id) => {
+  let { setCardsCopy, cardsFromServer, setCardsFromServer } =
+    useContext(GetCardsContext);
+  const [liked, setLiked] = useState("");
   const [visibleItems, setVisibleItems] = useState(4);
-
-  let { id } = useParams();
   const { logIn } = useContext(LogInContext);
   const { handleFavClick } = useHandleFavClick();
   const { handleEditClick } = useHandleEditCard();
+  let token = localStorage.getItem("token");
+  let userData = jwtDecode(token);
 
   const handleShowMore = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
   };
 
-  const handleDeleteCard = () => {
-    setFavCards((currentDataFromServer) =>
+  const handleDeleteCard = (id) => {
+    setCardsFromServer((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );
     toast("🦄 Card Is Deleted", {
@@ -46,11 +49,18 @@ const FavPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!id || !logIn) {
+        console.log("Current userData id:", userData._id);
+
+        if (!userData._id || !logIn) {
           return;
         }
-        const response = await axios.get(`/cards/${id}`);
-        setFavCards(response.data);
+
+        await axios.get(`/cards/${userData._id}`).then(({ data }) => {
+          const normalizedData = normalizeFav(data, liked);
+          console.log(normalizeFav(data));
+          setCardsFromServer(normalizeFav(data));
+          setCardsCopy(normalizeFav(data));
+        });
       } catch (error) {
         toast.error("Error fetching data", {
           position: "top-right",
@@ -66,9 +76,14 @@ const FavPage = () => {
     };
 
     fetchData();
-  }, [setFavCards, logIn, id]);
+  }, [logIn, userData._id, setCardsCopy, setCardsFromServer]);
 
-  if (!favCards || favCards.length === 0) {
+  let dataFromServerFiltered = normalizeFav(
+    cardsFromServer,
+    logIn ? logIn._id : undefined
+  );
+
+  if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could Not Find Items</Typography>;
   }
 
@@ -76,13 +91,13 @@ const FavPage = () => {
     handleEditClick(id);
   };
 
-  const handleFavCard = (id) => {
+  const handleFavCard = async (id) => {
     handleFavClick(id);
   };
 
   return (
     <Grid container spacing={2} mt={7}>
-      {favCards.slice(0, visibleItems).map((item, index) => (
+      {cardsFromServer.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}
@@ -96,7 +111,7 @@ const FavPage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
-            isFav={favCards.some((card) => card._id === item._id)}
+            isFav={item.liked}
           />
         </Grid>
       ))}
@@ -107,7 +122,7 @@ const FavPage = () => {
         alignItems="center"
         m={3}
       >
-        {visibleItems < favCards.length && (
+        {visibleItems < dataFromServerFiltered.length && (
           <Button
             variant="contained"
             endIcon={<ExpandMoreIcon />}

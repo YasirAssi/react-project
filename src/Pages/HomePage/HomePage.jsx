@@ -1,18 +1,19 @@
-import { Grid, Button, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CardComponent from "../../Component/CardComponent";
+import { Button, Grid, Typography } from "@mui/material";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
-import GetCardsContext from "../../store/getCardsContext";
-import ROUTES from "../../routes/ROUTES";
-import LogInContext from "../../store/loginContext";
-import { jwtDecode } from "jwt-decode";
-import useHandleFavClick from "../../hooks/useHandleFav";
-import useHandleEditCard from "../../hooks/useHandleEdit";
-import { getToken } from "../../services/storageService";
+import CardComponent from "../../Component/CardComponent";
 import PageHeader from "../../Layout/header/PageHeader";
+import useHandleEditCard from "../../hooks/useHandleEdit";
+import useHandleFavClick from "../../hooks/useHandleFav";
+import ROUTES from "../../routes/ROUTES";
+import normalizeFav from "../../services/normalizeFavs";
+import { getToken } from "../../services/storageService";
+import GetCardsContext from "../../store/getCardsContext";
+import LogInContext from "../../store/loginContext";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -20,29 +21,24 @@ const handlePhoneCard = (phone) => {
 
 const HomePage = () => {
   let { logIn } = useContext(LogInContext);
-  let { cardsFromServer, setCardsFromServer, setCardsCopy, favCards } =
+  let { cardsFromServer, setCardsFromServer, setCardsCopy } =
     useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(8);
-  const [userData, setUserData] = useState(null);
+
   const { handleFavClick } = useHandleFavClick();
   const navigate = useNavigate();
   const { handleEditClick } = useHandleEditCard();
+  let token = getToken();
+  const userData = jwtDecode(token);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/cards");
-        const { data } = response;
-        setCardsCopy(data);
-        setCardsFromServer(data);
-
-        // let token = localStorage.getItem("token");
-
-        let token = getToken();
-        if (token) {
-          const userData = jwtDecode(token);
-          setUserData(userData);
-        }
+        await axios.get("/cards").then(({ data }) => {
+          console.log(normalizeFav(data));
+          setCardsFromServer(normalizeFav(data));
+          setCardsCopy(normalizeFav(data));
+        });
       } catch (error) {
         console.error("Error from axios", error);
         return <Typography>Error,Could not find any card</Typography>;
@@ -50,7 +46,12 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, [setCardsFromServer, setCardsCopy, setUserData]);
+  }, [setCardsFromServer, setCardsCopy]);
+
+  let dataFromServerFiltered = normalizeFav(
+    cardsFromServer,
+    logIn ? logIn._id : undefined
+  );
 
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any card</Typography>;
@@ -98,8 +99,22 @@ const HomePage = () => {
     }
   };
 
-  const handleFavCard = (id) => {
+  const handleFavCard = async (id) => {
     handleFavClick(id);
+    // try {
+    //   let { data } = await axios.patch("/cards/" + id);
+    //   console.log("data from axios (patch)", data);
+    //   setCardsFromServer((cDataFromServer) => {
+    //     let cardIndex = cDataFromServer.findIndex((card) => card._id === id);
+    //     if (cardIndex >= 0) {
+    //       cDataFromServer[cardIndex] = data;
+    //     }
+    //     return [...cDataFromServer];
+    //   });
+    //   //update cards from server
+    // } catch (err) {
+    //   console.log("error from axios (like)", err);
+    // }
   };
 
   return (
@@ -114,7 +129,7 @@ const HomePage = () => {
           can make wonders for almost any web or mobile app"
         />
       </Fragment>
-      {cardsFromServer.slice(0, visibleItems).map((item, index) => (
+      {dataFromServerFiltered.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}
@@ -128,7 +143,7 @@ const HomePage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
-            isFav={favCards.some((card) => card._id === item._id)}
+            isFav={item.liked}
           />
         </Grid>
       ))}

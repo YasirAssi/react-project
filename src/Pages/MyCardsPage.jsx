@@ -11,13 +11,14 @@ import ROUTES from "../routes/ROUTES";
 import useHandleFavClick from "../hooks/useHandleFav";
 import PlusOneIcon from "@mui/icons-material/PlusOne";
 // import { jwtDecode } from "jwt-decode";
+import normalizeFav from "../services/normalizeFavs";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
 };
 
 const MyCardsPage = () => {
-  let { cardsFromServer, setCardsFromServer, favCards } =
+  let { cardsFromServer, setCardsFromServer, setCardsCopy } =
     useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(4);
   const { logIn } = useContext(LogInContext);
@@ -29,8 +30,11 @@ const MyCardsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/cards/my-cards");
-        setCardsFromServer(response.data);
+        await axios.get("/cards/my-cards").then(({ data }) => {
+          console.log(normalizeFav(data));
+          setCardsFromServer(normalizeFav(data));
+          setCardsCopy(normalizeFav(data));
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,6 +42,11 @@ const MyCardsPage = () => {
 
     fetchData();
   }, [setCardsFromServer]);
+
+  let dataFromServerFiltered = normalizeFav(
+    cardsFromServer,
+    logIn ? logIn._id : undefined
+  );
 
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any items</Typography>;
@@ -81,13 +90,13 @@ const MyCardsPage = () => {
     }
   };
 
-  const handleFavCard = (id) => {
+  const handleFavCard = async (id) => {
     handleFavClick(id);
   };
 
   return (
     <Grid container spacing={2} mt={7}>
-      {cardsFromServer.slice(0, visibleItems).map((item, index) => (
+      {dataFromServerFiltered.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}
@@ -101,7 +110,7 @@ const MyCardsPage = () => {
             onCall={handlePhoneCard}
             onEdit={handleEditCard}
             onFav={handleFavCard}
-            isFav={favCards.some((card) => card._id === item._id)}
+            isFav={item.liked}
           />
         </Grid>
       ))}
