@@ -23,6 +23,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import tmc from "twin-moon-color";
 import { toast } from "react-toastify";
 import LogInContext from "../../store/loginContext";
+import { getToken } from "../../services/storageService";
 import PropTypes from "prop-types";
 
 const themes = tmc({
@@ -42,7 +43,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   };
 
   const handleLogOut = async () => {
-    let token = localStorage.getItem("token");
+    let token = getToken();
     if (token) {
       localStorage.removeItem("token");
       setLogIn(false);

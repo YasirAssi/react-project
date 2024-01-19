@@ -62,8 +62,8 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
 
 PageHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  paragraph: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  paragraph: PropTypes.string,
 };
 
 export default PageHeader;

@@ -1,7 +1,6 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { Fragment, useContext, useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,9 +10,9 @@ import useHandleEditCard from "../../hooks/useHandleEdit";
 import useHandleFavClick from "../../hooks/useHandleFav";
 import ROUTES from "../../routes/ROUTES";
 import normalizeFav from "../../services/normalizeFavs";
-import { getToken } from "../../services/storageService";
 import GetCardsContext from "../../store/getCardsContext";
 import LogInContext from "../../store/loginContext";
+import useFilterdData from "../../hooks/useFilterdData";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -24,7 +23,7 @@ const HomePage = () => {
   let { cardsFromServer, setCardsFromServer, setCardsCopy } =
     useContext(GetCardsContext);
   const [visibleItems, setVisibleItems] = useState(8);
-
+  const FavFilter = useFilterdData();
   const { handleFavClick } = useHandleFavClick();
   const navigate = useNavigate();
   const { handleEditClick } = useHandleEditCard();
@@ -33,6 +32,8 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         await axios.get("/cards").then(({ data }) => {
+          console.log(normalizeFav(data));
+
           setCardsFromServer(normalizeFav(data));
           setCardsCopy(normalizeFav(data));
         });
@@ -44,9 +45,9 @@ const HomePage = () => {
     fetchData();
   }, [setCardsFromServer, setCardsCopy]);
 
-  const dataFromServerFiltered = useMemo(() => {
-    return normalizeFav(cardsFromServer, logIn ? logIn._id : undefined);
-  }, [cardsFromServer, logIn]);
+  // const dataFromServerFiltered = useMemo(() => {
+  //   return normalizeFav(cardsFromServer, logIn ? logIn._id : undefined);
+  // }, [cardsFromServer, logIn]);
 
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any card</Typography>;
@@ -61,7 +62,7 @@ const HomePage = () => {
   };
 
   const handleDeleteCard = (id) => {
-    const card = cardsFromServer.find((item) => item._id === id);
+    // const card = cardsFromServer.find((item) => item._id === id);
     if (logIn && (logIn.isAdmin || logIn.isBusiness)) {
       setCardsFromServer((currentDataFromServer) =>
         currentDataFromServer.filter((card) => card._id !== id)
@@ -107,7 +108,7 @@ const HomePage = () => {
           can make wonders for almost any web or mobile app"
         />
       </Fragment>
-      {dataFromServerFiltered.slice(0, visibleItems).map((item, index) => (
+      {FavFilter.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}

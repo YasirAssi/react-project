@@ -12,6 +12,7 @@ import useHandleFavClick from "../hooks/useHandleFav";
 import PlusOneIcon from "@mui/icons-material/PlusOne";
 // import { jwtDecode } from "jwt-decode";
 import normalizeFav from "../services/normalizeFavs";
+import useFilterdData from "../hooks/useFilterdData";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -24,6 +25,7 @@ const MyCardsPage = () => {
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
   const { handleFavClick } = useHandleFavClick();
+  const FavFilter = useFilterdData();
 
   // const userData = jwtDecode(sessionStorage.getItem("token"));
 
@@ -42,11 +44,6 @@ const MyCardsPage = () => {
 
     fetchData();
   }, [setCardsFromServer, setCardsCopy]);
-
-  let dataFromServerFiltered = normalizeFav(
-    cardsFromServer,
-    logIn ? logIn._id : undefined
-  );
 
   if (!cardsFromServer || !cardsFromServer.length) {
     return <Typography>Could not find any items</Typography>;
@@ -96,7 +93,7 @@ const MyCardsPage = () => {
 
   return (
     <Grid container spacing={2} mt={7}>
-      {dataFromServerFiltered.slice(0, visibleItems).map((item, index) => (
+      {FavFilter.slice(0, visibleItems).map((item, index) => (
         <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
           <CardComponent
             id={item._id}
