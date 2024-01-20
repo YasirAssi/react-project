@@ -1,5 +1,4 @@
 import { Grid, Typography, Button } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
 import { Fragment, useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -19,19 +18,13 @@ const handlePhoneCard = (phone) => {
 };
 
 const FavPage = () => {
-  let { setCardsCopy, cardsFromServer, setCardsFromServer } =
-    useContext(GetCardsContext);
+  let { setCardsCopy, setCardsFromServer } = useContext(GetCardsContext);
   const { logIn } = useContext(LogInContext);
-  const [visibleItems, setVisibleItems] = useState(8);
 
   const { handleFavClick } = useHandleFavClick();
   const { handleEditClick } = useHandleEditCard();
   const FavFilter = useFilterdData();
   const { handleDeleteClick } = useHandleDelete();
-
-  const handleShowMore = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
-  };
 
   useEffect(() => {
     const fetchLikes = async () => {
@@ -96,7 +89,7 @@ const FavPage = () => {
         paragraph="UI cards are great."
       />
       <Grid container spacing={2} mt={5}>
-        {FavFilter.slice(0, visibleItems).map(
+        {FavFilter.map(
           (item, index) =>
             FavFilter[index].likes.some((id) => id === logIn._id) && (
               <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
@@ -124,26 +117,14 @@ const FavPage = () => {
           alignItems="center"
           m={3}
         >
-          {visibleItems < FavFilter.length && (
-            <Button
-              variant="contained"
-              endIcon={<ExpandMoreIcon />}
-              onClick={handleShowMore}
-              color="secondary"
-            >
-              Show More Cards
-            </Button>
-          )}
-          {visibleItems > FavFilter.length && (
-            <Button
-              variant="contained"
-              endIcon={<PanToolAltIcon />}
-              onClick={scrollToTop}
-              color="secondary"
-            >
-              scroll To Top
-            </Button>
-          )}
+          <Button
+            variant="contained"
+            endIcon={<PanToolAltIcon />}
+            onClick={scrollToTop}
+            color="secondary"
+          >
+            scroll To Top
+          </Button>
         </Grid>
       </Grid>
     </Fragment>
