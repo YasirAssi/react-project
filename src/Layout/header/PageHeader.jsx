@@ -1,26 +1,14 @@
 import { Typography, Divider, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { Fragment } from "react";
 
 const PageHeader = ({ title, subtitle, paragraph }) => {
+  console.log("PageHeader is rendered with title:", title);
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing={2}
-      sx={{
-        padding: 4,
-        mt: 2,
-        backgroundPosition: "center",
-        textAlign: "center",
-        minHeight: "300px",
-        backgroundImage: `url('/assets/imgs/uiCardDesign.png')`,
-      }}
-    >
-      <Grid item md={4}>
+    <Fragment>
+      <Grid item md={6}>
         <Typography
-          variant="h1"
+          variant="h3"
           sx={{
             mb: 2,
             fontWeight: "bold",
@@ -31,32 +19,49 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
           {title}
         </Typography>
       </Grid>
-      <Grid item md={4}>
-        <Typography
-          variant="h5"
-          sx={{
-            mb: 2,
-            fontWeight: "bold",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          {subtitle}
-        </Typography>
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        sx={{
+          padding: 4,
+          mt: 2,
+          backgroundPosition: "center",
+          textAlign: "center",
+          minHeight: "300px",
+          backgroundImage: `url('/assets/imgs/uiCardDesign.png')`,
+        }}
+      >
+        <Grid item md={6}>
+          <Typography
+            variant="h5"
+            sx={{
+              mb: 2,
+              fontWeight: "bold",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            {subtitle}
+          </Typography>
+        </Grid>
+        <Grid item md={6}>
+          <Typography
+            variant="h5"
+            sx={{
+              mb: 2,
+              fontWeight: "bold",
+            }}
+          >
+            {paragraph}
+          </Typography>
+        </Grid>
+        <Divider sx={{ backgroundColor: "#fff" }} light />{" "}
       </Grid>
-      <Grid item md={4}>
-        <Typography
-          variant="h5"
-          sx={{
-            mb: 2,
-            fontWeight: "bold",
-          }}
-        >
-          {paragraph}
-        </Typography>
-      </Grid>
-      <Divider sx={{ backgroundColor: "#666" }} light />{" "}
-    </Grid>
+    </Fragment>
   );
 };
 

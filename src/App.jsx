@@ -6,7 +6,7 @@ import LogInContext from "./store/loginContext";
 import { ToastContainer } from "react-toastify";
 import GetCardsContext from "./store/getCardsContext";
 
-function App() {
+function CardifyHubApp() {
   const [logIn, setLogIn] = useState(null);
   const [cardsFromServer, setCardsFromServer] = useState([]);
   const [cardsCopy, setCardsCopy] = useState([]);
@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default CardifyHubApp;

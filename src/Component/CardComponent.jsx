@@ -11,10 +11,12 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
 import PropTypes from "prop-types";
 import { SignalCellular1Bar } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import ROUTES from "../routes/ROUTES";
 
 const CardComponent = ({
   title,
@@ -87,9 +89,11 @@ const CardComponent = ({
             </IconButton>
           </Box>
           <Box>
-            <IconButton onClick={handlePhoneClick}>
-              <LocalPhoneIcon />
-            </IconButton>
+            <Link to={ROUTES.DETAILS}>
+              <IconButton onClick={handlePhoneClick}>
+                <InfoIcon />
+              </IconButton>
+            </Link>
             <IconButton onClick={handleFavClick}>
               <StarIcon color={isFav ? "warning" : "inherit"} />
             </IconButton>

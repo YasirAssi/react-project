@@ -12,6 +12,7 @@ import CreateCardPage from "../Pages/CreateCardPage";
 import SandboxPage from "../sandbox/Pages/SandboxPage";
 import MyCardsPage from "../Pages/MyCardsPage";
 import FavPage from "../Pages/FavPage/FavPage";
+import DetailsPage from "../Pages/DetailsPage";
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutUsPage />} />
+      <Route path={ROUTES.DETAILS} element={<DetailsPage />} />
       <Route
         path={`${ROUTES.EDITCARD}/:id`}
         element={
