@@ -1,4 +1,3 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { Fragment, useContext, useEffect, useState } from "react";
@@ -10,6 +9,8 @@ import normalizeFav from "../../services/normalizeFavs";
 import GetCardsContext from "../../store/getCardsContext";
 import useFilterdData from "../../hooks/useFilterdData";
 import useHandleDelete from "../../hooks/useHandleDelete";
+import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -41,17 +42,19 @@ const HomePage = () => {
   }, [setCardsFromServer, setCardsCopy]);
 
   if (!cardsFromServer || !cardsFromServer.length) {
-    <Fragment>
-      <PageHeader
-        title="Card's Page"
-        subtitle="Cards, cards, cards - cards are practically everywhere. Pay attention and you will start noticing that most of the apps and platforms these days use UI cards in one or another way."
-        paragraph="UI cards are great. Designers love them, developers love them, users
+    return (
+      <Fragment>
+        <PageHeader
+          title="Card's Page"
+          subtitle="Cards, cards, cards - cards are practically everywhere. Pay attention and you will start noticing that most of the apps and platforms these days use UI cards in one or another way."
+          paragraph="UI cards are great. Designers love them, developers love them, users
           love them. But is card UI design really a one-size-fits-all solution?
           Here is where you need to decide. With skilled designers, cards really
           can make wonders for almost any web or mobile app"
-      />
-      return <Typography>Could not find any card</Typography>
-    </Fragment>;
+        />
+        <Typography>Could not find any card</Typography>
+      </Fragment>
+    );
   }
 
   const handleShowMore = () => {
@@ -68,6 +71,12 @@ const HomePage = () => {
 
   const handleFavCard = async (id) => {
     handleFavClick(id);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
   };
 
   return (
@@ -115,6 +124,16 @@ const HomePage = () => {
             color="secondary"
           >
             Show More Cards
+          </Button>
+        )}
+        {visibleItems > cardsFromServer.length && (
+          <Button
+            variant="contained"
+            endIcon={<PanToolAltIcon />}
+            onClick={scrollToTop}
+            color="secondary"
+          >
+            scroll To Top
           </Button>
         )}
       </Grid>

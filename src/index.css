@@ -18,3 +18,8 @@ code {
 a {
   text-decoration: none;
 }
+
+html {
+  scroll-behavior: smooth;
+  transition: scroll-behavior 0.5s ease-in-out; /* Adjust the duration (0.5s) as needed */
+}

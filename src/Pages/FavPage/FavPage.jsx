@@ -1,7 +1,7 @@
 import { Grid, Typography, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CardComponent from "../../Component/CardComponent";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../../store/getCardsContext";
@@ -11,6 +11,8 @@ import normalizeFav from "../../services/normalizeFavs";
 import useFilterdData from "../../hooks/useFilterdData";
 import useHandleDelete from "../../hooks/useHandleDelete";
 import LogInContext from "../../store/loginContext";
+import PageHeader from "../../Layout/header/PageHeader";
+import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -20,7 +22,7 @@ const FavPage = () => {
   let { setCardsCopy, cardsFromServer, setCardsFromServer } =
     useContext(GetCardsContext);
   const { logIn } = useContext(LogInContext);
-  const [visibleItems, setVisibleItems] = useState(4);
+  const [visibleItems, setVisibleItems] = useState(8);
 
   const { handleFavClick } = useHandleFavClick();
   const { handleEditClick } = useHandleEditCard();
@@ -56,8 +58,17 @@ const FavPage = () => {
     fetchLikes();
   }, [setCardsCopy, setCardsFromServer]);
 
-  if (!cardsFromServer || !cardsFromServer.length) {
-    return <Typography>Could Not Find Items</Typography>;
+  if (!FavFilter || !FavFilter.length) {
+    return (
+      <Fragment>
+        <PageHeader
+          title="Favorite Cards Page"
+          subtitle="Cards, cards, cards "
+          paragraph="UI cards are great."
+        />
+        <Typography>Could not find any card</Typography>
+      </Fragment>
+    );
   }
 
   const handleEditCard = (id) => {
@@ -71,48 +82,71 @@ const FavPage = () => {
     handleDeleteClick(id);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
+
   return (
-    <Grid container spacing={2} mt={7}>
-      {FavFilter.slice(0, visibleItems).map(
-        (item, index) =>
-          cardsFromServer[index].likes.some((id) => id === logIn._id) && (
-            <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
-              <CardComponent
-                id={item._id}
-                title={item.title}
-                subtitle={item.subtitle}
-                img={item.image.url}
-                phone={item.phone}
-                address={item.address}
-                cardNumber={item.bizNumber}
-                onDelete={handleDeleteCard}
-                onCall={handlePhoneCard}
-                onEdit={handleEditCard}
-                onFav={handleFavCard}
-                isFav={item.liked}
-              />
-            </Grid>
-          )
-      )}
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        m={3}
-      >
-        {visibleItems < cardsFromServer.length && (
-          <Button
-            variant="contained"
-            endIcon={<ExpandMoreIcon />}
-            onClick={handleShowMore}
-            color="secondary"
-          >
-            Show More Cards
-          </Button>
+    <Fragment>
+      <PageHeader
+        title="Favorite Cards Page"
+        subtitle="Cards, cards, cards "
+        paragraph="UI cards are great."
+      />
+      <Grid container spacing={2} mt={5}>
+        {FavFilter.slice(0, visibleItems).map(
+          (item, index) =>
+            FavFilter[index].likes.some((id) => id === logIn._id) && (
+              <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
+                <CardComponent
+                  id={item._id}
+                  title={item.title}
+                  subtitle={item.subtitle}
+                  img={item.image.url}
+                  phone={item.phone}
+                  address={item.address}
+                  cardNumber={item.bizNumber}
+                  onDelete={handleDeleteCard}
+                  onCall={handlePhoneCard}
+                  onEdit={handleEditCard}
+                  onFav={handleFavCard}
+                  isFav={item.liked}
+                />
+              </Grid>
+            )
         )}
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          m={3}
+        >
+          {visibleItems < FavFilter.length && (
+            <Button
+              variant="contained"
+              endIcon={<ExpandMoreIcon />}
+              onClick={handleShowMore}
+              color="secondary"
+            >
+              Show More Cards
+            </Button>
+          )}
+          {visibleItems > FavFilter.length && (
+            <Button
+              variant="contained"
+              endIcon={<PanToolAltIcon />}
+              onClick={scrollToTop}
+              color="secondary"
+            >
+              scroll To Top
+            </Button>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </Fragment>
   );
 };
 

@@ -13,6 +13,7 @@ import normalizeFav from "../services/normalizeFavs";
 import useFilterdData from "../hooks/useFilterdData";
 import PageHeader from "../Layout/header/PageHeader";
 import useHandleDelete from "../hooks/useHandleDelete";
+import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
 
 const handlePhoneCard = (phone) => {
   console.log("parent: Phone to call", phone);
@@ -89,6 +90,12 @@ const MyCardsPage = () => {
     handleFavClick(id);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
+
   return (
     <Fragment>
       <PageHeader
@@ -159,6 +166,16 @@ const MyCardsPage = () => {
               Show More Cards
             </Button>
           )}
+          {visibleItems > cardsFromServer.length && (
+            <Button
+              variant="contained"
+              endIcon={<PanToolAltIcon />}
+              onClick={scrollToTop}
+              color="secondary"
+            >
+              scroll To Top
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Fragment>
@@ -166,5 +183,3 @@ const MyCardsPage = () => {
 };
 
 export default MyCardsPage;
-
-// i dont get the PageHeader in the page
