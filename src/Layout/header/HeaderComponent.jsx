@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -25,6 +25,8 @@ import { toast } from "react-toastify";
 import LogInContext from "../../store/loginContext";
 import { getToken } from "../../services/storageService";
 import PropTypes from "prop-types";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const themes = tmc({
   "text.headerColor": "!gray",
@@ -37,10 +39,23 @@ const darkMode = createTheme(themes.dark);
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
+  const [appBarColor, setAppBarColor] = useState("#503ab7");
 
   const handleThemeChange = (event) => {
     onThemeChange(event.target.checked);
   };
+
+  const handleColorChange = (newColor) => {
+    setAppBarColor(newColor);
+    document.body.style.background = newColor;
+  };
+
+  const colorChoices = [
+    { label: "Purple", value: "#673ab7" },
+    { label: "Green", value: "#4caf50" },
+    { label: "Blue", value: "#2196f3" },
+    { label: "Red", value: "#f44336" },
+  ];
 
   const handleLogOut = async () => {
     let token = getToken();
@@ -76,13 +91,24 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        className="AppBar"
+        style={{ backgroundColor: appBarColor }}
+      >
         <Toolbar>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" }, flexGrow: 1 }}
+            sx={{
+              display: { sm: "block" },
+              flexGrow: 1,
+              fontSize: {
+                xs: "1.5rem",
+                sm: "2rem",
+              },
+            }}
           >
             CardifyHub
           </Typography>
@@ -106,10 +132,27 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             </Typography>
             <Switch checked={isDarkTheme} onChange={handleThemeChange} />
           </Box>
+          <Select
+            value={appBarColor}
+            onChange={(e) => handleColorChange(e.target.value)}
+            displayEmpty
+            inputProps={{ "aria-label": "Change Color" }}
+            sx={{
+              width: "100px",
+              height: "30px",
+              borderRadius: "5px",
+            }}
+          >
+            {colorChoices.map((choice) => (
+              <MenuItem key={choice.value} value={choice.value}>
+                {choice.label}
+              </MenuItem>
+            ))}
+          </Select>
           <Box sx={{ display: { xs: "flex" } }}>
             <Tooltip title="Account">
               <Link to={ROUTES.MYCARDS}>
-                <IconButton sx={{ p: 0 }}>
+                <IconButton sx={{ p: 0, m: 1 }}>
                   <Avatar>
                     <img
                       alt="Yasir Assi"

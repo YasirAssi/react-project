@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 import { SignalCellular1Bar } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import ROUTES from "../routes/ROUTES";
+import "../style/cardComponentStyle.css";
 
 const CardComponent = ({
   title,
@@ -49,7 +50,7 @@ const CardComponent = ({
   };
 
   return (
-    <Card square raised>
+    <Card square raised className="cards">
       <CardActionArea>
         <CardMedia
           component="img"
@@ -129,6 +130,13 @@ CardComponent.propTypes = {
 CardComponent.defaultProps = {
   img: SignalCellular1Bar,
   subtitle: "Cards HomePage",
+  phone: " 050-000-00-00",
+  address: {
+    city: " City",
+    street: "Street",
+    houseNumber: 11,
+  },
+  cardNumber: 12345,
 };
 
 export default CardComponent;

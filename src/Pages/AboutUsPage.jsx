@@ -7,7 +7,7 @@ const AboutUsPage = () => {
   return (
     <Fragment>
       <PageHeader
-        title="CardifyHub"
+        title="About Us - CardifyHub"
         subtitle="What is a UI card? Cards are UI components, basically content containers. Usually, cards contain the image, title, description, call to action, and sometimes subheadings or icons. Cards are united by the same concept where each card represents one idea, item, or piece of content."
       />
 

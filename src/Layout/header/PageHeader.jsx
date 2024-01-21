@@ -1,19 +1,23 @@
-import { Typography, Divider, Grid } from "@mui/material";
+import { Typography, Divider, Grid, Container } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment } from "react";
+import { orange, deepPurple } from "@mui/material/colors";
 
 const PageHeader = ({ title, subtitle, paragraph }) => {
   console.log("PageHeader is rendered with title:", title);
   return (
-    <Fragment>
-      <Grid item md={6}>
+    <Container>
+      <Grid container justifyContent="center" alignItems="center" md={12}>
         <Typography
-          variant="h3"
           sx={{
-            mb: 2,
+            display: "flex",
             fontWeight: "bold",
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: deepPurple[200],
+            height: "2rem",
+            padding: 5,
+            fontSize: "2rem",
           }}
         >
           {title}
@@ -22,27 +26,28 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
 
       <Grid
         container
-        direction="row"
+        direction="column"
         justifyContent="center"
         alignItems="center"
         spacing={2}
+        aria-label="uiCollection"
         sx={{
           padding: 4,
-          mt: 2,
+          mt: 1,
           backgroundPosition: "center",
           textAlign: "center",
           minHeight: "300px",
-          backgroundImage: `url('/assets/imgs/uiCardDesign.png')`,
+          backgroundImage: `url('/assets/imgs/uiCollection.png')`,
         }}
       >
         <Grid item md={6}>
           <Typography
-            variant="h5"
             sx={{
               mb: 2,
               fontWeight: "bold",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              textAlign: "justify",
+              color: orange[500],
+              fontSize: "1.5rem",
             }}
           >
             {subtitle}
@@ -50,18 +55,20 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
         </Grid>
         <Grid item md={6}>
           <Typography
-            variant="h5"
             sx={{
               mb: 2,
               fontWeight: "bold",
+              color: orange[100],
+              fontSize: "1.5rem",
             }}
           >
             {paragraph}
           </Typography>
         </Grid>
-        <Divider sx={{ backgroundColor: "#fff" }} light />{" "}
       </Grid>
-    </Fragment>
+
+      <Divider sx={{ backgroundColor: "#fff" }} light />
+    </Container>
   );
 };
 
