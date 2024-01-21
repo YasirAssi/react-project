@@ -35,17 +35,19 @@ const CreateCardPage = () => {
       navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log("error from axios", err);
-      toast.success("Somthing went wrong, please try again!", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      navigate(ROUTES.MYCARDS);
+      toast.error(
+        "Oops! It looks like there's an issue. This email is already in use. Please try a different one.",
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
     }
   };
 

@@ -1,6 +1,6 @@
 import { Grid, Typography, Button } from "@mui/material";
 import CardComponent from "../../Component/CardComponent";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../../store/getCardsContext";
