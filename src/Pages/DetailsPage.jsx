@@ -1,27 +1,8 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Container, Typography, Grid, Paper } from "@mui/material";
-import axios from "axios";
 import PageHeader from "../Layout/header/PageHeader";
 
 const DetailsPage = () => {
-  const [mapData, setMapData] = useState(null);
-  const [error, setError] = useState(null);
-  const apiKey = "AIzaSyCKxCRfh3SS1NNLIh91nbMVASCf6gB6ptY";
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=console.debug&libraries=maps,marker&v=beta${apiKey}`
-      )
-      .then((response) => {
-        setMapData(response.data.results[0]);
-      })
-      .catch((error) => {
-        console.error("Error fetching map data:", error);
-        setError(error);
-      });
-  }, []);
-
   return (
     <Container>
       <Fragment>
@@ -32,48 +13,45 @@ const DetailsPage = () => {
       </Fragment>
       <Grid container spacing={4} mt={4}>
         <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2 }}>
+          <Paper elevation={3} sx={{ padding: 2, height: "100%" }}>
             <Typography variant="h4" gutterBottom>
-              Welcome to Our Business
+              Welcome to CardifyHub
+            </Typography>
+            <Typography variant="body1" paragraph>
+              We are excited to have you visit us at the following location:
             </Typography>
             <Typography variant="body1">
-              We are delighted to serve you. Visit us at the following address:
+              <strong>Address:</strong> Yaffo Street, Kafr Bara, Building 11
             </Typography>
-            <Typography variant="body1">Street: 123 Main Street</Typography>
-            <Typography variant="body1">City: Your City</Typography>
-            <Typography variant="body1">Contact us:</Typography>
-            <Typography variant="body1">Phone: +1 (123) 456-7890</Typography>
-            <Typography variant="body1">Email: info@business.com</Typography>
+            <Typography variant="body1">
+              <strong>Phone:</strong> +972 548-195-183
+            </Typography>
+            <Typography variant="body1">
+              <strong>Email:</strong> CardifyHub@gmail.com
+            </Typography>
+            <Typography variant="body1" mt={2}>
+              Our friendly team is here to assist you. Feel free to reach out
+              for any inquiries or assistance you may need.
+            </Typography>
           </Paper>
         </Grid>
+
         <Grid item xs={12} md={6}>
-          {error ? (
-            <Paper elevation={3} sx={{ padding: 2 }}>
-              <Typography variant="h6" color="error" gutterBottom>
-                Error Fetching Map Data
-              </Typography>
-              <Typography variant="body1">
-                Please check your network connection or try again later.
-              </Typography>
-            </Paper>
-          ) : (
-            mapData && (
-              <Paper elevation={3} sx={{ padding: 2 }}>
-                <Typography variant="h6" gutterBottom>
-                  Our Location on Google Maps
-                </Typography>
-                <iframe
-                  title="Business Location"
-                  width="100%"
-                  height="300"
-                  frameBorder="0"
-                  style={{ border: 0 }}
-                  src={`https://www.google.com/maps/embed/v1/place?q=${mapData.geometry.location.lat},${mapData.geometry.location.lng}&key=${apiKey}`}
-                  allowFullScreen
-                ></iframe>
-              </Paper>
-            )
-          )}
+          <Paper elevation={3} sx={{ padding: 2, height: "100%" }}>
+            <Typography variant="h6" gutterBottom>
+              Our Location on Google Maps
+            </Typography>
+            <iframe
+              title="CardifyHub Location"
+              src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d5682.185132361709!2d34.962328527035375!3d32.132820959372026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x151d30a717585cdb%3A0xf1309e20c3fb3da2!2z15nXpNeVLCBLYWZyIEJhcmE!3m2!1d32.13129!2d34.965828099999996!5e0!3m2!1sen!2sil!4v1705929133403!5m2!1sen!2sil"
+              width="100%"
+              height="80%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </Paper>
         </Grid>
       </Grid>
     </Container>
