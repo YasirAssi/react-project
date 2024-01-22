@@ -1,5 +1,6 @@
 const normalizeDetails = (data) => {
   return {
+    _id: data._id,
     title: data.title,
     subtitle: data.subtitle,
     description: data.description,

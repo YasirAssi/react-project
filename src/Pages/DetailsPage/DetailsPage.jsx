@@ -14,7 +14,6 @@ const DetailsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(_id);
       if (!_id) return;
 
       try {

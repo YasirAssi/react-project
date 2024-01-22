@@ -116,11 +116,11 @@ CardComponent.propTypes = {
     zip: PropTypes.number.isRequired,
   }).isRequired,
   cardNumber: PropTypes.number.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  Info: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onFav: PropTypes.func.isRequired,
-  isFav: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func,
+  Info: PropTypes.func,
+  onEdit: PropTypes.func,
+  onFav: PropTypes.func,
+  isFav: PropTypes.bool,
 };
 
 CardComponent.defaultProps = {
