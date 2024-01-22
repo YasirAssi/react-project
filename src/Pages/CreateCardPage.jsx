@@ -34,7 +34,6 @@ const CreateCardPage = () => {
       });
       navigate(ROUTES.MYCARDS);
     } catch (err) {
-      console.log("error from axios", err);
       toast.error(
         "Oops! It looks like there's an issue. This email is already in use. Please try a different one.",
         {

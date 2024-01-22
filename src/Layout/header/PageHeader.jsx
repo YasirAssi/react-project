@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { orange, deepPurple } from "@mui/material/colors";
 
 const PageHeader = ({ title, subtitle, paragraph }) => {
-  console.log("PageHeader is rendered with title:", title);
   return (
     <Container>
-      <Grid container justifyContent="center" alignItems="center" md={12}>
+      <Grid container item justifyContent="center" alignItems="center" md={12}>
         <Typography
           sx={{
             display: "flex",

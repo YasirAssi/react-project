@@ -15,10 +15,6 @@ import PageHeader from "../Layout/header/PageHeader";
 import useHandleDelete from "../hooks/useHandleDelete";
 import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
 
-const handlePhoneCard = (phone) => {
-  console.log("parent: Phone to call", phone);
-};
-
 const MyCardsPage = () => {
   let { cardsFromServer, setCardsFromServer, setCardsCopy } =
     useContext(GetCardsContext);
@@ -32,7 +28,6 @@ const MyCardsPage = () => {
     const fetchData = async () => {
       try {
         await axios.get("/cards/my-cards").then(({ data }) => {
-          console.log(normalizeFav(data));
           setCardsFromServer(normalizeFav(data));
           setCardsCopy(normalizeFav(data));
         });
@@ -90,6 +85,10 @@ const MyCardsPage = () => {
     handleFavClick(id);
   };
 
+  const handleInfoClick = (id) => {
+    navigate(`${ROUTES.DETAILS}/${id}`);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -124,21 +123,21 @@ const MyCardsPage = () => {
       </Tooltip>
 
       <Grid container spacing={2} mt={7}>
-        {FavFilter.slice(0, visibleItems).map((item, index) => (
+        {FavFilter.slice(0, visibleItems).map((card, index) => (
           <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
             <CardComponent
-              id={item._id}
-              title={item.title}
-              subtitle={item.subtitle}
-              img={item.image.url}
-              phone={item.phone}
-              address={item.address}
-              cardNumber={item.bizNumber}
+              id={card._id}
+              title={card.title}
+              subtitle={card.subtitle}
+              img={card.image.url}
+              phone={card.phone}
+              address={card.address}
+              cardNumber={card.bizNumber}
               onDelete={handleDeleteCard}
-              onCall={handlePhoneCard}
+              Info={handleInfoClick}
               onEdit={handleEditCard}
               onFav={handleFavCard}
-              isFav={item.liked}
+              isFav={card.liked}
             />
           </Grid>
         ))}

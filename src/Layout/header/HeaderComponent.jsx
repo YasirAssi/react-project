@@ -39,7 +39,7 @@ const darkMode = createTheme(themes.dark);
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
-  const [appBarColor, setAppBarColor] = useState("#503ab7");
+  const [appBarColor, setAppBarColor] = useState("#673ab7");
 
   const handleThemeChange = (event) => {
     onThemeChange(event.target.checked);

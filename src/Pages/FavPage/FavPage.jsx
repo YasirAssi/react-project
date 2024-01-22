@@ -1,6 +1,7 @@
 import { Grid, Typography, Button } from "@mui/material";
 import CardComponent from "../../Component/CardComponent";
 import { Fragment, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GetCardsContext from "../../store/getCardsContext";
@@ -12,15 +13,12 @@ import useHandleDelete from "../../hooks/useHandleDelete";
 import LogInContext from "../../store/loginContext";
 import PageHeader from "../../Layout/header/PageHeader";
 import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
-
-const handlePhoneCard = (phone) => {
-  console.log("parent: Phone to call", phone);
-};
+import ROUTES from "../../routes/ROUTES";
 
 const FavPage = () => {
   let { setCardsCopy, setCardsFromServer } = useContext(GetCardsContext);
   const { logIn } = useContext(LogInContext);
-
+  const navigate = useNavigate();
   const { handleFavClick } = useHandleFavClick();
   const { handleEditClick } = useHandleEditCard();
   const FavFilter = useFilterdData();
@@ -30,7 +28,6 @@ const FavPage = () => {
     const fetchLikes = async () => {
       try {
         await axios.get("/cards").then(({ data }) => {
-          console.log(normalizeFav(data));
           setCardsFromServer(normalizeFav(data));
           setCardsCopy(normalizeFav(data));
         });
@@ -75,6 +72,10 @@ const FavPage = () => {
     handleDeleteClick(id);
   };
 
+  const handleInfoClick = (id) => {
+    navigate(`${ROUTES.DETAILS}/${id}`);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -90,22 +91,22 @@ const FavPage = () => {
       />
       <Grid container spacing={2} mt={5}>
         {FavFilter.map(
-          (item, index) =>
+          (card, index) =>
             FavFilter[index].likes.some((id) => id === logIn._id) && (
               <Grid item lg={3} md={3} xs={12} key={"carsCard" + index}>
                 <CardComponent
-                  id={item._id}
-                  title={item.title}
-                  subtitle={item.subtitle}
-                  img={item.image.url}
-                  phone={item.phone}
-                  address={item.address}
-                  cardNumber={item.bizNumber}
+                  id={card._id}
+                  title={card.title}
+                  subtitle={card.subtitle}
+                  img={card.image.url}
+                  phone={card.phone}
+                  address={card.address}
+                  cardNumber={card.bizNumber}
                   onDelete={handleDeleteCard}
-                  onCall={handlePhoneCard}
+                  Info={handleInfoClick}
                   onEdit={handleEditCard}
                   onFav={handleFavCard}
-                  isFav={item.liked}
+                  isFav={card.liked}
                 />
               </Grid>
             )

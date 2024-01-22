@@ -24,7 +24,6 @@ const EditCardPage = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(`cards/${id}`, toServer(inputsValue));
-      console.log("Axios response:", data);
       toast.success(
         "Your card has been successfully edited. Check out your updated information!",
         {

@@ -15,8 +15,6 @@ const useHandleDelete = () => {
     const fetchData = async () => {
       try {
         await axios.delete("/cards/" + id).then(({ data }) => {
-          console.log("data", data);
-          console.log("data from axios (delete)", data);
           setCardsFromServer((currentCardsFromServer) => {
             return currentCardsFromServer.filter((card) => card._id !== id);
           });

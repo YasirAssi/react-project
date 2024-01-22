@@ -7,7 +7,6 @@ const useHandleFavClick = () => {
   const handleFavClick = async (id) => {
     try {
       let { data } = await axios.patch("/cards/" + id);
-      console.log("data from axios (patch)", data);
       setCardsFromServer((cDataFromServer) => {
         let cardIndex = cDataFromServer.findIndex((card) => card._id === id);
         if (cardIndex >= 0) {

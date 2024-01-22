@@ -82,7 +82,6 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Checked:", checked);
     try {
       await axios.post("/users", normalizeRegister(inputsValue, checked));
       toast.success("Registered Successfully", {

@@ -15,8 +15,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
 import PropTypes from "prop-types";
 import { SignalCellular1Bar } from "@mui/icons-material";
-import { Link } from "react-router-dom";
-import ROUTES from "../routes/ROUTES";
 import "../style/cardComponentStyle.css";
 
 const CardComponent = ({
@@ -28,7 +26,7 @@ const CardComponent = ({
   cardNumber,
   id,
   onDelete,
-  onCall,
+  Info,
   onEdit,
   onFav,
   isFav,
@@ -37,8 +35,8 @@ const CardComponent = ({
     onDelete(id);
   };
 
-  const handlePhoneClick = () => {
-    onCall(phone);
+  const handleInfoClick = () => {
+    Info(id);
   };
 
   const handleFavClick = () => {
@@ -90,11 +88,9 @@ const CardComponent = ({
             </IconButton>
           </Box>
           <Box>
-            <Link to={ROUTES.DETAILS}>
-              <IconButton onClick={handlePhoneClick}>
-                <InfoIcon />
-              </IconButton>
-            </Link>
+            <IconButton onClick={handleInfoClick}>
+              <InfoIcon />
+            </IconButton>
             <IconButton onClick={handleFavClick}>
               <StarIcon color={isFav ? "warning" : "inherit"} />
             </IconButton>
@@ -121,7 +117,7 @@ CardComponent.propTypes = {
   }).isRequired,
   cardNumber: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onCall: PropTypes.func.isRequired,
+  Info: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onFav: PropTypes.func.isRequired,
   isFav: PropTypes.bool.isRequired,
