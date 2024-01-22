@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Typography, Grid, Paper } from "@mui/material";
 import PageHeader from "../../Layout/header/PageHeader";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import CardComponent from "../../Component/CardComponent";
 import normalizeDetails from "./normalizeDetails";
 
@@ -27,11 +26,6 @@ const DetailsPage = () => {
 
     fetchData();
   }, [_id]);
-
-  const location = {
-    lat: 32.13147290769876,
-    lng: 34.96580113830216,
-  };
 
   return (
     <Container>
@@ -90,7 +84,7 @@ const DetailsPage = () => {
           </Paper>
         </Grid>
 
-        {/* <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ padding: 2, height: "100%" }}>
             <Typography variant="h6" gutterBottom>
               Our Location on Google Maps
@@ -107,23 +101,6 @@ const DetailsPage = () => {
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
-          </Paper>
-        </Grid> */}
-
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2, height: "100%" }}>
-            <Typography variant="h6" gutterBottom>
-              Our Location on Google Maps
-            </Typography>
-            <LoadScript googleMapsApiKey="AIzaSyCKxCRfh3SS1NNLIh91nbMVASCf6gB6ptY">
-              <GoogleMap
-                center={location}
-                zoom={15}
-                mapContainerStyle={{ height: "80%", width: "100%" }}
-              >
-                <Marker position={location} label="CardifyHub" />
-              </GoogleMap>
-            </LoadScript>
           </Paper>
         </Grid>
       </Grid>
