@@ -28,18 +28,18 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        spacing={2}
+        spacing={1}
         aria-label="uiCollection"
         sx={{
           padding: 4,
           mt: 1,
           backgroundPosition: "center",
           textAlign: "center",
-          minHeight: "300px",
+          minHeight: "100px",
           backgroundImage: `url('/assets/imgs/uiCollection.png')`,
         }}
       >
-        <Grid item md={6}>
+        <Grid item md={6} xs={12}>
           <Typography
             sx={{
               mb: 2,

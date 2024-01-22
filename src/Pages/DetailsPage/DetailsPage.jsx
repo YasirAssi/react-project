@@ -40,57 +40,73 @@ const DetailsPage = () => {
           subtitle="What is a UI card? Cards are UI components, basically content containers. Usually, cards contain the image, title, description, call to action, and sometimes subheadings or icons. Cards are united by the same concept where each card represents one idea, item, or piece of content."
         />
       </Fragment>
-      {cardsFromServer.map((card, index) => (
-        <Grid
-          container
-          item
-          xs={12}
-          key={"carsCard" + index}
-          justifyContent="center"
-          alignItems="center"
-          mt={2}
-        >
-          <CardComponent
-            id={card._id}
-            title={card.title}
-            subtitle={card.subtitle}
-            img={card.url}
-            phone={card.phone}
-            address={card.address}
-            cardNumber={card.bizNumber}
-          />
-        </Grid>
-      ))}
-      <Grid container spacing={4} mt={4}>
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2, height: "100%" }}>
-            <Typography variant="h4" gutterBottom>
-              Welcome to {`${cardsFromServer[0]?.title || ""}`}
-            </Typography>
-            <Typography variant="body1" paragraph>
-              We are excited to have you visit us at the following location:
-            </Typography>
-            <Typography variant="body1">
-              <strong>Address:</strong>{" "}
-              {`${cardsFromServer[0]?.address?.street || ""}, ${
-                cardsFromServer[0]?.address?.city || ""
-              }, ${cardsFromServer[0]?.address?.country || ""}`}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Phone:</strong> {`${cardsFromServer[0]?.phone || ""}`}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Email:</strong> {`${cardsFromServer[0]?.email || ""}`}
-            </Typography>
-            <Typography variant="body1" mt={2}>
-              Our friendly team is here to assist you. Feel free to reach out
-              for any inquiries or assistance you may need.
-            </Typography>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2, height: "100%" }}>
+      <Grid container spacing={2} mt={2}>
+        {cardsFromServer.map((card, index) => (
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            key={"carsCard" + index}
+            justifyContent="center"
+            alignItems="center"
+            m={2}
+          >
+            <CardComponent
+              id={card._id}
+              title={card.title}
+              subtitle={card.subtitle}
+              img={card.url}
+              phone={card.phone}
+              address={card.address}
+              cardNumber={card.bizNumber}
+            />
+            <Grid item xs={12} md={6}>
+              <Paper
+                elevation={3}
+                sx={{
+                  padding: 2,
+                  height: "100%",
+                  margin: 2,
+                  background: "linear-gradient(45deg, #3498db, #8e44ad)",
+                  transition: "background 0.3s",
+                  cursor: "pointer",
+                  "&:hover": {
+                    border: "2px solid #3498db",
+                    transform: "scale(1.05) rotateZ(0deg)",
+                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+                  },
+                  borderRadius: "15px",
+                }}
+              >
+                <Typography variant="h4" gutterBottom>
+                  Welcome to {`${cardsFromServer[0]?.title || ""}`}
+                </Typography>
+                <Typography variant="body1" paragraph>
+                  We are excited to have you visit us at the following location:
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Address:</strong>{" "}
+                  {`${cardsFromServer[0].address.street || ""}, ${
+                    cardsFromServer[0].address.city || ""
+                  }, ${cardsFromServer[0].address.country || ""}`}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Phone:</strong> {`${cardsFromServer[0].phone || ""}`}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Email:</strong> {`${cardsFromServer[0].email || ""}`}
+                </Typography>
+                <Typography variant="body1" mt={2}>
+                  Our friendly team is here to assist you. Feel free to reach
+                  out for any inquiries or assistance you may need.
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        ))}
+        <Grid item xs={12} md={12} mb={3}>
+          <Paper elevation={3} sx={{ padding: 2, height: "400px" }}>
             <Typography variant="h6" gutterBottom>
               Our Location on Google Maps
             </Typography>
@@ -98,7 +114,7 @@ const DetailsPage = () => {
               <GoogleMap
                 center={location}
                 zoom={15}
-                mapContainerStyle={{ height: "80%", width: "100%" }}
+                mapContainerStyle={{ height: "100%", width: "100%" }}
               >
                 <Marker position={location} label="CardifyHub" />
               </GoogleMap>
