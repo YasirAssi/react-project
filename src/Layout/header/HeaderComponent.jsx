@@ -61,6 +61,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     let token = getToken();
     if (token) {
       localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       setLogIn(false);
       toast(" You're Logged Out", {
         position: "top-right",
@@ -98,6 +99,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       >
         <Toolbar>
           <Typography
+            variant="h6"
             noWrap
             component="div"
             sx={{
