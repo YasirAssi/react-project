@@ -1,4 +1,5 @@
 import { Link, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
 const CopyrightComponent = (props) => {
   return (
@@ -16,6 +17,10 @@ const CopyrightComponent = (props) => {
       {"."}
     </Typography>
   );
+};
+
+CopyrightComponent.propTypes = {
+  props: PropTypes.any,
 };
 
 export default CopyrightComponent;
