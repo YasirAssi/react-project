@@ -96,18 +96,16 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         position="static"
         className="AppBar"
         style={{ backgroundColor: appBarColor }}
+        sx={{ fontSize: "14px" }}
       >
         <Toolbar>
           <Typography
-            variant="h6"
-            noWrap
-            component="div"
             sx={{
               display: { sm: "block" },
               flexGrow: 1,
               fontSize: {
-                xs: "1.5rem",
-                sm: "2rem",
+                xs: "1rem",
+                sm: "1.2rem",
               },
             }}
           >
