@@ -1,20 +1,20 @@
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import LogInContext from "../store/loginContext";
-import PropTypes from "prop-types";
 import ROUTES from "../routes/ROUTES";
+import PropTypes from "prop-types";
 
-const BizGuard = ({ children }) => {
+const AdminGuard = ({ children }) => {
   const { logIn } = useContext(LogInContext);
-  if ((logIn && logIn.isBusiness) || logIn.isAdmin) {
+  if (logIn && logIn.isAdmin) {
     return children;
   } else {
-    return <Navigate to={ROUTES.HOME} />;
+    return <Navigate to={ROUTES.LOGIN} />;
   }
 };
 
-BizGuard.prototype = {
+AdminGuard.prototype = {
   children: PropTypes.node.isRequired,
 };
 
-export default BizGuard;
+export default AdminGuard;

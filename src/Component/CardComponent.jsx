@@ -108,7 +108,7 @@ CardComponent.propTypes = {
   img: PropTypes.string,
   phone: PropTypes.string.isRequired,
   address: PropTypes.shape({
-    state: PropTypes.string.isRequired,
+    state: PropTypes.string,
     country: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     street: PropTypes.string.isRequired,

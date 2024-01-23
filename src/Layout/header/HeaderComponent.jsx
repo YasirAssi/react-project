@@ -98,7 +98,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       >
         <Toolbar>
           <Typography
-            variant="h6"
             noWrap
             component="div"
             sx={{

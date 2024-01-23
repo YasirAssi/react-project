@@ -9,10 +9,11 @@ import ErrorPage from "../Pages/ErrorPage";
 import AboutUsPage from "./../Pages/AboutUsPage";
 import EditCardPage from "../Pages/EditCardPage";
 import CreateCardPage from "../Pages/CreateCardPage";
-import SandboxPage from "../sandbox/Pages/SandboxPage";
+import SandboxPage from "../sandbox/SandboxPage";
 import MyCardsPage from "../Pages/MyCardsPage";
 import FavPage from "../Pages/FavPage/FavPage";
 import DetailsPage from "../Pages/DetailsPage/DetailsPage";
+import AdminGuard from "../guard/adminGuard";
 
 const Router = () => {
   return (
@@ -54,7 +55,14 @@ const Router = () => {
           </BizGuard>
         }
       />
-      <Route path={ROUTES.SANDBOX} element={<SandboxPage />}></Route>
+      <Route
+        path={ROUTES.SANDBOX}
+        element={
+          <AdminGuard>
+            <SandboxPage />
+          </AdminGuard>
+        }
+      ></Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

@@ -6,9 +6,11 @@ const loggedInLinks = [{ to: ROUTES.FAV, children: "FavCards 🌟" }];
 
 const bizLinks = [{ to: ROUTES.MYCARDS, children: "MYCARDS" }];
 
+const adminLinks = [{ to: ROUTES.SANDBOX, children: "UserManage" }];
+
 const loggedOutLinks = [
   { to: ROUTES.REGISTER, children: "Register page" },
   { to: ROUTES.LOGIN, children: "Login page" },
 ];
 
-export { alwaysLinks, loggedInLinks, loggedOutLinks, bizLinks };
+export { alwaysLinks, loggedInLinks, loggedOutLinks, bizLinks, adminLinks };
