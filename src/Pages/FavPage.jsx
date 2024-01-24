@@ -1,19 +1,19 @@
 import { Grid, Typography, Button } from "@mui/material";
-import CardComponent from "../../Component/CardComponent";
+import CardComponent from "../Component/CardComponent";
 import { Fragment, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import GetCardsContext from "../../store/getCardsContext";
-import useHandleFavClick from "../../hooks/useHandleFav";
-import useHandleEditCard from "../../hooks/useHandleEdit";
-import normalizeFav from "../../services/normalizeFavs";
-import useFilterdData from "../../hooks/useFilterdData";
-import useHandleDelete from "../../hooks/useHandleDelete";
-import LogInContext from "../../store/loginContext";
-import PageHeader from "../../Layout/header/PageHeader";
+import GetCardsContext from "../store/getCardsContext";
+import useHandleFavClick from "../hooks/useHandleFav";
+import useHandleEditCard from "../hooks/useHandleEdit";
+import normalizeFav from "../services/normalizeFavs";
+import useFilterdData from "../hooks/useFilterdData";
+import useHandleDelete from "../hooks/useHandleDelete";
+import LogInContext from "../store/loginContext";
+import PageHeader from "../Layout/header/PageHeader";
 import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
-import ROUTES from "../../routes/ROUTES";
+import ROUTES from "../routes/ROUTES";
 
 const FavPage = () => {
   let { setCardsCopy, setCardsFromServer } = useContext(GetCardsContext);

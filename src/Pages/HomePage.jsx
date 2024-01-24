@@ -2,17 +2,17 @@ import { Button, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CardComponent from "../../Component/CardComponent";
-import PageHeader from "../../Layout/header/PageHeader";
-import useHandleEditCard from "../../hooks/useHandleEdit";
-import useHandleFavClick from "../../hooks/useHandleFav";
-import normalizeFav from "../../services/normalizeFavs";
-import GetCardsContext from "../../store/getCardsContext";
-import useFilterdData from "../../hooks/useFilterdData";
-import useHandleDelete from "../../hooks/useHandleDelete";
+import CardComponent from "../Component/CardComponent";
+import PageHeader from "../Layout/header/PageHeader";
+import useHandleEditCard from "../hooks/useHandleEdit";
+import useHandleFavClick from "../hooks/useHandleFav";
+import normalizeFav from "../services/normalizeFavs";
+import GetCardsContext from "../store/getCardsContext";
+import useFilterdData from "../hooks/useFilterdData";
+import useHandleDelete from "../hooks/useHandleDelete";
 import PanToolAltIcon from "@mui/icons-material/PanToolAlt";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ROUTES from "../../routes/ROUTES";
+import ROUTES from "../routes/ROUTES";
 
 const HomePage = () => {
   let { cardsFromServer, setCardsFromServer, setCardsCopy } =

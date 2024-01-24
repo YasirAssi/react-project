@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import ROUTES from "./ROUTES";
-import HomePage from "../Pages/HomePage/HomePage";
+import HomePage from "../Pages/HomePage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import AuthGuard from "../guard/AuthGuard";
@@ -11,11 +11,11 @@ import EditCardPage from "../Pages/EditCardPage";
 import CreateCardPage from "../Pages/CreateCardPage";
 import SandboxPage from "../sandbox/SandboxPage";
 import MyCardsPage from "../Pages/MyCardsPage";
-import FavPage from "../Pages/FavPage/FavPage";
+import FavPage from "../Pages/FavPage";
 import DetailsPage from "../Pages/DetailsPage/DetailsPage";
 import AdminGuard from "../guard/adminGuard";
 import ProfilePage from "../Pages/ProfilePage";
-import EditUserPage from "../Pages/EditUser/EditUserPage";
+import EditUserPage from "../Pages/EditUserPage";
 
 const Router = () => {
   return (

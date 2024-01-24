@@ -11,11 +11,11 @@ import {
   Typography,
   Alert,
 } from "@mui/material";
-import TextContent from "../../Component/TextContent";
+import TextContent from "../Component/TextContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import ROUTES from "../../routes/ROUTES";
-import normalizeRegister from "../RegisterPage/normalizeRegister";
-import { validateSchema } from "../../validation/registerationValidation";
+import ROUTES from "../routes/ROUTES";
+import normalizeRegister from "./RegisterPage/normalizeRegister";
+import { validateSchema } from "../validation/registerationValidation";
 import { toast } from "react-toastify";
 
 const EditUserPage = () => {
@@ -97,8 +97,8 @@ const EditUserPage = () => {
   };
 
   const handleDiscard = () => {
-    setInputsValue((cInputsValue) => {
-      const clearedInputs = Object.keys(cInputsValue).reduce((acc, key) => {
+    setInputsValue((copyInputsValue) => {
+      const clearedInputs = Object.keys(copyInputsValue).reduce((acc, key) => {
         acc[key] = "";
         return acc;
       }, {});

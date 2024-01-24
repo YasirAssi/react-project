@@ -43,6 +43,7 @@ const LoginPage = () => {
   const handlePasswordChange = (e) => {
     setPasswordValue(e.target.value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -70,6 +71,7 @@ const LoginPage = () => {
       localStorage.clear();
     }
   };
+
   const handleEmailBlur = () => {
     let dataFromJoi = validateEmailLogin({ email: emailValue });
     if (dataFromJoi.error) {
