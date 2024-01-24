@@ -149,8 +149,8 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             ))}
           </Select>
           <Box sx={{ display: { xs: "flex" } }}>
-            <Tooltip title="Account">
-              <Link to={ROUTES.MYCARDS}>
+            <Tooltip title="Profile">
+              <Link to={ROUTES.PROFILE}>
                 <IconButton sx={{ p: 0, m: 1 }}>
                   <Avatar>
                     <img

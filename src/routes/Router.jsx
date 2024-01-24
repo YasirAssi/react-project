@@ -14,6 +14,8 @@ import MyCardsPage from "../Pages/MyCardsPage";
 import FavPage from "../Pages/FavPage/FavPage";
 import DetailsPage from "../Pages/DetailsPage/DetailsPage";
 import AdminGuard from "../guard/adminGuard";
+import ProfilePage from "../Pages/ProfilePage";
+import EditUserPage from "../Pages/EditUser/EditUserPage";
 
 const Router = () => {
   return (
@@ -44,6 +46,22 @@ const Router = () => {
         element={
           <AuthGuard>
             <FavPage />
+          </AuthGuard>
+        }
+      />
+      <Route
+        path={ROUTES.PROFILE}
+        element={
+          <AuthGuard>
+            <ProfilePage />
+          </AuthGuard>
+        }
+      />
+      <Route
+        path={`${ROUTES.EDITUSER}/:id`}
+        element={
+          <AuthGuard>
+            <EditUserPage />
           </AuthGuard>
         }
       />

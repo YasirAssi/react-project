@@ -8,6 +8,8 @@ const ROUTES = {
   SANDBOX: "/sandbox",
   MYCARDS: "/mycards",
   FAV: "/fav",
-  DETAILS: "/Detalis",
+  DETAILS: "/detalis",
+  PROFILE: "/profile",
+  EDITUSER: "/edituser",
 };
 export default ROUTES;

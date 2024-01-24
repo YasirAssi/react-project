@@ -1,22 +1,28 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Box, List, Grid, Typography } from "@mui/material";
 import UserManageComponent from "../Component/UserManageComponent";
 import nextKey from "generate-my-key";
-import normalizeUser from "../services/normalizeUser";
 import { toast } from "react-toastify";
 import GetUsersContext from "../store/usersContext";
+import LogInContext from "../store/loginContext";
+import ROUTES from "../routes/ROUTES";
 
-const SandboxPage = () => {
+const ProfilePage = () => {
   const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
   const [dense, setDense] = useState(true);
+  const { logIn } = useContext(LogInContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("logIn id", logIn._id);
     const fetchData = async () => {
       try {
-        const response = await axios.get("/users");
-        setUserArr(normalizeUser(response.data));
-        setUserCopy(normalizeUser(response.data));
+        const { data } = await axios.get("/users/" + logIn._id);
+        console.log("Received data:", data);
+        setUserArr([data]);
+        setUserCopy([data]);
       } catch (error) {
         toast.error("Error fetching data", {
           position: "top-right",
@@ -32,52 +38,17 @@ const SandboxPage = () => {
     };
 
     fetchData();
-  }, [setUserArr, setUserCopy]);
+  }, [logIn, setUserArr, setUserCopy]);
 
-  const handleDelete = async (id) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this user?"
-    );
-
-    if (!isConfirmed) {
-      return;
-    }
-    try {
-      await axios.delete("/users/" + id).then(({ data }) => {
-        setUserArr((copyOfUsers) => {
-          return copyOfUsers.filter((user) => user._id !== id);
-        });
-      });
-      toast.success("🦄 User is Deleted", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      toast.warn("Only Admin or LoggedIn Owner can Delete!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
+  const handleEdit = (id) => {
+    navigate(`${ROUTES.EDITUSER}/${id}`);
   };
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
       <Grid item xs={12} md={6}>
         <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-          Users List
+          Profile
         </Typography>
 
         <List dense={dense}>
@@ -94,7 +65,7 @@ const SandboxPage = () => {
                 isAdmin: user.isAdmin,
                 isBusiness: user.isBusiness,
               }}
-              onDelete={handleDelete}
+              onEdit={handleEdit}
             />
           ))}
         </List>
@@ -103,4 +74,4 @@ const SandboxPage = () => {
   );
 };
 
-export default SandboxPage;
+export default ProfilePage;
