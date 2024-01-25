@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Avatar,
@@ -16,7 +15,6 @@ import {
   Alert,
 } from "@mui/material";
 import CopyrightComponent from "./ui/CopyrightComponent";
-
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
 import LoginContext from "../../store/loginContext";
@@ -40,10 +38,10 @@ const LoginPage = () => {
   const handleEmailChange = (e) => {
     setEmailValue(e.target.value);
   };
+
   const handlePasswordChange = (e) => {
     setPasswordValue(e.target.value);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -71,7 +69,6 @@ const LoginPage = () => {
       localStorage.clear();
     }
   };
-
   const handleEmailBlur = () => {
     let dataFromJoi = validateEmailLogin({ email: emailValue });
     if (dataFromJoi.error) {
@@ -88,7 +85,6 @@ const LoginPage = () => {
       setPasswordError("");
     }
   };
-
   const handleRememberMeCheck = (e) => {
     setRememberMe(e.target.checked);
   };
