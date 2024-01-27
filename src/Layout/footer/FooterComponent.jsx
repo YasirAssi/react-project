@@ -1,16 +1,23 @@
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
-import CoffeeIcon from "@mui/icons-material/Coffee";
-import DiamondIcon from "@mui/icons-material/Diamond";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
+  Grid,
+} from "@mui/material";
+
+import BottomButtons from "./BottmoNavigation";
 const FooterComponent = () => {
   return (
-    <Paper elevation={4} sx={{ position: "sticky", mt: 2, mb: 0 }}>
-      <BottomNavigation showLabels>
-        <BottomNavigationAction label="Icebook" icon={<AcUnitIcon />} />
-        <BottomNavigationAction label="Cofegram" icon={<CoffeeIcon />} />
-        <BottomNavigationAction label="D" icon={<DiamondIcon />} />
-      </BottomNavigation>
-    </Paper>
+    <Grid container justifyContent="center" alignItems="center">
+      <Paper
+        elevation={4}
+        sx={{ position: "sticky", mt: 3, mb: 0, width: "100%" }}
+      >
+        <BottomNavigation>
+          <BottomButtons />
+        </BottomNavigation>
+      </Paper>
+    </Grid>
   );
 };
 
