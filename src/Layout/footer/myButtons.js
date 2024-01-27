@@ -9,8 +9,8 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 const alwaysButtons = [
   {
     to: ROUTES.ABOUT,
-    title: "About Us", // Provide the text content for the button
-    icon: <InfoIcon />, // Optionally, you can include an icon for the button
+    title: "About Us",
+    icon: <InfoIcon />,
   },
 ];
 
