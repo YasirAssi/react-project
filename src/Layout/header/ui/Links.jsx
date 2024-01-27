@@ -6,7 +6,7 @@ import {
   bizLinks,
   adminLinks,
 } from "../../myLinks";
-import NavLinkComponent from "../NavLinkComponent";
+import NavLinkComponent from "../../NavLinkComponent";
 import { useContext } from "react";
 import LogInContext from "../../../store/loginContext";
 

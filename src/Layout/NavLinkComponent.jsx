@@ -8,8 +8,8 @@ const NavLinkComponent = ({ to, children }) => {
       {({ isActive }) => (
         <Typography
           color={isActive ? "text.headerActive" : "text.headerColor"}
-          sx={{ p: 2 }}
-          variant="h8"
+          sx={{ p: 1 }}
+          fontSize={"0.8rem"}
         >
           {children}
         </Typography>

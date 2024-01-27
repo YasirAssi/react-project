@@ -96,7 +96,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         position="static"
         className="AppBar"
         style={{ backgroundColor: appBarColor }}
-        sx={{ fontSize: "14px" }}
       >
         <Toolbar>
           <Typography

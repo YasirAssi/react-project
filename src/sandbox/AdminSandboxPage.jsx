@@ -1,15 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Box, List, Grid, Typography } from "@mui/material";
+import { Box, List, Grid, Typography, Button } from "@mui/material";
 import UserManageComponent from "../Component/UserManageComponent";
 import nextKey from "generate-my-key";
 import normalizeUser from "../services/normalizeUser";
 import { toast } from "react-toastify";
 import GetUsersContext from "../store/usersContext";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const SandboxPage = () => {
   const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
   const [dense, setDense] = useState(true);
+  const [visibleItems, setVisibleItems] = useState(4);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +75,10 @@ const SandboxPage = () => {
     }
   };
 
+  const handleShowMore = () => {
+    setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
+  };
+
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
       <Grid item xs={12} md={6}>
@@ -81,7 +87,7 @@ const SandboxPage = () => {
         </Typography>
 
         <List dense={dense}>
-          {userArr.map((user) => (
+          {userArr.slice(0, visibleItems).map((user) => (
             <UserManageComponent
               key={nextKey()}
               userInfo={{
@@ -98,6 +104,17 @@ const SandboxPage = () => {
             />
           ))}
         </List>
+
+        {visibleItems < userArr.length && (
+          <Button
+            variant="contained"
+            endIcon={<ExpandMoreIcon />}
+            onClick={handleShowMore}
+            color="secondary"
+          >
+            Show More Users
+          </Button>
+        )}
       </Grid>
     </Box>
   );

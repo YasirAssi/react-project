@@ -7,7 +7,7 @@ import {
   adminButtons,
 } from "./myButtons";
 
-import NavLinkComponent from "../header/NavLinkComponent";
+import NavLinkComponent from "../NavLinkComponent";
 import { useContext } from "react";
 import LogInContext from "../../store/loginContext";
 

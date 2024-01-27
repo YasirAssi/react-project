@@ -9,7 +9,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import AboutUsPage from "./../Pages/AboutUsPage";
 import EditCardPage from "../Pages/EditCardPage";
 import CreateCardPage from "../Pages/CreateCardPage";
-import SandboxPage from "../sandbox/SandboxPage";
+import SandboxPage from "../sandbox/AdminSandboxPage";
 import MyCardsPage from "../Pages/MyCardsPage";
 import FavPage from "../Pages/FavPage";
 import DetailsPage from "../Pages/DetailsPage/DetailsPage";
@@ -87,5 +87,3 @@ const Router = () => {
 };
 
 export default Router;
-
-//router code page
