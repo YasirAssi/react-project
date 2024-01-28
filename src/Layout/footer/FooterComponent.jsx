@@ -1,9 +1,4 @@
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Paper,
-  Grid,
-} from "@mui/material";
+import { BottomNavigation, Paper, Grid } from "@mui/material";
 
 import BottomButtons from "./BottmoNavigation";
 const FooterComponent = () => {

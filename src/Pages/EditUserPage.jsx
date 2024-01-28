@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  Avatar,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Grid,
-  Box,
-  Typography,
-  Alert,
-} from "@mui/material";
+import { Avatar, Button, Grid, Box, Typography, Alert } from "@mui/material";
 import TextContent from "../Component/TextContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ROUTES from "../routes/ROUTES";

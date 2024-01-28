@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import PageHeader from "../Layout/header/PageHeader";
 import Typography from "@mui/material/Typography";
-import { Container, Grid, Paper, Box, IconButton } from "@mui/material";
+import { Container, Grid, Paper, Box } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
