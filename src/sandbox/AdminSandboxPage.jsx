@@ -2,7 +2,6 @@ import { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
 import { Box, List, Grid, Button } from "@mui/material";
 import UserManageComponent from "../Component/UserManageComponent";
-import nextKey from "generate-my-key";
 import normalizeUser from "../services/normalizeUser";
 import { toast } from "react-toastify";
 import GetUsersContext from "../store/usersContext";
@@ -98,9 +97,9 @@ const SandboxPage = () => {
       >
         <Grid item xs={12} md={6}>
           <List dense={dense}>
-            {userArr.slice(0, visibleItems).map((user) => (
+            {userArr.slice(0, visibleItems).map((user, index) => (
               <UserManageComponent
-                key={nextKey()}
+                key={"user" + index}
                 userInfo={{
                   _id: user._id,
                   first: user.name.first,

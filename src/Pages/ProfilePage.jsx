@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Box, List, Grid, Typography } from "@mui/material";
 import UserManageComponent from "../Component/UserManageComponent";
-import nextKey from "generate-my-key";
 import { toast } from "react-toastify";
 import GetUsersContext from "../store/usersContext";
 import LogInContext from "../store/loginContext";
@@ -52,9 +51,9 @@ const ProfilePage = () => {
         </Typography>
 
         <List dense={dense}>
-          {userArr.map((user) => (
+          {userArr.map((user, index) => (
             <UserManageComponent
-              key={nextKey()}
+              key={user._id + index}
               userInfo={{
                 _id: user._id,
                 first: user.name.first,
