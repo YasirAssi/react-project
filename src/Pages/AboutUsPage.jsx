@@ -19,7 +19,7 @@ const AboutUsPage = () => {
               <Typography paragraph>
                 This website is a project that was created for the purpose of
                 providing a management system that allows business users to
-                publish content using Ui Cards. The published content will be
+                publish content using UI Cards. The published content will be
                 available in different parts of the site.
               </Typography>
               <Typography variant="h6">Our HomePage</Typography>
