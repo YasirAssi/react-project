@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -14,7 +14,6 @@ import {
   Typography,
 } from "@mui/material";
 import LogInContext from "../store/loginContext";
-import "../style/userManagerCardStyle.css";
 
 const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   const { logIn } = useContext(LogInContext);
@@ -27,10 +26,16 @@ const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
 
   return (
     <Grid xs={12} md={6}>
-      <Card className="managementCard">
+      <Card
+        sx={{
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          marginBottom: "8px",
+        }}
+      >
         <ListItem justifyContent>
           <ListItemAvatar>
-            <Avatar className="avatar">
+            <Avatar>
               <FolderIcon />
             </Avatar>
           </ListItemAvatar>
@@ -43,7 +48,7 @@ const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <CardContent className="cardContent">
+                  <CardContent>
                     <Typography variant="body2" color="text.secondary">
                       isAdmin: {userInfo.isAdmin ? "Yes" : "No"}
                     </Typography>
@@ -70,7 +75,7 @@ const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
               <DeleteIcon />
             </IconButton>
           )}
-          <IconButton edge="end" aria-label="edit" onClick={handleEditClick}>
+          <IconButton edge="end" aria-label="delete" onClick={handleEditClick}>
             <ModeIcon />
           </IconButton>
         </ListItem>
