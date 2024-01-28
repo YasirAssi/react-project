@@ -91,7 +91,7 @@ const AboutUsPage = () => {
                   <img
                     src="/assets/imgs/SassBiz.png"
                     alt="SaaS Example"
-                    style={{ width: "100%", borderRadius: 8, height: 300 }}
+                    style={{ width: "100%", borderRadius: 8, height: 286 }}
                   />
                   <Typography variant="caption">SaaS Businesses</Typography>
                 </Grid>
@@ -99,7 +99,7 @@ const AboutUsPage = () => {
                   <img
                     src="/assets/imgs/_Image credit Netflix.png"
                     alt="Media Example"
-                    style={{ width: "100%", borderRadius: 8, height: 300 }}
+                    style={{ width: "100%", borderRadius: 8, height: 286 }}
                   />
                   <Typography variant="caption">
                     Media, Entertainment
@@ -109,7 +109,7 @@ const AboutUsPage = () => {
                   <img
                     src="/assets/imgs/Dashboard apps and platforms.png"
                     alt="Dashboard Example"
-                    style={{ width: "100%", borderRadius: 8, height: 295 }}
+                    style={{ width: "100%", borderRadius: 8, height: 285 }}
                   />
                   <Typography variant="caption">Dashboard Apps</Typography>
                 </Grid>
@@ -117,7 +117,7 @@ const AboutUsPage = () => {
                   <img
                     src="/assets/imgs/realEstate.png"
                     alt="Real Estate Example"
-                    style={{ width: "100%", borderRadius: 8, height: 295 }}
+                    style={{ width: "100%", borderRadius: 8, height: 285 }}
                   />
                   <Typography variant="caption">
                     Real Estate Platforms
@@ -154,6 +154,17 @@ const AboutUsPage = () => {
                   interact with your product. Compact and well-designed cards
                   with the right CTA make users want to click and share
                   instantly.
+                </Typography>
+                <Typography>
+                  to read more about UI Cards:{" "}
+                  <a
+                    href="https://www.eleken.co/blog-posts/card-ui-examples-and-best-practices-for-product-owners"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {" "}
+                    Elken Blog
+                  </a>
                 </Typography>
               </Grid>
             </Paper>
