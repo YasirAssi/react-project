@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import LogInContext from "../store/loginContext";
+import "../style/userManagerCardStyle.css";
 
 const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   const { logIn } = useContext(LogInContext);
@@ -25,60 +26,56 @@ const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   };
 
   return (
-    <Card
-      sx={{
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        marginBottom: "8px",
-      }}
-    >
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <FolderIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <Grid container>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item>
-                <Typography variant="h6">
-                  User Name: {userInfo.first} {userInfo.last}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    isAdmin: {userInfo.isAdmin ? "Yes" : "No"}
+    <Grid xs={12} md={6}>
+      <Card className="managementCard">
+        <ListItem justifyContent>
+          <ListItemAvatar>
+            <Avatar className="avatar">
+              <FolderIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <Grid container>
+            <Grid item xs={12} sm container>
+              <Grid item xs spacing={2}>
+                <Grid item>
+                  <Typography variant="h6">
+                    User Full Name: {userInfo.first} {userInfo.last}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    isBusiness: {userInfo.isBusiness ? "Yes" : "No"}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Phone: {userInfo.phone}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Email: {userInfo.email}
-                  </Typography>
-                </CardContent>
+                </Grid>
+                <Grid item>
+                  <CardContent className="cardContent">
+                    <Typography variant="body2" color="text.secondary">
+                      isAdmin: {userInfo.isAdmin ? "Yes" : "No"}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      isBusiness: {userInfo.isBusiness ? "Yes" : "No"}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Phone: {userInfo.phone}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Email: {userInfo.email}
+                    </Typography>
+                  </CardContent>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        {logIn.isAdmin && (
-          <IconButton
-            edge="end"
-            aria-label="delete"
-            onClick={handleDeleteClick}
-          >
-            <DeleteIcon />
+          {logIn.isAdmin && (
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={handleDeleteClick}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
+          <IconButton edge="end" aria-label="edit" onClick={handleEditClick}>
+            <ModeIcon />
           </IconButton>
-        )}
-        <IconButton edge="end" aria-label="delete" onClick={handleEditClick}>
-          <ModeIcon />
-        </IconButton>
-      </ListItem>
-    </Card>
+        </ListItem>
+      </Card>
+    </Grid>
   );
 };
 

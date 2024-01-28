@@ -1,12 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
-import { Box, List, Grid, Typography, Button } from "@mui/material";
+import { Box, List, Grid, Button } from "@mui/material";
 import UserManageComponent from "../Component/UserManageComponent";
 import nextKey from "generate-my-key";
 import normalizeUser from "../services/normalizeUser";
 import { toast } from "react-toastify";
 import GetUsersContext from "../store/usersContext";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PageHeader from "../Layout/header/PageHeader";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const SandboxPage = () => {
   const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
@@ -80,43 +81,54 @@ const SandboxPage = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
-      <Grid item xs={12} md={6}>
-        <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-          Users List
-        </Typography>
-
-        <List dense={dense}>
-          {userArr.slice(0, visibleItems).map((user) => (
-            <UserManageComponent
-              key={nextKey()}
-              userInfo={{
-                _id: user._id,
-                first: user.name.first,
-                middle: user.name.middle,
-                last: user.name.last,
-                phone: user.phone,
-                email: user.email,
-                isAdmin: user.isAdmin,
-                isBusiness: user.isBusiness,
-              }}
-              onDelete={handleDelete}
-            />
-          ))}
-        </List>
-
-        {visibleItems < userArr.length && (
-          <Button
-            variant="contained"
-            endIcon={<ExpandMoreIcon />}
-            onClick={handleShowMore}
-            color="secondary"
-          >
-            Show More Users
-          </Button>
-        )}
-      </Grid>
-    </Box>
+    <Fragment>
+      <PageHeader
+        title="User List"
+        subtitle="Admin, you have control over user accounts on this page"
+        paragraph=" This page allows you to oversee and manage user accounts. Utilize the 'Edit' option to modify user details and 'Delete' to remove a user from the system. Take care to confirm any deletions, as this action is irreversible"
+      />
+      <Box
+        sx={{
+          flexGrow: 1,
+          maxWidth: 1200,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Grid item xs={12} md={6}>
+          <List dense={dense}>
+            {userArr.slice(0, visibleItems).map((user) => (
+              <UserManageComponent
+                key={nextKey()}
+                userInfo={{
+                  _id: user._id,
+                  first: user.name.first,
+                  middle: user.name.middle,
+                  last: user.name.last,
+                  phone: user.phone,
+                  email: user.email,
+                  isAdmin: user.isAdmin,
+                  isBusiness: user.isBusiness,
+                }}
+                onDelete={handleDelete}
+              />
+            ))}
+            {visibleItems < userArr.length && (
+              <Button
+                variant="contained"
+                endIcon={<AddCircleOutlineIcon />}
+                onClick={handleShowMore}
+                color="secondary"
+                sx={{ mt: 1, ml: 12 }}
+              >
+                Show More Users
+              </Button>
+            )}
+          </List>
+        </Grid>
+      </Box>
+    </Fragment>
   );
 };
 
