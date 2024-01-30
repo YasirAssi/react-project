@@ -82,7 +82,7 @@ const SandboxPage = () => {
   return (
     <Fragment>
       <PageHeader
-        title="User List"
+        title="Users List"
         subtitle="Admin, you have control over user accounts on this page"
         paragraph=" This page allows you to oversee and manage user accounts. Utilize the 'Edit' option to modify user details and 'Delete' to remove a user from the system. Take care to confirm any deletions, as this action is irreversible"
       />
