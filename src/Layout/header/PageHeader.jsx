@@ -16,7 +16,8 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
             backgroundColor: deepPurple[200],
             height: "2rem",
             padding: 5,
-            fontSize: "2rem",
+            fontSize: "3rem",
+            fontFamily: "cursive",
           }}
         >
           {title}
@@ -46,7 +47,8 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
               fontWeight: "bold",
               textAlign: "justify",
               color: orange[500],
-              fontSize: "1.5rem",
+              fontSize: "2rem",
+              fontFamily: "cursive",
             }}
           >
             {subtitle}
@@ -58,7 +60,8 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
               mb: 2,
               fontWeight: "bold",
               color: orange[100],
-              fontSize: "1.5rem",
+              fontSize: "2rem",
+              fontFamily: "cursive",
             }}
           >
             {paragraph}
