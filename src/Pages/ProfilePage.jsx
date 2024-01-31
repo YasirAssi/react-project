@@ -10,7 +10,7 @@ import ROUTES from "../routes/ROUTES";
 
 const ProfilePage = () => {
   const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
-  const [dense, setDense] = useState(true);
+  const [dense] = useState(true);
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
 

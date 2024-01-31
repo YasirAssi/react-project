@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const SandboxPage = () => {
   const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
-  const [dense, setDense] = useState(true);
+  const [dense] = useState(true);
   const [visibleItems, setVisibleItems] = useState(4);
 
   useEffect(() => {
