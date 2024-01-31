@@ -20,7 +20,7 @@ const SandboxPage = () => {
         setUserArr(normalizeUser(response.data));
         setUserCopy(normalizeUser(response.data));
       } catch (error) {
-        toast.error("Error fetching data", {
+        toast.error("Ops! somthing went wrong", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -119,7 +119,7 @@ const SandboxPage = () => {
                 endIcon={<AddCircleOutlineIcon />}
                 onClick={handleShowMore}
                 color="secondary"
-                sx={{ mt: 1, ml: 12 }}
+                sx={{ mt: 1, ml: 28 }}
               >
                 Show More Users
               </Button>

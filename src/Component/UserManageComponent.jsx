@@ -1,11 +1,11 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FolderIcon from "@mui/icons-material/Folder";
 import ModeIcon from "@mui/icons-material/Mode";
 import {
-  Grid,
   Box,
+  Grid,
   Card,
   CardContent,
   ListItem,
@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 import LogInContext from "../store/loginContext";
-import "../style/userCardStyle.css";
 
 const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   const { logIn } = useContext(LogInContext);
@@ -27,80 +26,81 @@ const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   };
 
   return (
-    <Grid item xs={12} md={6}>
+    <Grid xs={12} md={6}>
       <Card
-        sx={{
+        style={{
           border: "1px solid #ccc",
           borderRadius: "8px",
           marginBottom: "8px",
         }}
-        className="user-card"
       >
-        <ListItem className="user-info">
+        <ListItem
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px",
+          }}
+        >
           <ListItemAvatar>
-            <Avatar className="avatar">
+            <Avatar style={{ backgroundColor: "#800080" }}>
               <FolderIcon />
             </Avatar>
           </ListItemAvatar>
-          <Grid container className="user-details">
-            <Grid item xs={12} sm container>
-              <Grid item>
-                <Typography variant="h6" className="user-full-name">
-                  User Full Name: {userInfo.first} {userInfo.last}
+          <Grid container style={{ flex: 1, paddingLeft: "16px" }}>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                style={{ fontSize: "1.2rem", marginBottom: "8px" }}
+              >
+                User Full Name: {userInfo.first} {userInfo.last}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <CardContent>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{ fontSize: "1rem", marginBottom: "4px" }}
+                >
+                  isAdmin: {userInfo.isAdmin ? "Yes" : "No"}
                 </Typography>
-
-                <Grid item>
-                  <CardContent>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      className="user-property"
-                    >
-                      isAdmin: {userInfo.isAdmin ? "Yes" : "No"}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      className="user-property"
-                    >
-                      isBusiness: {userInfo.isBusiness ? "Yes" : "No"}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      className="user-property"
-                    >
-                      Phone: {userInfo.phone}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      className="user-property"
-                    >
-                      Email: {userInfo.email}
-                    </Typography>
-                  </CardContent>
-                </Grid>
-              </Grid>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{ fontSize: "1rem", marginBottom: "4px" }}
+                >
+                  isBusiness: {userInfo.isBusiness ? "Yes" : "No"}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{ fontSize: "1rem", marginBottom: "4px" }}
+                >
+                  Phone: {userInfo.phone}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{ fontSize: "1rem", marginBottom: "4px" }}
+                >
+                  Email: {userInfo.email}
+                </Typography>
+              </CardContent>
             </Grid>
           </Grid>
-          <Box className="actions">
+          <Box style={{ display: "flex", alignItems: "center" }}>
             {logIn.isAdmin && (
               <IconButton
                 edge="end"
                 aria-label="delete"
                 onClick={handleDeleteClick}
-                className="delete-button"
+                style={{ marginLeft: "auto" }}
               >
                 <DeleteIcon />
               </IconButton>
             )}
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={handleEditClick}
-              className="edit-button"
-            >
+            <IconButton edge="end" aria-label="edit" onClick={handleEditClick}>
               <ModeIcon />
             </IconButton>
           </Box>
