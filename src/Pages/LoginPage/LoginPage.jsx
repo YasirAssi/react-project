@@ -42,6 +42,7 @@ const LoginPage = () => {
   const handlePasswordChange = (e) => {
     setPasswordValue(e.target.value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -65,6 +66,16 @@ const LoginPage = () => {
       navigate(ROUTES.HOME);
     } catch (err) {
       console.log("err from axios", err);
+      toast.error("something went wrong! check youe email or password", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setLogIn(null);
       localStorage.clear();
     }
