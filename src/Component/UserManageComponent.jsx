@@ -26,7 +26,7 @@ const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   };
 
   return (
-    <Grid xs={12} md={6}>
+    <Grid item xs={12} md={6}>
       <Card
         style={{
           border: "1px solid #ccc",
