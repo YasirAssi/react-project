@@ -32,7 +32,16 @@ const MyCardsPage = () => {
           setCardsCopy(normalizeFav(data));
         });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.error("Something went wrong!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     };
 

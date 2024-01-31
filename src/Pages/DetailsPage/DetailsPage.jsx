@@ -20,7 +20,7 @@ const DetailsPage = () => {
         const { data } = await axios.get(`cards/${_id}`);
         setCadsFromServer([normalizeDetails(data)]);
       } catch (err) {
-        alert("Failed to fetch card data");
+        alert("Failed to find card data");
       }
     };
 

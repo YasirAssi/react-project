@@ -32,7 +32,7 @@ const FavPage = () => {
           setCardsCopy(normalizeFav(data));
         });
       } catch (error) {
-        toast.error("Error fetching likes", {
+        toast.error("Something went wrong!", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,

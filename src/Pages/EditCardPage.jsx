@@ -38,7 +38,18 @@ const EditCardPage = () => {
         }
       );
       navigate(ROUTES.MYCARDS);
-    } catch (err) {}
+    } catch (err) {
+      toast.error("Something went wrong!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   const handleDiscard = () => {

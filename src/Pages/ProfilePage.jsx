@@ -23,7 +23,7 @@ const ProfilePage = () => {
         setUserArr([data]);
         setUserCopy([data]);
       } catch (error) {
-        toast.error("Error fetching data", {
+        toast.error("Something went wrong!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
