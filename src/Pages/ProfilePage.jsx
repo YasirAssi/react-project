@@ -19,7 +19,6 @@ const ProfilePage = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get("/users/" + logIn._id);
-        console.log("Received data:", data);
         setUserArr([data]);
         setUserCopy([data]);
       } catch (error) {
