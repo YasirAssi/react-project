@@ -46,5 +46,3 @@ const useHandleFavClick = () => {
 };
 
 export default useHandleFavClick;
-
-// if the card is already got the patch, add tost with error removing the card from the favs
