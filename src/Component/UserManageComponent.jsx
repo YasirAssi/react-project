@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import LogInContext from "../store/loginContext";
-import "../style/userStyle.css";
+import "../style/userCardStyle.css";
 
 const UserManageComponent = ({ userInfo, onDelete, onEdit }) => {
   const { logIn } = useContext(LogInContext);
