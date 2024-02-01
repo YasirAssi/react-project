@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import validateSchema from "../validation/cardValidation";
 import LogInContext from "../store/loginContext";
-import { fromServer } from "../services/normalizeRequest";
+import { fromServer } from "../services/normalizeFromServer";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
 

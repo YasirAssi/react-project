@@ -5,7 +5,7 @@ import TextContent from "../Component/TextContent";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import useCardsInputs from "../hooks/useCardsInputs";
-import { toServer } from "../services/normalizeRespons";
+import { toServer } from "../services/normalizeToServer";
 
 const EditCardPage = () => {
   const {

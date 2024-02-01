@@ -2,7 +2,7 @@ import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import axios from "axios";
 import TextContent from "../Component/TextContent";
-import { toServer } from "../services/normalizeRespons";
+import { toServer } from "../services/normalizeToServer";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import useCardsInputs from "../hooks/useCardsInputs";
