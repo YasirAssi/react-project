@@ -236,5 +236,3 @@ HeaderComponent.defaultProps = {
 };
 
 export default HeaderComponent;
-
-// userArr.name.first in undefined, althought the name in nested in the userArr obj
