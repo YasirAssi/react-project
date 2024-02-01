@@ -10,13 +10,11 @@ import {
   Tooltip,
   Switch,
 } from "@mui/material";
-
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/Home";
 import Links from "./ui/Links";
 import FilterComponent from "./ui/FilterComponent";
-
 import ROUTES from "../../routes/ROUTES";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import tmc from "twin-moon-color";
