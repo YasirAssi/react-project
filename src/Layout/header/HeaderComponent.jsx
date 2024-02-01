@@ -46,9 +46,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         try {
           const { data } = await axios.get("/users/" + logIn._id);
           setUserArr(data);
-          console.log("data", data);
         } catch (error) {
-          console.log("err", error);
           toast.error("Ops! something went wrong", {
             position: "top-right",
             autoClose: 3000,
