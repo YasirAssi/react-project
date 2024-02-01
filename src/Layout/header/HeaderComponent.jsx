@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -36,7 +35,7 @@ const themes = tmc({
 
 const darkMode = createTheme(themes.dark);
 
-const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
+const HeaderComponent = ({ isDarkTheme, onThemeChange, userInfo }) => {
   const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
   const [appBarColor, setAppBarColor] = useState("#673ab7");
@@ -149,16 +148,26 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           </Select>
           <Box sx={{ display: { xs: "flex" } }}>
             <Tooltip title="Profile">
-              <Link to={ROUTES.PROFILE}>
-                <IconButton sx={{ p: 0, m: 1 }}>
-                  <Avatar>
-                    <img
-                      alt="Yasir Assi"
-                      src="/assets/imgs/myPhoto.jpg"
-                      width="100%"
-                    />
-                  </Avatar>
-                </IconButton>
+              <Link
+                to={ROUTES.PROFILE}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                {userInfo && !Array.isArray(userInfo) ? (
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontSize: "1rem",
+                      marginBottom: "8px",
+                      fontFamily: "cursive",
+                      fontWeight: "bold",
+                      color: "#fff",
+                      textTransform: "capitalize",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {/* {userInfo.name.first} {userInfo.name.last} */}
+                  </Typography>
+                ) : null}
               </Link>
             </Tooltip>
           </Box>
@@ -176,5 +185,12 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 HeaderComponent.propTypes = {
   isDarkTheme: PropTypes.bool.isRequired,
   onThemeChange: PropTypes.func.isRequired,
+  userInfo: PropTypes.shape({
+    name: PropTypes.shape({
+      first: PropTypes.string.isRequired,
+      last: PropTypes.string.isRequired,
+    }),
+  }),
 };
+
 export default HeaderComponent;

@@ -15,7 +15,6 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("logIn id", logIn._id);
     const fetchData = async () => {
       try {
         const { data } = await axios.get("/users/" + logIn._id);
