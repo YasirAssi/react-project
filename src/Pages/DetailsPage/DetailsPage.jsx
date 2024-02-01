@@ -1,11 +1,11 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Typography, Grid, Paper } from "@mui/material";
 import PageHeader from "../../Layout/header/PageHeader";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import CardComponent from "../../Component/CardComponent";
 import useFilterdData from "../../hooks/useFilterdData";
-import normalizeDetails from "./normalizeDetails";
+
 import useHandleFavClick from "../../hooks/useHandleFav";
 import useHandleEditCard from "../../hooks/useHandleEdit";
 import useHandleDelete from "../../hooks/useHandleDelete";
@@ -17,8 +17,7 @@ import axios from "axios";
 import GetCardsContext from "../../store/getCardsContext";
 
 const DetailsPage = () => {
-  // const [cardsFromServer, setCardsFromServer] = useState([]);
-  const { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
+  const { setCardsFromServer } = useContext(GetCardsContext);
   const { id: _id } = useParams();
   const FavFilter = useFilterdData();
   const { handleFavClick } = useHandleFavClick();

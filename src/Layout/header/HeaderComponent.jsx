@@ -118,7 +118,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, mb: 2 }}>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
         className="AppBar"
@@ -128,11 +128,10 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           <Typography
             sx={{
               display: { sm: "block" },
-              flexGrow: 1,
-              fontSize: {
-                xs: "1rem",
-                sm: "1.2rem",
-              },
+              color: "inherit",
+              fontFamily: "cursive",
+              fontWeight: "bold",
+              fontSize: "1.5rem",
             }}
           >
             CardifyHub
