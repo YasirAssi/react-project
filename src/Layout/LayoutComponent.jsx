@@ -14,34 +14,34 @@ import LogInContext from "../store/loginContext";
 const LayoutComponent = ({ children }) => {
   const finishAutoLogin = useAutoLogin();
   const [isDarkTheme, SetDarkTheme] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-  const { logIn } = useContext(LogInContext);
+  // const [userInfo, setUserInfo] = useState(null);
+  // const { logIn } = useContext(LogInContext);
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      if (logIn && logIn._id) {
-        try {
-          const { data } = await axios.get("/users/" + logIn._id);
-          setUserInfo(data);
-          console.log("data", data);
-        } catch (error) {
-          console.log("err", error);
-          toast.error("Ops! something went wrong", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserInfo = async () => {
+  //     if (logIn && logIn._id) {
+  //       try {
+  //         const { data } = await axios.get("/users/" + logIn._id);
+  //         setUserInfo(data);
+  //         console.log("data", data);
+  //       } catch (error) {
+  //         console.log("err", error);
+  //         toast.error("Ops! something went wrong", {
+  //           position: "top-right",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "dark",
+  //         });
+  //       }
+  //     }
+  //   };
 
-    fetchUserInfo();
-  }, [logIn, setUserInfo]);
+  //   fetchUserInfo();
+  // }, [logIn, setUserInfo]);
 
   const themes = tmc({
     "text.headerColor": "!gray",
@@ -62,7 +62,6 @@ const LayoutComponent = ({ children }) => {
       <HeaderComponent
         isDarkTheme={isDarkTheme}
         onThemeChange={handleThemeChange}
-        userInfo={userInfo || { first: "welcome", last: "" }}
       />
       <MainComponent>
         {finishAutoLogin ? (

@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   AppBar,
   Box,
   Toolbar,
   IconButton,
   Typography,
-  Avatar,
   Tooltip,
   Switch,
 } from "@mui/material";
@@ -26,6 +26,7 @@ import { getToken } from "../../services/storageService";
 import PropTypes from "prop-types";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import GetUsersContext from "../../store/usersContext";
 
 const themes = tmc({
   "text.headerColor": "!gray",
@@ -35,10 +36,41 @@ const themes = tmc({
 
 const darkMode = createTheme(themes.dark);
 
-const HeaderComponent = ({ isDarkTheme, onThemeChange, userInfo }) => {
+const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
   const [appBarColor, setAppBarColor] = useState("#673ab7");
+  const { userArr, setUserArr } = useContext(GetUsersContext);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (logIn && logIn._id) {
+        try {
+          const { data } = await axios.get("/users/" + logIn._id);
+          setUserArr(data);
+          console.log("data", data);
+        } catch (error) {
+          console.log("err", error);
+          toast.error("Ops! something went wrong", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+      }
+    };
+
+    fetchUserInfo();
+
+    return () => {
+      setUserArr([]);
+    };
+  }, [logIn, setUserArr]);
 
   const handleThemeChange = (event) => {
     onThemeChange(event.target.checked);
@@ -152,25 +184,26 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange, userInfo }) => {
                 to={ROUTES.PROFILE}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                {userInfo && !Array.isArray(userInfo) ? (
-                  <Typography
-                    variant="h6"
-                    style={{
-                      fontSize: "1rem",
-                      marginBottom: "8px",
-                      fontFamily: "cursive",
-                      fontWeight: "bold",
-                      color: "#fff",
-                      textTransform: "capitalize",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    {/* {userInfo.name.first} {userInfo.name.last} */}
-                  </Typography>
-                ) : null}
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontSize: "1rem",
+                    marginBottom: "8px",
+                    fontFamily: "cursive",
+                    fontWeight: "bold",
+                    color: "#fff",
+                    textTransform: "capitalize",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {userArr && userArr.name && userArr.name.first
+                    ? `${userArr.name.first} ${userArr.name.last}`
+                    : "Welcome"}
+                </Typography>
               </Link>
             </Tooltip>
           </Box>
+
           <ThemeProvider theme={darkMode}>
             <IconButton size="large" color="" onClick={handleLogOut}>
               {logIn ? <LogoutIcon /> : <LoginIcon />}
@@ -193,4 +226,15 @@ HeaderComponent.propTypes = {
   }),
 };
 
+HeaderComponent.defaultProps = {
+  userInfo: PropTypes.shape({
+    name: PropTypes.shape({
+      first: "Welcome",
+      last: "",
+    }),
+  }),
+};
+
 export default HeaderComponent;
+
+// userArr.name.first in undefined, althought the name in nested in the userArr obj
