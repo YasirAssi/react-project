@@ -16,9 +16,9 @@ const SandboxPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/users");
-        setUserArr(normalizeUser(response.data));
-        setUserCopy(normalizeUser(response.data));
+        const { data } = await axios.get("/users");
+        setUserArr(normalizeUser(data));
+        setUserCopy(normalizeUser(data));
       } catch (error) {
         toast.error("Ops! somthing went wrong", {
           position: "top-right",
