@@ -1,16 +1,30 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Typography, Grid, Paper } from "@mui/material";
 import PageHeader from "../../Layout/header/PageHeader";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import CardComponent from "../../Component/CardComponent";
+import useFilterdData from "../../hooks/useFilterdData";
 import normalizeDetails from "./normalizeDetails";
+import useHandleFavClick from "../../hooks/useHandleFav";
+import useHandleEditCard from "../../hooks/useHandleEdit";
+import useHandleDelete from "../../hooks/useHandleDelete";
+import normalizeFav from "../../services/normalizeFavs";
+
+import ROUTES from "../../routes/ROUTES";
 
 import axios from "axios";
+import GetCardsContext from "../../store/getCardsContext";
 
 const DetailsPage = () => {
-  const [cardsFromServer, setCadsFromServer] = useState([]);
+  // const [cardsFromServer, setCardsFromServer] = useState([]);
+  const { cardsFromServer, setCardsFromServer } = useContext(GetCardsContext);
   const { id: _id } = useParams();
+  const FavFilter = useFilterdData();
+  const { handleFavClick } = useHandleFavClick();
+  const { handleEditClick } = useHandleEditCard();
+  const { handleDeleteClick } = useHandleDelete();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,18 +32,35 @@ const DetailsPage = () => {
 
       try {
         const { data } = await axios.get(`cards/${_id}`);
-        setCadsFromServer([normalizeDetails(data)]);
+        setCardsFromServer([normalizeFav(data)]);
       } catch (err) {
+        console.log("error Fetching", err);
         alert("Failed to find card data");
       }
     };
 
     fetchData();
-  }, [_id]);
+  }, [_id, setCardsFromServer]);
 
   const location = {
     lat: 32.13147290769876,
     lng: 34.96580113830216,
+  };
+
+  const handleEditCard = (id) => {
+    handleEditClick(id);
+  };
+
+  const handleDeleteCard = (id) => {
+    handleDeleteClick(id);
+  };
+
+  const handleFavCard = async (id) => {
+    handleFavClick(id);
+  };
+
+  const handleInfoClick = (id) => {
+    navigate(`${ROUTES.DETAILS}/${id}`);
   };
 
   return (
@@ -41,7 +72,7 @@ const DetailsPage = () => {
         />
       </Fragment>
       <Grid container spacing={2} mt={2}>
-        {cardsFromServer.map((card, index) => (
+        {FavFilter.map((card, index) => (
           <Grid
             container
             item
@@ -56,10 +87,15 @@ const DetailsPage = () => {
               id={card._id}
               title={card.title}
               subtitle={card.subtitle}
-              img={card.url}
+              img={card.image.url}
               phone={card.phone}
               address={card.address}
               cardNumber={card.bizNumber}
+              onDelete={handleDeleteCard}
+              Info={handleInfoClick}
+              onEdit={handleEditCard}
+              onFav={handleFavCard}
+              isFav={card.liked}
             />
             <Grid item xs={12} md={6}>
               <Paper
@@ -80,22 +116,22 @@ const DetailsPage = () => {
                 }}
               >
                 <Typography variant="h4" gutterBottom>
-                  Welcome to {`${cardsFromServer[0]?.title || ""}`}
+                  Welcome to {`${FavFilter[0]?.title || ""}`}
                 </Typography>
                 <Typography variant="body1" paragraph>
                   We are excited to have you visit us at the following location:
                 </Typography>
                 <Typography variant="body1">
                   <strong>Address:</strong>{" "}
-                  {`${cardsFromServer[0].address.street || ""}, ${
-                    cardsFromServer[0].address.city || ""
-                  }, ${cardsFromServer[0].address.country || ""}`}
+                  {`${FavFilter[0].address.street || ""}, ${
+                    FavFilter[0].address.city || ""
+                  }, ${FavFilter[0].address.country || ""}`}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone:</strong> {`${cardsFromServer[0].phone || ""}`}
+                  <strong>Phone:</strong> {`${FavFilter[0].phone || ""}`}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Email:</strong> {`${cardsFromServer[0].email || ""}`}
+                  <strong>Email:</strong> {`${FavFilter[0].email || ""}`}
                 </Typography>
                 <Typography variant="body1" mt={2}>
                   Our friendly team is here to assist you. Feel free to reach

@@ -144,3 +144,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+//card.likes is undefined, thats what i get from react. need to solve it

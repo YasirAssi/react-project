@@ -49,22 +49,26 @@ const ProfilePage = () => {
         </Typography>
 
         <List dense={dense}>
-          {userArr.map((user, index) => (
-            <UserManageComponent
-              key={user._id + index}
-              userInfo={{
-                _id: user._id,
-                first: user.name.first,
-                middle: user.name.middle,
-                last: user.name.last,
-                phone: user.phone,
-                email: user.email,
-                isAdmin: user.isAdmin,
-                isBusiness: user.isBusiness,
-              }}
-              onEdit={handleEdit}
-            />
-          ))}
+          {Array.isArray(userArr) ? (
+            userArr.map((user, index) => (
+              <UserManageComponent
+                key={user._id + index}
+                userInfo={{
+                  _id: user._id,
+                  first: user.name.first,
+                  middle: user.name.middle,
+                  last: user.name.last,
+                  phone: user.phone,
+                  email: user.email,
+                  isAdmin: user.isAdmin,
+                  isBusiness: user.isBusiness,
+                }}
+                onEdit={handleEdit}
+              />
+            ))
+          ) : (
+            <p>User data is not an array.</p>
+          )}
         </List>
       </Grid>
     </Box>
