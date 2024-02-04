@@ -12,12 +12,10 @@ function CardifyHubApp() {
   const [cardsFromServer, setCardsFromServer] = useState([]);
   const [cardsCopy, setCardsCopy] = useState([]);
   const [userCopy, setUserCopy] = useState([]);
-  const [userArr, setUserArr] = useState([]);
+  const [user, setUser] = useState([]);
 
   return (
-    <GetUsersContext.Provider
-      value={{ userCopy, setUserCopy, userArr, setUserArr }}
-    >
+    <GetUsersContext.Provider value={{ userCopy, setUserCopy, user, setUser }}>
       <GetCardsContext.Provider
         value={{
           cardsFromServer,

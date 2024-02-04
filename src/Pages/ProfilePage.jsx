@@ -9,7 +9,7 @@ import LogInContext from "../store/loginContext";
 import ROUTES from "../routes/ROUTES";
 
 const ProfilePage = () => {
-  const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
+  const { user, setUser, setUserCopy } = useContext(GetUsersContext);
   const [dense] = useState(true);
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const ProfilePage = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get("/users/" + logIn._id);
-        setUserArr(data);
+        setUser(data);
       } catch (error) {
         toast.error("Something went wrong!", {
           position: "top-right",
@@ -50,14 +50,14 @@ const ProfilePage = () => {
         <List dense={dense}>
           <UserManageComponent
             userInfo={{
-              _id: userArr._id,
-              first: userArr.first,
-              middle: userArr.middle,
-              last: userArr.last,
-              phone: userArr.phone,
-              email: userArr.email,
-              isAdmin: userArr.isAdmin,
-              isBusiness: userArr.isBusiness,
+              _id: user._id,
+              first: user.first,
+              middle: user.middle,
+              last: user.last,
+              phone: user.phone,
+              email: user.email,
+              isAdmin: user.isAdmin,
+              isBusiness: user.isBusiness,
             }}
             onEdit={handleEdit}
           />

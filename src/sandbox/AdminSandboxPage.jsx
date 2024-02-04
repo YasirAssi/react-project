@@ -11,7 +11,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ROUTES from "../routes/ROUTES";
 
 const SandboxPage = () => {
-  const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
+  const { user, setUser, setUserCopy } = useContext(GetUsersContext);
   const [dense] = useState(true);
   const [visibleItems, setVisibleItems] = useState(4);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const SandboxPage = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get("/users");
-        setUserArr(normalizeUser(data));
+        setUser(normalizeUser(data));
         setUserCopy(normalizeUser(data));
       } catch (error) {
         toast.error("Ops! somthing went wrong", {
@@ -37,7 +37,7 @@ const SandboxPage = () => {
     };
 
     fetchData();
-  }, [setUserArr, setUserCopy]);
+  }, [setUser, setUserCopy]);
 
   const handleDelete = async (id) => {
     const isConfirmed = window.confirm(
@@ -49,7 +49,7 @@ const SandboxPage = () => {
     }
     try {
       await axios.delete("/users/" + id).then(({ data }) => {
-        setUserArr((copyOfUsers) => {
+        setUser((copyOfUsers) => {
           return copyOfUsers.filter((user) => user._id !== id);
         });
       });
@@ -104,8 +104,8 @@ const SandboxPage = () => {
       >
         <Grid item xs={12} md={6}>
           <List dense={dense}>
-            {userArr.length > 0 ? (
-              userArr.slice(0, visibleItems).map((user, index) => (
+            {user.length > 0 ? (
+              user.slice(0, visibleItems).map((user, index) => (
                 <UserManageComponent
                   key={"user" + index}
                   userInfo={{
@@ -125,7 +125,7 @@ const SandboxPage = () => {
             ) : (
               <p>No users available.</p>
             )}
-            {visibleItems < userArr.length && (
+            {visibleItems < user.length && (
               <Button
                 variant="contained"
                 endIcon={<AddCircleOutlineIcon />}
