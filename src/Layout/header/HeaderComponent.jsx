@@ -213,21 +213,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 HeaderComponent.propTypes = {
   isDarkTheme: PropTypes.bool.isRequired,
   onThemeChange: PropTypes.func.isRequired,
-  userInfo: PropTypes.shape({
-    name: PropTypes.shape({
-      first: PropTypes.string.isRequired,
-      last: PropTypes.string.isRequired,
-    }),
-  }),
-};
-
-HeaderComponent.defaultProps = {
-  userInfo: PropTypes.shape({
-    name: PropTypes.shape({
-      first: "Welcome",
-      last: "",
-    }),
-  }),
 };
 
 export default HeaderComponent;

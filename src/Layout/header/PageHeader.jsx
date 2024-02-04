@@ -18,6 +18,7 @@ const PageHeader = ({ title, subtitle, paragraph }) => {
             padding: 5,
             fontSize: "3rem",
             fontFamily: "cursive",
+            mt: 5,
           }}
         >
           {title}
