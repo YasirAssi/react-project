@@ -17,7 +17,6 @@ const SandboxPage = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get("/users");
-        console.log("data", data);
         setUserArr(normalizeUser(data));
         setUserCopy(normalizeUser(data));
       } catch (error) {
