@@ -40,13 +40,13 @@ const useCardsInputs = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
-      if (!id || !logIn) {
+      if (!id || !logIn || !logIn.isAdmin) {
         return;
       }
 
       try {
         const { data } = await axios.get("/cards/" + id);
-        if (data.user_id === logIn._id) {
+        if (data.user_id === logIn._id || logIn.isAdmin) {
           setInputsValue(fromServer(data));
         } else {
           alert("Unauthorized access");
