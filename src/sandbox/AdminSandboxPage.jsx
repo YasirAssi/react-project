@@ -17,6 +17,7 @@ const SandboxPage = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get("/users");
+        console.log("data", data);
         setUserArr(normalizeUser(data));
         setUserCopy(normalizeUser(data));
       } catch (error) {
@@ -97,22 +98,26 @@ const SandboxPage = () => {
       >
         <Grid item xs={12} md={6}>
           <List dense={dense}>
-            {userArr.slice(0, visibleItems).map((user, index) => (
-              <UserManageComponent
-                key={"user" + index}
-                userInfo={{
-                  _id: user._id,
-                  first: user.name.first,
-                  middle: user.name.middle,
-                  last: user.name.last,
-                  phone: user.phone,
-                  email: user.email,
-                  isAdmin: user.isAdmin,
-                  isBusiness: user.isBusiness,
-                }}
-                onDelete={handleDelete}
-              />
-            ))}
+            {userArr.length > 0 ? (
+              userArr.slice(0, visibleItems).map((user, index) => (
+                <UserManageComponent
+                  key={"user" + index}
+                  userInfo={{
+                    _id: user._id,
+                    first: user.name.first,
+                    middle: user.name.middle,
+                    last: user.name.last,
+                    phone: user.phone,
+                    email: user.email,
+                    isAdmin: user.isAdmin,
+                    isBusiness: user.isBusiness,
+                  }}
+                  onDelete={handleDelete}
+                />
+              ))
+            ) : (
+              <p>No users available.</p>
+            )}
             {visibleItems < userArr.length && (
               <Button
                 variant="contained"
@@ -132,3 +137,28 @@ const SandboxPage = () => {
 };
 
 export default SandboxPage;
+
+// the userArr is an array (data
+//Array(297) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, … ]) but still get form react that useArr.slice or useArr.map is not a function
+
+/**
+ * the normalizeUser code:
+ 
+ * const normalizeUser = (data) => {
+  return data.map((user) => ({
+    _id: user._id,
+    name: {
+      first: user.name.first,
+      middle: user.name.middle,
+      last: user.name.last,
+    },
+    phone: user.phone,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    isBusiness: user.isBusiness,
+  }));
+};
+
+export default normalizeUser;
+
+ */
