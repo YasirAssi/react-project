@@ -8,13 +8,13 @@ import GetUsersContext from "../../../store/usersContext";
 
 const FilterComponent = () => {
   const { setCardsFromServer, cardsCopy } = useContext(GetCardsContext);
-  const { setUserArr, userCopy } = useContext(GetUsersContext);
+  const { setUser, userCopy } = useContext(GetUsersContext);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     if (!inputValue || inputValue.length < 1) {
       setCardsFromServer(cardsCopy);
-      setUserArr(userCopy);
+      setUser(userCopy);
       return;
     }
     const cardsSearch = cardsCopy.filter((card) => {
@@ -25,7 +25,7 @@ const FilterComponent = () => {
     });
 
     setCardsFromServer(cardsSearch);
-    setUserArr(userSearch);
+    setUser(userSearch);
   };
 
   return (

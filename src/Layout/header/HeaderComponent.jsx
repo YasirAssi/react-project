@@ -38,14 +38,14 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const { logIn, setLogIn } = useContext(LogInContext);
   const navigate = useNavigate();
   const [appBarColor, setAppBarColor] = useState("#673ab7");
-  const { userArr, setUserArr } = useContext(GetUsersContext);
+  const { user, setUser } = useContext(GetUsersContext);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       if (logIn && logIn._id) {
         try {
           const { data } = await axios.get("/users/" + logIn._id);
-          setUserArr(data);
+          setUser(data);
         } catch (error) {
           toast.error("Ops! something went wrong", {
             position: "top-right",
@@ -64,9 +64,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     fetchUserInfo();
 
     return () => {
-      setUserArr([]);
+      setUser([]);
     };
-  }, [logIn, setUserArr]);
+  }, [logIn, setUser]);
 
   const handleThemeChange = (event) => {
     onThemeChange(event.target.checked);
@@ -192,8 +192,8 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
                     marginLeft: "10px",
                   }}
                 >
-                  {userArr && userArr.name && userArr.name.first
-                    ? `${userArr.name.first} ${userArr.name.last}`
+                  {user && user.name && user.name.first
+                    ? `${user.name.first} ${user.name.last}`
                     : "Welcome"}
                 </Typography>
               </Link>

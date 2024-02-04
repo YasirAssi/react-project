@@ -34,7 +34,7 @@ const ProfilePage = () => {
     };
 
     fetchData();
-  }, [logIn, setUserArr, setUserCopy]);
+  }, [logIn, setUser, setUserCopy]);
 
   const handleEdit = (id) => {
     navigate(`${ROUTES.EDITUSER}/${id}`);
