@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Box, List, Grid, Button } from "@mui/material";
 import UserManageComponent from "../Component/UserManageComponent";
@@ -7,11 +8,13 @@ import { toast } from "react-toastify";
 import GetUsersContext from "../store/usersContext";
 import PageHeader from "../Layout/header/PageHeader";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ROUTES from "../routes/ROUTES";
 
 const SandboxPage = () => {
   const { userArr, setUserArr, setUserCopy } = useContext(GetUsersContext);
   const [dense] = useState(true);
   const [visibleItems, setVisibleItems] = useState(4);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +82,10 @@ const SandboxPage = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 4);
   };
 
+  const handleEdit = (id) => {
+    navigate(`${ROUTES.EDITUSER}/${id}`);
+  };
+
   return (
     <Fragment>
       <PageHeader
@@ -112,6 +119,7 @@ const SandboxPage = () => {
                     isBusiness: user.isBusiness,
                   }}
                   onDelete={handleDelete}
+                  onEdit={handleEdit}
                 />
               ))
             ) : (

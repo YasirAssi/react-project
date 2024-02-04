@@ -38,7 +38,7 @@ TextContent.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   autoFocus: PropTypes.bool,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
   errors: PropTypes.string,

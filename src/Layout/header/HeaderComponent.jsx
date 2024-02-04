@@ -132,6 +132,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
               fontFamily: "cursive",
               fontWeight: "bold",
               fontSize: "1.5rem",
+              cursor: "pointer",
             }}
           >
             CardifyHub
