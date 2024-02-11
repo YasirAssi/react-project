@@ -33,10 +33,10 @@ const streetSchema = Joi.object({
   street: Joi.string().min(2).max(256).required(),
 });
 const houseNumberSchema = Joi.object({
-  houseNumber: Joi.number().min(2).max(256).required(),
+  zip: Joi.string().min(2).max(256).required(),
 });
 const zipSchema = Joi.object({
-  zip: Joi.number().min(100000).max(10000000).required(),
+  zip: Joi.string().min(2).max(256).required(),
 });
 const isBusinessSchema = Joi.object({
   isBusiness: Joi.boolean().required(),
