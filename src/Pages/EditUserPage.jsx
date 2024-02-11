@@ -67,7 +67,7 @@ const EditUserPage = () => {
     e.preventDefault();
     try {
       await axios.put(`users/${id}`, normalizeRegister(inputsValue));
-      toast.success("Registered Successfully", {
+      toast.success("Edit Successfully", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
