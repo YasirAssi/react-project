@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Avatar, Button, Grid, Box, Typography, Alert } from "@mui/material";
-import TextContent from "../Component/TextContent";
+import TextContent from "../../Component/TextContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import ROUTES from "../routes/ROUTES";
-import normalizeRegister from "./RegisterPage/normalizeRegister";
-import { validateSchema } from "../validation/registerationValidation";
+import ROUTES from "../../routes/ROUTES";
+import normalizeEditUser from "./normalizeEditUser";
+import normalizeRegister from "../RegisterPage/normalizeRegister";
+import { validateSchema } from "../../validation/registerationValidation";
 import { toast } from "react-toastify";
 
 const EditUserPage = () => {
@@ -62,6 +63,22 @@ const EditUserPage = () => {
       });
     }
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `users/${id}`,
+          normalizeRegister(inputsValue)
+        );
+        setInputsValue(normalizeEditUser(response.data));
+      } catch (err) {
+        console.error("Error fetching user details:", err);
+      }
+    };
+
+    fetchUserData();
+  }, [id, inputsValue]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -15,7 +15,7 @@ import FavPage from "../Pages/FavPage";
 import DetailsPage from "../Pages/DetailsPage/DetailsPage";
 import AdminGuard from "../guard/adminGuard";
 import ProfilePage from "../Pages/ProfilePage";
-import EditUserPage from "../Pages/EditUserPage";
+import EditUserPage from "../Pages/EditUserPage/EditUserPage";
 
 const Router = () => {
   return (
