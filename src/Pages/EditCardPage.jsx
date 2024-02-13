@@ -1,4 +1,5 @@
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
+import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import TextContent from "../Component/TextContent";
@@ -6,6 +7,7 @@ import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import useCardsInputs from "../hooks/useCardsInputs";
 import { toServer } from "../services/normalizeToServer";
+import { fromServer } from "../services/normalizeFromServer";
 
 const EditCardPage = () => {
   const {
@@ -19,6 +21,20 @@ const EditCardPage = () => {
     handleInputsBlur,
     isRequiredField,
   } = useCardsInputs();
+
+  useEffect(() => {
+    const fetchCardDetails = async () => {
+      try {
+        const response = await axios.get(`cards/${id}`);
+        const normalizedData = fromServer(response.data);
+        setInputsValue(normalizedData);
+      } catch (err) {
+        console.error("Error fetching card details:", err);
+      }
+    };
+
+    fetchCardDetails();
+  }, [id, setInputsValue]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

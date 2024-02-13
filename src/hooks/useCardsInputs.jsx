@@ -38,6 +38,7 @@ const useCardsInputs = () => {
   let { id } = useParams();
   const { logIn } = useContext(LogInContext);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       if (!id || !logIn || !logIn.isAdmin) {
