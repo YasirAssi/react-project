@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Avatar, Button, Grid, Box, Typography, Alert } from "@mui/material";
@@ -63,10 +63,24 @@ const EditUserPage = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await axios.get(`users/${id}`);
+  //       const normalizedData = normalizeRegister(response.data);
+  //       setInputsValue(normalizedData);
+  //     } catch (err) {
+  //       console.error("Error fetching user details:", err);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, [id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`users/${id}`, normalizeRegister(inputsValue));
+      await axios.put(`users/${id}`);
       toast.success("Edit Successfully", {
         position: "top-right",
         autoClose: 1000,

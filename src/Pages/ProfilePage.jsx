@@ -51,9 +51,9 @@ const ProfilePage = () => {
           <UserManageComponent
             userInfo={{
               _id: user._id,
-              first: user.first,
-              middle: user.middle,
-              last: user.last,
+              first: user.name.first,
+              middle: user.name.middle,
+              last: user.name.last,
               phone: user.phone,
               email: user.email,
               isAdmin: user.isAdmin,
