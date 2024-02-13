@@ -33,7 +33,7 @@ const streetSchema = Joi.object({
   street: Joi.string().min(2).max(256).required(),
 });
 const houseNumberSchema = Joi.object({
-  zip: Joi.string().min(2).max(256).required(),
+  houseNumber: Joi.string().min(2).max(256).required(),
 });
 const zipSchema = Joi.object({
   zip: Joi.string().min(2).max(256).required(),
