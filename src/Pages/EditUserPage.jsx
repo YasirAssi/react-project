@@ -63,24 +63,10 @@ const EditUserPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await axios.get(`users/${id}`);
-  //       const normalizedData = normalizeRegister(response.data);
-  //       setInputsValue(normalizedData);
-  //     } catch (err) {
-  //       console.error("Error fetching user details:", err);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, [id]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`users/${id}`);
+      await axios.put(`users/${id}`, normalizeRegister(inputsValue));
       toast.success("Edit Successfully", {
         position: "top-right",
         autoClose: 1000,
